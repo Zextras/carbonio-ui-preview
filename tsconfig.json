@@ -9,7 +9,7 @@
 		"jsx": "react",
 		"moduleResolution": "node",
 		"baseUrl": "src",
-		"types": ["@testing-library/jest-dom"],
+		"types": ["node", "@testing-library/jest-dom"],
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["./node_modules/*", "src/**/*.test.*", "src/tests/*"],
