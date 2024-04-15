@@ -8,8 +8,8 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 
 import { PreviewWrapper } from './PreviewWrapper';
-import { SELECTORS } from '../constants/test';
-import { setup } from 'test-utils';
+import { SELECTORS } from '../tests/constants';
+import { setup } from '../tests/utils';
 
 describe('Preview Wrapper', () => {
 	test('Render the pdf preview for type pdf', async () => {

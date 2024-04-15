@@ -28,7 +28,7 @@ import { usePageScrollController } from './usePageScrollController';
 import { useZoom } from './useZoom';
 import { ZoomController } from './ZoomController';
 import { SCROLL_STEP } from '../constants';
-import { type MakeOptional } from '../utils/type-utils';
+import { type MakeOptional } from '../types/utils';
 import { print } from '../utils/utils';
 
 const Overlay = styled.div`

@@ -197,6 +197,7 @@ Boolean isDevelBranch
 Boolean isPullRequest
 Boolean isMergeCommit
 Boolean isBumpBuild
+Boolean lcovIsPresent
 // PROJECT DETAILS
 String pkgName
 String pkgVersion
@@ -211,6 +212,7 @@ pipeline {
     }
     parameters {
         booleanParam defaultValue: false, description: 'Run with test', name: 'TEST'
+        booleanParam defaultValue: true, description: 'Enable SonarQube Stage', name: 'RUN_SONARQUBE'
     }
     options {
         timeout(time: 20, unit: "MINUTES")
@@ -237,24 +239,26 @@ pipeline {
         stage("Read settings") {
             steps {
                 script {
-                   isReleaseBranch = "${BRANCH_NAME}" ==~ /(release|master)/
-                   echo "isReleaseBranch: ${isReleaseBranch}"
-                   isDevelBranch = "${BRANCH_NAME}" ==~ /devel/
-                   echo "isDevelBranch: ${isDevelBranch}"
-                   isPullRequest = "${BRANCH_NAME}" ==~ /PR-\d+/
-                   echo "isPullRequest: ${isPullRequest}"
-                   isMergeCommit = gitIsMergeCommit()
-                   echo "isMergeCommit: ${isMergeCommit}"
-                   isBumpBuild = isReleaseBranch && isMergeCommit
-                   echo "isBumpBuild: ${isBumpBuild}"
-                   isDevBuild = !isReleaseBranch
-                   echo "isDevBuild: ${isDevBuild}"
-                   pkgName = getPackageName()
-                   echo "pkgName: ${pkgName}"
-                   pkgDescription = getPackageDescription()
-                   echo "pkgDescription: ${pkgDescription}"
-                   pkgFullVersion = getPackageVersion()
-                   echo "pkgFullVersion: ${pkgFullVersion}"
+                    isReleaseBranch = "${BRANCH_NAME}" ==~ /(release|master)/
+                    echo "isReleaseBranch: ${isReleaseBranch}"
+                    isDevelBranch = "${BRANCH_NAME}" ==~ /devel/
+                    echo "isDevelBranch: ${isDevelBranch}"
+                    isPullRequest = "${BRANCH_NAME}" ==~ /PR-\d+/
+                    echo "isPullRequest: ${isPullRequest}"
+                    isMergeCommit = gitIsMergeCommit()
+                    echo "isMergeCommit: ${isMergeCommit}"
+                    isBumpBuild = isReleaseBranch && isMergeCommit
+                    echo "isBumpBuild: ${isBumpBuild}"
+                    isDevBuild = !isReleaseBranch
+                    echo "isDevBuild: ${isDevBuild}"
+                    pkgName = getPackageName()
+                    echo "pkgName: ${pkgName}"
+                    pkgDescription = getPackageDescription()
+                    echo "pkgDescription: ${pkgDescription}"
+                    pkgFullVersion = getPackageVersion()
+                    echo "pkgFullVersion: ${pkgFullVersion}"
+                    isSonarQubeEnabled = params.RUN_SONARQUBE == true && (isPullRequest || isDevelBranch || isReleaseBranch)
+                    echo "isSonarQubeEnabled: ${isSonarQubeEnabled}"
                 }
                 withCredentials([
                     usernamePassword(
@@ -276,8 +280,11 @@ pipeline {
         //============================================ Test ====================================================================
         stage("Tests") {
             when {
+                beforeAgent true
                 anyOf {
+                    expression { isSonarQubeEnabled == true }
                     expression { isPullRequest == true }
+                    expression { isDevelBranch == true }
                     expression { params.TEST == true }
                 }
             }
@@ -345,27 +352,43 @@ pipeline {
                                     )
                                     recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage/cobertura-coverage.xml']])
                                 }
+                                if (fileExists('coverage/lcov.info')) {
+                                    lcovIsPresent = true
+                                    stash(
+                                        includes: 'coverage/lcov.info',
+                                        name: 'lcov.info'
+                                    )
+                                }
                             }
                         }
                     }
                 }
-                stage("SonarQube Check") {
-                    agent {
-                        node {
-                            label 'nodejs-agent-v4'
-                        }
+            }
+        }
+        stage("SonarQube Check") {
+            agent {
+                node {
+                    label 'nodejs-agent-v4'
+                }
+            }
+            when {
+                beforeAgent(true)
+                allOf {
+                    expression { isSonarQubeEnabled == true }
+                }
+            }
+            steps {
+                script {
+                    if (lcovIsPresent) {
+                        unstash(name: 'lcov.info')
                     }
-                    steps {
+                    // remove @zextras/ prefix to make pkgName a valid sonarqube project key
+                    def sonarQubeProjectKey = pkgName.replaceAll("@zextras/", "")
+                    withSonarQubeEnv(credentialsId: 'sonarqube-user-token', installationName: 'SonarQube instance') {
                         script {
-                            // remove @zextras/ prefix to make pkgName a valid sonarqube project key
-                            def sonarQubeProjectKey = pkgName.replaceAll("@zextras/", "")
-                            withSonarQubeEnv(credentialsId: 'sonarqube-user-token', installationName: 'SonarQube instance') {
-                                script {
-                                    npxCmd(
-                                        script: "sonarqube-scanner -Dsonar.projectKey=${sonarQubeProjectKey}"
-                                    )
-                                }
-                            }
+                            npxCmd(
+                                script: "sonarqube-scanner -Dsonar.projectKey=${sonarQubeProjectKey} -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info"
+                            )
                         }
                     }
                 }
@@ -447,31 +470,6 @@ pipeline {
                         includes: 'package-lock.json',
                         name: 'release_updated_files_packagelockjson'
                     )
-
-                    // at the moment the bot might not have the permissions to create pull requests
-                    // returned response is: { "message": "Not Found" }
-//                     post {
-//                         success {
-//                             withCredentials([
-//                                 usernamePassword(
-//                                     credentialsId: 'tarsier-bot-pr-token-github',
-//                                     passwordVariable: 'ZXBOT_TOKEN',
-//                                     usernameVariable: 'ZXBOT_NAME'
-//                                 )
-//                             ]) {
-//                                 script {
-//                                         catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-//                                         openGithubPr(
-//                                             TOKEN: ZXBOT_TOKEN,
-//                                             title: "Bumped version ${pkgVersionFull}",
-//                                             head: versionBumperBranch,
-//                                             base: 'devel'
-//                                         )
-//                                     }
-//                                 }
-//                             }
-//                         }
-//                     }
                 }
             }
         }

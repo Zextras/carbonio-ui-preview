@@ -8,7 +8,7 @@ module.exports = {
 	plugins: ['notice'],
 	overrides: [
 		{
-			files: ['**/utils/test-utils.tsx', 'jest-setup.ts'],
+			files: ['**/tests/*'],
 			extends: ['plugin:jest-dom/recommended', 'plugin:testing-library/react'],
 			rules: {
 				'import/no-extraneous-dependencies': 'off'
