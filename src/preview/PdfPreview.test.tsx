@@ -11,8 +11,8 @@ import fetch from 'jest-fetch-mock';
 
 import { PdfPreview, PdfPreviewProps } from './PdfPreview';
 import { ZOOM_STEPS } from '../constants';
-import { KEYBOARD_KEY, SELECTORS } from '../constants/test';
-import { loadPDF, setup, triggerObserver } from 'test-utils';
+import { KEYBOARD_KEY, SELECTORS } from '../tests/constants';
+import { loadPDF, setup, triggerObserver } from '../tests/utils';
 
 const pdfFile = loadPDF('./__mocks__/_pdf.pdf');
 

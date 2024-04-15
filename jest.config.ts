@@ -3,11 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
+
+import type { Config } from 'jest';
+
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
-export default {
+const config: Config = {
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
 
@@ -30,7 +33,7 @@ export default {
 	coverageDirectory: 'coverage',
 
 	// An array of regexp pattern strings used to skip coverage collection
-	coveragePathIgnorePatterns: ['/node_modules/', 'src/utils/test-utils.*'],
+	coveragePathIgnorePatterns: ['/node_modules/', 'src/tests/', '/src/types/'],
 
 	// Indicates which provider should be used to instrument code for coverage
 	coverageProvider: 'babel',
@@ -140,7 +143,7 @@ export default {
 	setupFiles: ['jest-canvas-mock'],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
-	setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
+	setupFilesAfterEnv: ['<rootDir>/src/tests/jest-setup.ts'],
 
 	// The number of seconds after which a test is considered as slow and reported as such in the results.
 	// slowTestThreshold: 5,
@@ -164,7 +167,7 @@ export default {
 	// ],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-	testPathIgnorePatterns: ['/node_modules/', '/coverage/', '/lib/', '/lib-esm/', '/constants/'],
+	testPathIgnorePatterns: ['/node_modules/', '/coverage/', '/lib/', '/lib-esm/'],
 
 	// The regexp pattern or array of patterns that Jest uses to detect test files
 	// testRegex: [],
@@ -198,3 +201,5 @@ export default {
 	// Whether to use watchman for file crawling
 	// watchman: true,
 };
+
+export default config;

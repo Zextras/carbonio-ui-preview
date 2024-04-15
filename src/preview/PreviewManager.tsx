@@ -11,7 +11,7 @@ import findIndex from 'lodash/findIndex';
 import { ImagePreviewProps } from './ImagePreview';
 import { PdfPreviewProps } from './PdfPreview';
 import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper';
-import { type MakeOptional } from '../utils/type-utils';
+import { type MakeOptional } from '../types/utils';
 
 type PreviewArgType = (
 	| MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'>
