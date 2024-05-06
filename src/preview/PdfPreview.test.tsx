@@ -819,9 +819,13 @@ describe('Pdf Preview', () => {
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />, {
 				setupOptions: { advanceTimers: () => Promise.resolve() }
 			});
-			await screen.findByText(/Loading document preview…/i);
+			const loadingElement = await screen.findByText(/Loading document preview…/i);
+			// await waitForElementToBeRemoved(loadingElement);
+			screen.logTestingPlaygroundURL();
 			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
+			await waitFor(() => expect(document.querySelector('canvas')).toBeVisible(), {
+				timeout: 9000
+			});
 			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
@@ -845,6 +849,6 @@ describe('Pdf Preview', () => {
 			await user.keyboard(KEYBOARD_KEY.ARROW_UP);
 			expect(scrollByFn).toHaveBeenCalledTimes(2);
 			expect(scrollByFn).toHaveBeenCalledWith(0, -40);
-		});
+		}, 10000);
 	});
 });

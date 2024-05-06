@@ -12,7 +12,7 @@ import { ThemeProvider } from '@zextras/carbonio-design-system';
 import * as fs from 'fs';
 
 interface ProvidersWrapperProps {
-	children?: React.ReactElement;
+	children?: React.ReactNode;
 }
 
 const ProvidersWrapper = ({ children }: ProvidersWrapperProps): React.JSX.Element => (

@@ -18,7 +18,7 @@ const FocusContainer = styled.span`
 
 interface FocusContainerProps {
 	returnFocus?: boolean;
-	children: React.ReactChild | React.ReactChildren;
+	children: React.ReactNode;
 }
 
 const FocusWithin = ({ children, returnFocus = true }: FocusContainerProps): React.JSX.Element => {

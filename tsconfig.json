@@ -15,7 +15,7 @@
 		"types": ["@testing-library/jest-dom"],
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["./node_modules/*", "src/**/*.test.*", "src/**/test*"],
+	"exclude": ["./node_modules/*"],
 	"ts-node": {
 		"transpileOnly": true
 	}

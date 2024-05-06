@@ -35,7 +35,7 @@ const PreviewsManagerContext = createContext<PreviewManagerContextType>({
 	emptyPreview: () => undefined
 });
 
-const PreviewManager: React.FC = ({ children }) => {
+const PreviewManager = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
 	const [previews, dispatchPreviews] = useReducer(
 		(
 			state: Array<PreviewArgType>,
