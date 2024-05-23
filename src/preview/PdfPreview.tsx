@@ -193,7 +193,7 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 
 	useEffect(() => {
 		// Check whether is a string but not a data URI.
-		if (typeof src === 'string' && !src.startsWith('data:')) {
+		if (typeof src === 'string' && !src.startsWith('data:') && src.trim().length > 0) {
 			const controller = new AbortController();
 			fetch(src, { signal: controller.signal, cache: forceCache ? 'force-cache' : undefined })
 				.then((res) => res.blob())
