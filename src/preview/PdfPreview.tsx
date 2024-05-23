@@ -9,8 +9,9 @@ import { Container, Portal, useCombinedRefs, getColor } from '@zextras/carbonio-
 import { size as lodashSize } from 'lodash';
 import map from 'lodash/map';
 import noop from 'lodash/noop';
-import type { DocumentProps, PDFPageProxy, PageProps } from 'react-pdf';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
+import type { DocumentProps, PageProps } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
+// TODO: check how to remove /esm and use only dist import
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import styled from 'styled-components';
@@ -30,6 +31,8 @@ import { ZoomController } from './ZoomController';
 import { SCROLL_STEP } from '../constants';
 import { type MakeOptional } from '../types/utils';
 import { print } from '../utils/utils';
+
+type Page = Parameters<NonNullable<PageProps['onLoadSuccess']>>[0];
 
 const Overlay = styled.div`
 	height: 100vh;
@@ -209,7 +212,7 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	const previewRef: React.MutableRefObject<HTMLDivElement | null> = useCombinedRefs(ref);
 	const documentLoaded = useRef(useFallback);
 	const pageRefs = useRef<React.RefObject<HTMLElement>[]>([]);
-	const pdfPageProxyListRef = useRef<{ [pageIndex: number]: PDFPageProxy }>({});
+	const pdfPageProxyListRef = useRef<{ [pageIndex: number]: Page }>({});
 
 	const [numPages, setNumPages] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState<number>(0);
