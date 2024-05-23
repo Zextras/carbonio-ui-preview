@@ -43,6 +43,7 @@ const PreviewManagerInitTester = (props: {
 
 describe('Preview Manager', () => {
 	test('Show the preview of a pdf by calling createPreview and hide it with close action', async () => {
+		// global.fetch = jest.fn(() => Promise.reject());
 		const onClose = jest.fn();
 		const { user } = setup(
 			<PreviewManager>
