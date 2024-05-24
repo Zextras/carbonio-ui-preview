@@ -8,17 +8,21 @@ import React from 'react';
 import { ImagePreview, ImagePreviewProps } from './ImagePreview';
 import { PdfPreview, PdfPreviewProps } from './PdfPreview';
 
-type PreviewsProps = ImagePreviewProps | PdfPreviewProps;
+export type PreviewWrapperProps =
+	| (ImagePreviewProps & {
+			previewType: 'image';
+	  })
+	| (PdfPreviewProps & { previewType: 'pdf' });
 
-type PreviewWrapperProps = PreviewsProps & {
-	previewType: 'pdf' | 'image';
-};
-
-const PreviewWrapper: React.VFC<PreviewWrapperProps> = ({ previewType, ...props }) =>
+/**
+ * Show the preview for either an image or a pdf.
+ * This component is just a wrapper on the two specific preview components.
+ * @param previewType - The type of the preview
+ * @param props - The item to show
+ */
+export const PreviewWrapper: React.VFC<PreviewWrapperProps> = ({ previewType, ...props }) =>
 	previewType === 'pdf' ? (
 		<PdfPreview {...(props as PdfPreviewProps)} />
 	) : (
 		<ImagePreview {...(props as ImagePreviewProps)} />
 	);
-
-export { PreviewWrapper, PreviewWrapperProps };

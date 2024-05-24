@@ -105,49 +105,61 @@ const VerticalDivider = styled.div<{ $color: string }>`
 	flex: 0 0 0.0625rem;
 `;
 
-type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
-	/** Left Action for the preview */
+export interface PdfPreviewProps
+	extends Partial<Omit<HeaderProps, 'closeAction'>>,
+		Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> {
+	/** Left action for the preview */
 	closeAction?: MakeOptional<HeaderAction, 'onClick'>;
 	/**
 	 * HTML node where to insert the Portal's children.
 	 * The default value is 'window.top.document'.
-	 * */
+	 */
 	container?: Element;
 	/** Flag to disable the Portal implementation */
 	disablePortal?: boolean;
 	/** Flag to show or hide Portal's content */
 	show: boolean;
-	/** preview source */
+	/** Preview source */
 	src: string | File | Blob | ArrayBuffer;
 	/** Whether force cache */
 	forceCache?: boolean;
 	/** Callback to hide the preview */
 	onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent */
+	/** Use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent */
 	useFallback?: boolean;
-	/** CustomContent */
+	/** Custom component for the fallback */
 	customContent?: React.ReactElement;
 	/** Whether a text layer should be rendered */
 	renderTextLayer?: boolean;
 	/** Whether the annotation layer should be rendered */
 	renderAnnotationLayer?: boolean;
+	/** Label for the zoom out action */
 	zoomOutLabel?: string;
+	/** Label shown when the zoom is at its minimum */
 	lowerLimitReachedLabel?: string;
+	/** Label for the reset zoom action */
 	resetZoomLabel?: string;
+	/** Label for the fit to width zoom action */
 	fitToWidthLabel?: string;
+	/** Label for the zoom in action */
 	zoomInLabel?: string;
+	/** Label shown when the zoom is at its maximum */
 	upperLimitReachedLabel?: string;
-	/** Callback  */
+	/** Callback invoked when the next preview is requested */
 	onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Callback  */
+	/** Callback invoked when the previous preview is requested */
 	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
+	/** Label for the page controller */
 	pageLabel?: string;
+	/** Label shown when the preview cannot be shown */
 	errorLabel?: string;
+	/** Label shown while the preview is loading */
 	loadingLabel?: string;
+	/** Label for the print action */
 	printActionTooltipLabel?: string;
-} & Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'>;
+}
 
-const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function PreviewFn(
+export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function PreviewFn(
 	{
 		src,
 		forceCache = true,
@@ -552,5 +564,3 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 		</Portal>
 	);
 });
-
-export { PdfPreview, PdfPreviewProps };

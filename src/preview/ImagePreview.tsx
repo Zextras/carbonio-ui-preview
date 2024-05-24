@@ -71,7 +71,7 @@ const PreviewContainer = styled.div.attrs({
 	flex-grow: 1;
 `;
 
-type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
+export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
 	/** Left Action for the preview */
 	closeAction?: MakeOptional<HeaderAction, 'onClick'>;
 	/**
@@ -93,9 +93,9 @@ type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 	/** Callback  */
 	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-};
+}
 
-const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
+export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
 	{
 		src,
 		show,
@@ -221,5 +221,3 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 		</Portal>
 	);
 });
-
-export { ImagePreview, ImagePreviewProps };

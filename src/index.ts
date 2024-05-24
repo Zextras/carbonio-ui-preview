@@ -4,9 +4,19 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
+/**
+ * A library to open previews of images and pdf.
+ *
+ * @packageDocumentation
+ */
+
 /** Base components */
-export * from './preview/ImagePreview';
-export * from './preview/PdfPreview';
+export { type ImagePreviewProps, ImagePreview } from './preview/ImagePreview';
+export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview';
 /** Utils */
-export * from './preview/PreviewManager';
-export * from './preview/PreviewWrapper';
+export {
+	PreviewManager,
+	PreviewsManagerContext,
+	type PreviewManagerContextType
+} from './preview/PreviewManager';
+export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper';
