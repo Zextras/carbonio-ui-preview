@@ -23,19 +23,16 @@ type PreviewItem = (
 export interface PreviewManagerContextType {
 	/**
 	 * Initialize and open the preview for the given item
-	 * @param item
 	 */
 	createPreview: (item: PreviewItem) => void;
 	/**
 	 * Initialize the preview for the given items. This function does not open the preview.
 	 * Use openPreview to open the preview for one of the initialized items.
-	 * @param items
 	 */
 	initPreview: (items: MakeRequired<PreviewItem, 'id'>[]) => void;
 	/**
 	 * Open the preview for the item with the given id. The item must have been initialized
 	 * before with the initPreview method.
-	 * @param id
 	 */
 	openPreview: (id: string) => void;
 	/**
@@ -59,7 +56,6 @@ export const PreviewsManagerContext = createContext<PreviewManagerContextType>({
  * The manager for showing multiple previews.
  * From within it, the PreviewsManagerContext give access to the functions to initialize and open
  * the previews of different items.
- * @param children
  */
 export const PreviewManager: React.FC = ({ children }) => {
 	const [previews, dispatchPreviews] = useReducer(
