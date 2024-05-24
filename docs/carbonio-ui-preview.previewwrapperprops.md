@@ -7,7 +7,11 @@
 **Signature:**
 
 ```typescript
-type PreviewWrapperProps = PreviewsProps & {
-    previewType: 'pdf' | 'image';
-};
+export type PreviewWrapperProps = (ImagePreviewProps & {
+    previewType: 'image';
+}) | (PdfPreviewProps & {
+    previewType: 'pdf';
+});
 ```
+**References:** [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
+

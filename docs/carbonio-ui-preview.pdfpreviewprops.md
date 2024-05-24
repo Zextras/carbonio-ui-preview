@@ -2,34 +2,473 @@
 
 [Home](./index.md) &gt; [@zextras/carbonio-ui-preview](./carbonio-ui-preview.md) &gt; [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
 
-## PdfPreviewProps type
+## PdfPreviewProps interface
 
 **Signature:**
 
 ```typescript
-type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
-    closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-    container?: Element;
-    disablePortal?: boolean;
-    show: boolean;
-    src: string | File | Blob | ArrayBuffer;
-    forceCache?: boolean;
-    onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    useFallback?: boolean;
-    customContent?: React.ReactElement;
-    renderTextLayer?: boolean;
-    renderAnnotationLayer?: boolean;
-    zoomOutLabel?: string;
-    lowerLimitReachedLabel?: string;
-    resetZoomLabel?: string;
-    fitToWidthLabel?: string;
-    zoomInLabel?: string;
-    upperLimitReachedLabel?: string;
-    onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    pageLabel?: string;
-    errorLabel?: string;
-    loadingLabel?: string;
-    printActionTooltipLabel?: string;
-} & Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'>;
+export interface PdfPreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> 
 ```
+**Extends:** Partial&lt;Omit&lt;HeaderProps, 'closeAction'&gt;&gt;, Omit&lt;PreviewCriteriaAlternativeContentProps, 'downloadSrc'&gt;
+
+## Properties
+
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[closeAction?](./carbonio-ui-preview.pdfpreviewprops.closeaction.md)
+
+
+</td><td>
+
+
+</td><td>
+
+MakeOptional&lt;HeaderAction, 'onClick'&gt;
+
+
+</td><td>
+
+_(Optional)_ Left action for the preview
+
+
+</td></tr>
+<tr><td>
+
+[container?](./carbonio-ui-preview.pdfpreviewprops.container.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+_(Optional)_ HTML node where to insert the Portal's children. The default value is 'window.top.document'.
+
+
+</td></tr>
+<tr><td>
+
+[customContent?](./carbonio-ui-preview.pdfpreviewprops.customcontent.md)
+
+
+</td><td>
+
+
+</td><td>
+
+React.ReactElement
+
+
+</td><td>
+
+_(Optional)_ Custom component for the fallback
+
+
+</td></tr>
+<tr><td>
+
+[disablePortal?](./carbonio-ui-preview.pdfpreviewprops.disableportal.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Flag to disable the Portal implementation
+
+
+</td></tr>
+<tr><td>
+
+[errorLabel?](./carbonio-ui-preview.pdfpreviewprops.errorlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label shown when the preview cannot be shown
+
+
+</td></tr>
+<tr><td>
+
+[fitToWidthLabel?](./carbonio-ui-preview.pdfpreviewprops.fittowidthlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the fit to width zoom action
+
+
+</td></tr>
+<tr><td>
+
+[forceCache?](./carbonio-ui-preview.pdfpreviewprops.forcecache.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Whether force cache
+
+
+</td></tr>
+<tr><td>
+
+[loadingLabel?](./carbonio-ui-preview.pdfpreviewprops.loadinglabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label shown while the preview is loading
+
+
+</td></tr>
+<tr><td>
+
+[lowerLimitReachedLabel?](./carbonio-ui-preview.pdfpreviewprops.lowerlimitreachedlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label shown when the zoom is at its minimum
+
+
+</td></tr>
+<tr><td>
+
+[onClose](./carbonio-ui-preview.pdfpreviewprops.onclose.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+Callback to hide the preview
+
+
+</td></tr>
+<tr><td>
+
+[onNextPreview?](./carbonio-ui-preview.pdfpreviewprops.onnextpreview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+_(Optional)_ Callback invoked when the next preview is requested
+
+
+</td></tr>
+<tr><td>
+
+[onPreviousPreview?](./carbonio-ui-preview.pdfpreviewprops.onpreviouspreview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+_(Optional)_ Callback invoked when the previous preview is requested
+
+
+</td></tr>
+<tr><td>
+
+[pageLabel?](./carbonio-ui-preview.pdfpreviewprops.pagelabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the page controller
+
+
+</td></tr>
+<tr><td>
+
+[printActionTooltipLabel?](./carbonio-ui-preview.pdfpreviewprops.printactiontooltiplabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the print action
+
+
+</td></tr>
+<tr><td>
+
+[renderAnnotationLayer?](./carbonio-ui-preview.pdfpreviewprops.renderannotationlayer.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Whether the annotation layer should be rendered
+
+
+</td></tr>
+<tr><td>
+
+[renderTextLayer?](./carbonio-ui-preview.pdfpreviewprops.rendertextlayer.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Whether a text layer should be rendered
+
+
+</td></tr>
+<tr><td>
+
+[resetZoomLabel?](./carbonio-ui-preview.pdfpreviewprops.resetzoomlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the reset zoom action
+
+
+</td></tr>
+<tr><td>
+
+[show](./carbonio-ui-preview.pdfpreviewprops.show.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+Flag to show or hide Portal's content
+
+
+</td></tr>
+<tr><td>
+
+[src](./carbonio-ui-preview.pdfpreviewprops.src.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| File \| Blob \| ArrayBuffer
+
+
+</td><td>
+
+Preview source
+
+
+</td></tr>
+<tr><td>
+
+[upperLimitReachedLabel?](./carbonio-ui-preview.pdfpreviewprops.upperlimitreachedlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label shown when the zoom is at its maximum
+
+
+</td></tr>
+<tr><td>
+
+[useFallback?](./carbonio-ui-preview.pdfpreviewprops.usefallback.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent
+
+
+</td></tr>
+<tr><td>
+
+[zoomInLabel?](./carbonio-ui-preview.pdfpreviewprops.zoominlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the zoom in action
+
+
+</td></tr>
+<tr><td>
+
+[zoomOutLabel?](./carbonio-ui-preview.pdfpreviewprops.zoomoutlabel.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Label for the zoom out action
+
+
+</td></tr>
+</tbody></table>

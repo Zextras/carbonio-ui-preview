@@ -4,6 +4,50 @@
 
 ## carbonio-ui-preview package
 
+A library to open previews of images and pdf.
+
+## Interfaces
+
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PreviewManagerContextType](./carbonio-ui-preview.previewmanagercontexttype.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+
 ## Variables
 
 <table><thead><tr><th>
@@ -42,6 +86,8 @@ Description
 
 </td><td>
 
+The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
+
 
 </td></tr>
 <tr><td>
@@ -51,6 +97,8 @@ Description
 
 </td><td>
 
+The context give access to the functions needed to manage multiple previews. It must be used together with the PreviewManager.
+
 
 </td></tr>
 <tr><td>
@@ -59,6 +107,8 @@ Description
 
 
 </td><td>
+
+Show the preview for either an image or a pdf. This component is just a wrapper on the two specific preview components.
 
 
 </td></tr>
@@ -78,33 +128,6 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
-
-[ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[PreviewManagerContextType](./carbonio-ui-preview.previewmanagercontexttype.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
 
 [PreviewWrapperProps](./carbonio-ui-preview.previewwrapperprops.md)
 

@@ -7,29 +7,5 @@
 **Signature:**
 
 ```typescript
-PdfPreview: React.ForwardRefExoticComponent<Partial<Omit<HeaderProps, "closeAction">> & {
-    closeAction?: MakeOptional<HeaderAction, "onClick"> | undefined;
-    container?: Element | undefined;
-    disablePortal?: boolean | undefined;
-    show: boolean;
-    src: string | File | Blob | ArrayBuffer;
-    forceCache?: boolean | undefined;
-    onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    useFallback?: boolean | undefined;
-    customContent?: React.ReactElement<any, string | React.JSXElementConstructor<any>> | undefined;
-    renderTextLayer?: boolean | undefined;
-    renderAnnotationLayer?: boolean | undefined;
-    zoomOutLabel?: string | undefined;
-    lowerLimitReachedLabel?: string | undefined;
-    resetZoomLabel?: string | undefined;
-    fitToWidthLabel?: string | undefined;
-    zoomInLabel?: string | undefined;
-    upperLimitReachedLabel?: string | undefined;
-    onNextPreview?: ((e: React.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    onPreviousPreview?: ((e: React.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    pageLabel?: string | undefined;
-    errorLabel?: string | undefined;
-    loadingLabel?: string | undefined;
-    printActionTooltipLabel?: string | undefined;
-} & Omit<PreviewCriteriaAlternativeContentProps, "downloadSrc"> & React.RefAttributes<HTMLDivElement>>
+PdfPreview: React.ForwardRefExoticComponent<PdfPreviewProps & React.RefAttributes<HTMLDivElement>>
 ```

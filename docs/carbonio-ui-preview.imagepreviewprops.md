@@ -2,20 +2,207 @@
 
 [Home](./index.md) &gt; [@zextras/carbonio-ui-preview](./carbonio-ui-preview.md) &gt; [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)
 
-## ImagePreviewProps type
+## ImagePreviewProps interface
 
 **Signature:**
 
 ```typescript
-type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
-    closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-    container?: Element;
-    disablePortal?: boolean;
-    show: boolean;
-    src: string | File | Blob;
-    onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    alt?: string;
-    onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-};
+export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> 
 ```
+**Extends:** Partial&lt;Omit&lt;HeaderProps, 'closeAction'&gt;&gt;
+
+## Properties
+
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[alt?](./carbonio-ui-preview.imagepreviewprops.alt.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Alternative text for image
+
+
+</td></tr>
+<tr><td>
+
+[closeAction?](./carbonio-ui-preview.imagepreviewprops.closeaction.md)
+
+
+</td><td>
+
+
+</td><td>
+
+MakeOptional&lt;HeaderAction, 'onClick'&gt;
+
+
+</td><td>
+
+_(Optional)_ Left Action for the preview
+
+
+</td></tr>
+<tr><td>
+
+[container?](./carbonio-ui-preview.imagepreviewprops.container.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Element
+
+
+</td><td>
+
+_(Optional)_ HTML node where to insert the Portal's children. The default value is 'window.top.document'.
+
+
+</td></tr>
+<tr><td>
+
+[disablePortal?](./carbonio-ui-preview.imagepreviewprops.disableportal.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+_(Optional)_ Flag to disable the Portal implementation
+
+
+</td></tr>
+<tr><td>
+
+[onClose](./carbonio-ui-preview.imagepreviewprops.onclose.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+Callback to hide the preview
+
+
+</td></tr>
+<tr><td>
+
+[onNextPreview?](./carbonio-ui-preview.imagepreviewprops.onnextpreview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+_(Optional)_ Callback
+
+
+</td></tr>
+<tr><td>
+
+[onPreviousPreview?](./carbonio-ui-preview.imagepreviewprops.onpreviouspreview.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
+
+
+</td><td>
+
+_(Optional)_ Callback
+
+
+</td></tr>
+<tr><td>
+
+[show](./carbonio-ui-preview.imagepreviewprops.show.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+Flag to show or hide Portal's content
+
+
+</td></tr>
+<tr><td>
+
+[src](./carbonio-ui-preview.imagepreviewprops.src.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string \| File \| Blob
+
+
+</td><td>
+
+preview img source
+
+
+</td></tr>
+</tbody></table>

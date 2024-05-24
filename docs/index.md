@@ -24,6 +24,8 @@ Description
 
 </td><td>
 
+A library to open previews of images and pdf.
+
 
 </td></tr>
 </tbody></table>

@@ -28,100 +28,62 @@ interface HeaderProps {
     size: string;
 }
 
+// @public (undocumented)
+export const ImagePreview: React_2.ForwardRefExoticComponent<ImagePreviewProps & React_2.RefAttributes<HTMLDivElement>>;
+
 // Warning: (ae-forgotten-export) The symbol "HeaderProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const ImagePreview: React_2.ForwardRefExoticComponent<Partial<Omit<HeaderProps, "closeAction">> & {
-    closeAction?: MakeOptional<HeaderAction, "onClick"> | undefined;
-    container?: Element | undefined;
-    disablePortal?: boolean | undefined;
-    show: boolean;
-    src: string | File | Blob;
-    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    alt?: string | undefined;
-    onNextPreview?: ((e: React_2.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    onPreviousPreview?: ((e: React_2.SyntheticEvent | KeyboardEvent) => void) | undefined;
-} & React_2.RefAttributes<HTMLDivElement>>;
-
-// @public (undocumented)
-export type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
+export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
+    alt?: string;
+    // Warning: (ae-forgotten-export) The symbol "MakeOptional" needs to be exported by the entry point index.d.ts
     closeAction?: MakeOptional<HeaderAction, 'onClick'>;
     container?: Element;
     disablePortal?: boolean;
-    show: boolean;
-    src: string | File | Blob;
     onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    alt?: string;
     onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-};
+    show: boolean;
+    src: string | File | Blob;
+}
 
 // @public (undocumented)
-type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-    [SubKey in K]?: T[SubKey];
-};
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+// @public (undocumented)
+type MakeRequired<T, K extends keyof T> = T & Required<Pick<T, K>>;
+
+// @public (undocumented)
+export const PdfPreview: React_2.ForwardRefExoticComponent<PdfPreviewProps & React_2.RefAttributes<HTMLDivElement>>;
 
 // Warning: (ae-forgotten-export) The symbol "PreviewCriteriaAlternativeContentProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export const PdfPreview: React_2.ForwardRefExoticComponent<Partial<Omit<HeaderProps, "closeAction">> & {
-    closeAction?: MakeOptional<HeaderAction, "onClick"> | undefined;
-    container?: Element | undefined;
-    disablePortal?: boolean | undefined;
-    show: boolean;
-    src: string | File | Blob | ArrayBuffer;
-    forceCache?: boolean | undefined;
-    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    useFallback?: boolean | undefined;
-    customContent?: React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>> | undefined;
-    renderTextLayer?: boolean | undefined;
-    renderAnnotationLayer?: boolean | undefined;
-    zoomOutLabel?: string | undefined;
-    lowerLimitReachedLabel?: string | undefined;
-    resetZoomLabel?: string | undefined;
-    fitToWidthLabel?: string | undefined;
-    zoomInLabel?: string | undefined;
-    upperLimitReachedLabel?: string | undefined;
-    onNextPreview?: ((e: React_2.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    onPreviousPreview?: ((e: React_2.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    pageLabel?: string | undefined;
-    errorLabel?: string | undefined;
-    loadingLabel?: string | undefined;
-    printActionTooltipLabel?: string | undefined;
-} & Omit<PreviewCriteriaAlternativeContentProps, "downloadSrc"> & React_2.RefAttributes<HTMLDivElement>>;
-
-// @public (undocumented)
-export type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
+export interface PdfPreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> {
     closeAction?: MakeOptional<HeaderAction, 'onClick'>;
     container?: Element;
-    disablePortal?: boolean;
-    show: boolean;
-    src: string | File | Blob | ArrayBuffer;
-    forceCache?: boolean;
-    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    useFallback?: boolean;
     customContent?: React_2.ReactElement;
-    renderTextLayer?: boolean;
-    renderAnnotationLayer?: boolean;
-    zoomOutLabel?: string;
-    lowerLimitReachedLabel?: string;
-    resetZoomLabel?: string;
+    disablePortal?: boolean;
+    errorLabel?: string;
     fitToWidthLabel?: string;
-    zoomInLabel?: string;
-    upperLimitReachedLabel?: string;
+    forceCache?: boolean;
+    loadingLabel?: string;
+    lowerLimitReachedLabel?: string;
+    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     pageLabel?: string;
-    errorLabel?: string;
-    loadingLabel?: string;
     printActionTooltipLabel?: string;
-} & Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'>;
-
-// @public (undocumented)
-type PreviewArgType = (MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> | MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'>) & {
-    previewType: 'pdf' | 'image';
-    id?: string;
-};
+    renderAnnotationLayer?: boolean;
+    renderTextLayer?: boolean;
+    resetZoomLabel?: string;
+    show: boolean;
+    src: string | File | Blob | ArrayBuffer;
+    upperLimitReachedLabel?: string;
+    useFallback?: boolean;
+    zoomInLabel?: string;
+    zoomOutLabel?: string;
+}
 
 // @public (undocumented)
 interface PreviewCriteriaAlternativeContentProps {
@@ -143,39 +105,38 @@ interface PreviewCriteriaAlternativeContentProps {
 }
 
 // @public (undocumented)
+type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
+    previewType: 'image';
+}) | (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & {
+    previewType: 'pdf';
+})) & {
+    id?: string;
+};
+
+// @public
 export const PreviewManager: React_2.FC;
 
 // @public (undocumented)
-export type PreviewManagerContextType = {
-    createPreview: (args: PreviewArgType) => void;
-    initPreview: (args: Array<PreviewArgType & {
-        id: string;
-    }>) => void;
-    openPreview: (id: string) => void;
+export interface PreviewManagerContextType {
+    // Warning: (ae-forgotten-export) The symbol "PreviewItem" needs to be exported by the entry point index.d.ts
+    createPreview: (item: PreviewItem) => void;
     emptyPreview: () => void;
-};
+    // Warning: (ae-forgotten-export) The symbol "MakeRequired" needs to be exported by the entry point index.d.ts
+    initPreview: (items: MakeRequired<PreviewItem, 'id'>[]) => void;
+    openPreview: (id: string) => void;
+}
 
-// @public (undocumented)
+// @public
 export const PreviewsManagerContext: React_2.Context<PreviewManagerContextType>;
 
-// @public (undocumented)
-type PreviewsProps = ImagePreviewProps | PdfPreviewProps;
-
-// @public (undocumented)
+// @public
 export const PreviewWrapper: React_2.VFC<PreviewWrapperProps>;
 
-// Warning: (ae-forgotten-export) The symbol "PreviewsProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export type PreviewWrapperProps = PreviewsProps & {
-    previewType: 'pdf' | 'image';
-};
-
-// Warnings were encountered during analysis:
-//
-// lib/preview/ImagePreview.d.ts:29:5 - (ae-forgotten-export) The symbol "MakeOptional" needs to be exported by the entry point index.d.ts
-// lib/preview/PreviewManager.d.ts:10:5 - (ae-forgotten-export) The symbol "PreviewArgType" needs to be exported by the entry point index.d.ts
-
-// (No @packageDocumentation comment for this package)
+export type PreviewWrapperProps = (ImagePreviewProps & {
+    previewType: 'image';
+}) | (PdfPreviewProps & {
+    previewType: 'pdf';
+});
 
 ```

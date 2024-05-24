@@ -4,6 +4,8 @@
 
 ## PreviewManager variable
 
+The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
+
 **Signature:**
 
 ```typescript

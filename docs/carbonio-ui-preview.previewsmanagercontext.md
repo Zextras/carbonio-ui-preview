@@ -4,6 +4,8 @@
 
 ## PreviewsManagerContext variable
 
+The context give access to the functions needed to manage multiple previews. It must be used together with the PreviewManager.
+
 **Signature:**
 
 ```typescript

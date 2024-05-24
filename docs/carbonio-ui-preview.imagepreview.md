@@ -7,15 +7,5 @@
 **Signature:**
 
 ```typescript
-ImagePreview: React.ForwardRefExoticComponent<Partial<Omit<HeaderProps, "closeAction">> & {
-    closeAction?: MakeOptional<HeaderAction, "onClick"> | undefined;
-    container?: Element | undefined;
-    disablePortal?: boolean | undefined;
-    show: boolean;
-    src: string | File | Blob;
-    onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-    alt?: string | undefined;
-    onNextPreview?: ((e: React.SyntheticEvent | KeyboardEvent) => void) | undefined;
-    onPreviousPreview?: ((e: React.SyntheticEvent | KeyboardEvent) => void) | undefined;
-} & React.RefAttributes<HTMLDivElement>>
+ImagePreview: React.ForwardRefExoticComponent<ImagePreviewProps & React.RefAttributes<HTMLDivElement>>
 ```
