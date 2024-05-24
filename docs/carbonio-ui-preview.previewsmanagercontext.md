@@ -6,6 +6,10 @@
 
 The context give access to the functions needed to manage multiple previews. It must be used together with the PreviewManager.
 
+```ts
+const previewUtils = useContext(PreviewsManagerContext);
+```
+
 **Signature:**
 
 ```typescript
