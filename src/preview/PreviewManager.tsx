@@ -11,25 +11,25 @@ import findIndex from 'lodash/findIndex';
 import { ImagePreviewProps } from './ImagePreview';
 import { PdfPreviewProps } from './PdfPreview';
 import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper';
-import { type MakeOptional, MakeRequired } from '../types/utils';
+import { type MakeOptional } from '../types/utils';
 
-type PreviewItem = (
+export type PreviewItem = (
 	| (MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & { previewType: 'image' })
 	| (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & { previewType: 'pdf' })
 ) & {
-	id?: string;
+	id: string;
 };
 
 export interface PreviewManagerContextType {
 	/**
 	 * Initialize and open the preview for the given item
 	 */
-	createPreview: (item: PreviewItem) => void;
+	createPreview: (item: MakeOptional<PreviewItem, 'id'>) => void;
 	/**
 	 * Initialize the preview for the given items. This function does not open the preview.
 	 * Use openPreview to open the preview for one of the initialized items.
 	 */
-	initPreview: (items: MakeRequired<PreviewItem, 'id'>[]) => void;
+	initPreview: (items: PreviewItem[]) => void;
 	/**
 	 * Open the preview for the item with the given id. The item must have been initialized
 	 * before with the initPreview method.
@@ -56,13 +56,48 @@ export const PreviewsManagerContext = createContext<PreviewManagerContextType>({
  * The manager for showing multiple previews.
  * From within it, the PreviewsManagerContext give access to the functions to initialize and open
  * the previews of different items.
+ *
+ * @example
+ *
+ * Add the manager as provider for your app.
+ *
+ * ```tsx
+ * const App = () => {
+ * 	return (
+ * 		<PreviewManager>
+ * 			<Component1 />
+ * 		</PreviewManager>
+ * 	);
+ * }
+ * ```
+ *
+ * From within the manager, you can then initialize the previews for your items.
+ *
+ * ```tsx
+ * const Component1 = () => {
+ *  const { initPreview, emptyPreview, openPreview } = useContext(PreviewsManagerContext);
+ *
+ * 	const previewItems = useMemo(() => {
+ * 		return items.map((item) => ({
+ * 			previewType: 'image' // or 'pdf', based on the preview type
+ * 			src: '/the/src/' // consult the documentation for the accepted values
+ * 		}));
+ * 	}, [items]);
+ *
+ * 	useEffect(() => {
+ * 		// each time the previewItems change, invoke the init to update the preview
+ *		initPreview(previewItems)
+ * 		return (): void => {
+ * 			// cleanup on component unmount
+ * 			emptyPreview();
+ * 		}
+ * 	}, [previewItems])
+ * }
+ * ```
  */
 export const PreviewManager: React.FC = ({ children }) => {
 	const [previews, dispatchPreviews] = useReducer(
-		(
-			state: Array<PreviewItem>,
-			action: { type: 'empty' } | { type: 'init'; value: Array<PreviewItem> }
-		) => {
+		(state: PreviewItem[], action: { type: 'empty' } | { type: 'init'; value: PreviewItem[] }) => {
 			switch (action.type) {
 				case 'init': {
 					return action.value;
@@ -114,11 +149,11 @@ export const PreviewManager: React.FC = ({ children }) => {
 		return undefined;
 	}, [openArrayIndex, previews]);
 
-	const createPreview = useCallback<(args: PreviewItem) => void>(
+	const createPreview = useCallback<PreviewManagerContextType['createPreview']>(
 		(args) => {
 			dispatchPreviews({
 				type: 'init',
-				value: [args]
+				value: [{ id: 'default-id', ...args }]
 			});
 			setOpenArrayIndex(0);
 		},
@@ -132,7 +167,7 @@ export const PreviewManager: React.FC = ({ children }) => {
 		setOpenArrayIndex(-1);
 	}, [dispatchPreviews]);
 
-	const initPreview = useCallback<(args: Array<PreviewItem>) => void>(
+	const initPreview = useCallback<(args: PreviewItem[]) => void>(
 		(args) => {
 			dispatchPreviews({
 				type: 'init',

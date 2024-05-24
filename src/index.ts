@@ -17,6 +17,7 @@ export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview';
 export {
 	PreviewManager,
 	PreviewsManagerContext,
-	type PreviewManagerContextType
+	type PreviewManagerContextType,
+	type PreviewItem
 } from './preview/PreviewManager';
 export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper';
