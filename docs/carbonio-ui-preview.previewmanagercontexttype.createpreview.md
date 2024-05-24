@@ -9,5 +9,5 @@ Initialize and open the preview for the given item
 **Signature:**
 
 ```typescript
-createPreview: (item: PreviewItem) => void;
+createPreview: (item: MakeOptional<PreviewItem, 'id'>) => void;
 ```

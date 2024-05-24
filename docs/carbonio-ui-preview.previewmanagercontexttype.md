@@ -43,7 +43,7 @@ Description
 
 </td><td>
 
-(item: PreviewItem) =&gt; void
+(item: MakeOptional&lt;[PreviewItem](./carbonio-ui-preview.previewitem.md)<!-- -->, 'id'&gt;) =&gt; void
 
 
 </td><td>
@@ -81,7 +81,7 @@ Clear the initialized previews
 
 </td><td>
 
-(items: MakeRequired&lt;PreviewItem, 'id'&gt;\[\]) =&gt; void
+(items: [PreviewItem](./carbonio-ui-preview.previewitem.md)<!-- -->\[\]) =&gt; void
 
 
 </td><td>

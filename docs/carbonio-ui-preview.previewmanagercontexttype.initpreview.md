@@ -9,5 +9,5 @@ Initialize the preview for the given items. This function does not open the prev
 **Signature:**
 
 ```typescript
-initPreview: (items: MakeRequired<PreviewItem, 'id'>[]) => void;
+initPreview: (items: PreviewItem[]) => void;
 ```

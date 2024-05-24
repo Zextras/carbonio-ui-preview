@@ -48,10 +48,9 @@ export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeActio
 }
 
 // @public (undocumented)
-type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-
-// @public (undocumented)
-type MakeRequired<T, K extends keyof T> = T & Required<Pick<T, K>>;
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+    [P in keyof T]?: T[P];
+};
 
 // @public (undocumented)
 export const PdfPreview: React_2.ForwardRefExoticComponent<PdfPreviewProps & React_2.RefAttributes<HTMLDivElement>>;
@@ -105,12 +104,12 @@ interface PreviewCriteriaAlternativeContentProps {
 }
 
 // @public (undocumented)
-type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
+export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
     previewType: 'image';
 }) | (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & {
     previewType: 'pdf';
 })) & {
-    id?: string;
+    id: string;
 };
 
 // @public
@@ -118,11 +117,9 @@ export const PreviewManager: React_2.FC;
 
 // @public (undocumented)
 export interface PreviewManagerContextType {
-    // Warning: (ae-forgotten-export) The symbol "PreviewItem" needs to be exported by the entry point index.d.ts
-    createPreview: (item: PreviewItem) => void;
+    createPreview: (item: MakeOptional<PreviewItem, 'id'>) => void;
     emptyPreview: () => void;
-    // Warning: (ae-forgotten-export) The symbol "MakeRequired" needs to be exported by the entry point index.d.ts
-    initPreview: (items: MakeRequired<PreviewItem, 'id'>[]) => void;
+    initPreview: (items: PreviewItem[]) => void;
     openPreview: (id: string) => void;
 }
 

@@ -129,6 +129,15 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[PreviewItem](./carbonio-ui-preview.previewitem.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [PreviewWrapperProps](./carbonio-ui-preview.previewwrapperprops.md)
 
 

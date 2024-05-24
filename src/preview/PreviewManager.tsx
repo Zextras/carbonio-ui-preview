@@ -75,23 +75,24 @@ export const PreviewsManagerContext = createContext<PreviewManagerContextType>({
  *
  * ```tsx
  * const Component1 = () => {
- *  const { initPreview, emptyPreview, openPreview } = useContext(PreviewsManagerContext);
+ *     const { initPreview, emptyPreview, openPreview } = useContext(PreviewsManagerContext);
  *
- * 	const previewItems = useMemo(() => {
- * 		return items.map((item) => ({
- * 			previewType: 'image' // or 'pdf', based on the preview type
- * 			src: '/the/src/' // consult the documentation for the accepted values
- * 		}));
- * 	}, [items]);
+ *     const previewItems = useMemo<PreviewItem[]>(() => {
+ *         return items.map((item) => ({
+ *             previewType: 'image', // or 'pdf', based on the preview type
+ *             src: '/the/src/', // consult the documentation for the accepted values,
+ *             id: item.id
+ *         }));
+ *     }, [items]);
  *
- * 	useEffect(() => {
- * 		// each time the previewItems change, invoke the init to update the preview
- *		initPreview(previewItems)
- * 		return (): void => {
- * 			// cleanup on component unmount
- * 			emptyPreview();
- * 		}
- * 	}, [previewItems])
+ *     useEffect(() => {
+ *         // each time the previewItems change, invoke the init to update the preview
+ *         initPreview(previewItems)
+ *         return (): void => {
+ *             // cleanup on component unmount
+ *             emptyPreview();
+ *         }
+ *     }, [previewItems])
  * }
  * ```
  */

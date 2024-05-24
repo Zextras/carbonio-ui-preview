@@ -11,3 +11,42 @@ The manager for showing multiple previews. From within it, the PreviewsManagerCo
 ```typescript
 PreviewManager: React.FC
 ```
+
+## Example
+
+Add the manager as provider for your app.
+
+```tsx
+const App = () => {
+	return (
+		<PreviewManager>
+			<Component1 />
+		</PreviewManager>
+	);
+}
+```
+From within the manager, you can then initialize the previews for your items.
+
+```tsx
+const Component1 = () => {
+    const { initPreview, emptyPreview, openPreview } = useContext(PreviewsManagerContext);
+
+    const previewItems = useMemo<PreviewItem[]>(() => {
+        return items.map((item) => ({
+            previewType: 'image', // or 'pdf', based on the preview type
+            src: '/the/src/', // consult the documentation for the accepted values,
+            id: item.id
+        }));
+    }, [items]);
+
+    useEffect(() => {
+        // each time the previewItems change, invoke the init to update the preview
+        initPreview(previewItems)
+        return (): void => {
+            // cleanup on component unmount
+            emptyPreview();
+        }
+    }, [previewItems])
+}
+```
+
