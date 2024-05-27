@@ -5,8 +5,8 @@
  */
 import React from 'react';
 
-import { ImagePreview, ImagePreviewProps } from './ImagePreview';
-import { PdfPreview, PdfPreviewProps } from './PdfPreview';
+import { ImagePreview, ImagePreviewProps } from './ImagePreview.js';
+import { PdfPreview, PdfPreviewProps } from './PdfPreview.js';
 
 type PreviewsProps = ImagePreviewProps | PdfPreviewProps;
 

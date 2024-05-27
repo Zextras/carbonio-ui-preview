@@ -6,7 +6,7 @@
 import React from 'react';
 
 import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
-import map from 'lodash/map';
+import map from 'lodash/map.js';
 import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
@@ -70,8 +70,7 @@ export interface HeaderProps {
 const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extension, size }) => (
 	<HeaderContainer>
 		<LeftContainer>
-			{closeAction && (
-				<Tooltip
+			{closeAction ? <Tooltip
 					label={closeAction.tooltipLabel}
 					disabled={!closeAction.tooltipLabel}
 					key={closeAction.id}
@@ -84,15 +83,14 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 						backgroundColor="transparent"
 						iconColor="gray6"
 					/>
-				</Tooltip>
-			)}
+				</Tooltip> : null}
 			<InfoContainer>
 				<Text size="small" color="gray6">
 					{filename}
 				</Text>
 				<UpperCaseText size="small" color="gray6">
 					{extension}
-					{extension && size && <> &middot; </>}
+					{extension && size ? <> &middot; </> : null}
 					{size}
 				</UpperCaseText>
 			</InfoContainer>

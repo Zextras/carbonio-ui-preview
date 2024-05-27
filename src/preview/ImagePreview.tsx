@@ -8,10 +8,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Container, Portal, useCombinedRefs } from '@zextras/carbonio-design-system';
 import styled from 'styled-components';
 
-import FocusWithin from './FocusWithin';
-import Header, { HeaderAction, HeaderProps } from './Header';
-import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents';
-import { type MakeOptional } from '../types/utils';
+import FocusWithin from './FocusWithin.js';
+import Header, { HeaderAction, HeaderProps } from './Header.js';
+import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents.js';
+import { type MakeOptional } from '../types/utils.js';
 
 const Overlay = styled.div`
 	height: 100vh;
@@ -186,16 +186,14 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 							closeAction={$closeAction}
 						/>
 						<MiddleContainer orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview && (
-								<AbsoluteLeftIconButton
+							{onPreviousPreview ? <AbsoluteLeftIconButton
 									icon="ArrowBackOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onPreviousPreview}
-								/>
-							)}
+								/> : null}
 							<PreviewContainer ref={previewRef}>
 								<Image
 									alt={alt ?? filename}
@@ -204,16 +202,14 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									ref={imageRef}
 								/>
 							</PreviewContainer>
-							{onNextPreview && (
-								<AbsoluteRightIconButton
+							{onNextPreview ? <AbsoluteRightIconButton
 									icon="ArrowForwardOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onNextPreview}
-								/>
-							)}
+								/> : null}
 						</MiddleContainer>
 					</ExternalContainer>
 				</FocusWithin>

@@ -12,8 +12,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 /** Base components */
-export * from './preview/ImagePreview';
-export * from './preview/PdfPreview';
+export * from './preview/ImagePreview.js';
+export * from './preview/PdfPreview.js';
 /** Utils */
-export * from './preview/PreviewManager';
-export * from './preview/PreviewWrapper';
+export * from './preview/PreviewManager.js';
+export * from './preview/PreviewWrapper.js';

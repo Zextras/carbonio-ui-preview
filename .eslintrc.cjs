@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 module.exports = {
-	extends: ['./node_modules/@zextras/carbonio-ui-configs/rules/eslint.js'],
+	extends: ['wojtekmaj/react'],
 	plugins: ['notice'],
 	overrides: [
 		{
@@ -22,7 +22,7 @@ module.exports = {
 				templateFile: './notice.template.ts'
 			}
 		],
-		'import/no-unresolved': ['error', { commonjs: true }]
+		'@typescript-eslint/consistent-type-definitions': 'off'
 	},
 	ignorePatterns: ['notice.template.ts']
 };

@@ -2,11 +2,12 @@
 	"name": "@zextras/carbonio-ui-preview",
 	"version": "1.2.3",
 	"description": "Preview ui utility for Zextras Carbonio",
-	"module": "./lib/esm/index.js",
 	"main": "./lib/cjs/index.js",
+	"module": "./lib/index.js",
 	"types": "./lib/index.d.ts",
+	"type": "module",
 	"exports": {
-		"import": "./lib/esm/index.js",
+		"import": "./lib/index.js",
 		"require": "./lib/cjs/index.js"
 	},
 	"files": [
@@ -17,7 +18,7 @@
 	],
 	"scripts": {
 		"clean": "rm -rf lib",
-		"build": "npm run clean && npm run build:types && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+		"build": "npm run clean && tsc -p tsconfig.lib.json",
 		"build:types": "tsc --project tsconfig.types.json",
 		"prepare": "is-ci || husky",
 		"prepack": "npm run build",
@@ -56,6 +57,7 @@
 		"@types/styled-components": "^5.1.34",
 		"@zextras/carbonio-ui-configs": "^1.0.0",
 		"babel-plugin-styled-components": "^2.1.4",
+		"eslint-config-wojtekmaj": "^1.0.2",
 		"eslint-plugin-notice": "^0.9.10",
 		"husky": "^9.0.11",
 		"identity-obj-proxy": "^3.0.0",

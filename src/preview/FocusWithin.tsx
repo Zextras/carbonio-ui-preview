@@ -6,7 +6,7 @@
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import last from 'lodash/last';
+import last from 'lodash/last.js';
 import styled from 'styled-components';
 
 const FocusContainer = styled.span`

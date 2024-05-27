@@ -6,12 +6,12 @@
 
 import React, { useCallback, createContext, useReducer, useState, useMemo } from 'react';
 
-import findIndex from 'lodash/findIndex';
+import { findIndex } from 'lodash';
 
-import { ImagePreviewProps } from './ImagePreview';
-import { PdfPreviewProps } from './PdfPreview';
-import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper';
-import { type MakeOptional } from '../types/utils';
+import { ImagePreviewProps } from './ImagePreview.js';
+import { PdfPreviewProps } from './PdfPreview.js';
+import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper.js';
+import { type MakeOptional } from '../types/utils.js';
 
 type PreviewArgType = (
 	| MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'>
@@ -23,7 +23,7 @@ type PreviewArgType = (
 
 export type PreviewManagerContextType = {
 	createPreview: (args: PreviewArgType) => void;
-	initPreview: (args: Array<PreviewArgType & { id: string }>) => void;
+	initPreview: (args: (PreviewArgType & { id: string })[]) => void;
 	openPreview: (id: string) => void;
 	emptyPreview: () => void;
 };
@@ -38,8 +38,8 @@ const PreviewsManagerContext = createContext<PreviewManagerContextType>({
 const PreviewManager: React.FC = ({ children }) => {
 	const [previews, dispatchPreviews] = useReducer(
 		(
-			state: Array<PreviewArgType>,
-			action: { type: 'empty' } | { type: 'init'; value: Array<PreviewArgType> }
+			state: PreviewArgType[],
+			action: { type: 'empty' } | { type: 'init'; value: PreviewArgType[] }
 		) => {
 			switch (action.type) {
 				case 'init': {
@@ -68,14 +68,14 @@ const PreviewManager: React.FC = ({ children }) => {
 			const onPreviousPreviewCallback: PreviewWrapperProps['onPreviousPreview'] =
 				openArrayIndex === 0
 					? undefined
-					: (e): void => {
+					: (e: React.SyntheticEvent | KeyboardEvent): void => {
 							e.stopPropagation();
 							setOpenArrayIndex(openArrayIndex - 1);
 						};
 			const onNextPreviewCallback: PreviewWrapperProps['onNextPreview'] =
 				openArrayIndex === previews.length - 1
 					? undefined
-					: (e): void => {
+					: (e: React.SyntheticEvent | KeyboardEvent): void => {
 							e.stopPropagation();
 							setOpenArrayIndex(openArrayIndex + 1);
 						};
@@ -110,7 +110,7 @@ const PreviewManager: React.FC = ({ children }) => {
 		setOpenArrayIndex(-1);
 	}, [dispatchPreviews]);
 
-	const initPreview = useCallback<(args: Array<PreviewArgType>) => void>(
+	const initPreview = useCallback<(args: PreviewArgType[]) => void>(
 		(args) => {
 			dispatchPreviews({
 				type: 'init',

@@ -6,9 +6,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Container, Portal, useCombinedRefs, getColor } from '@zextras/carbonio-design-system';
-import { size as lodashSize } from 'lodash';
-import map from 'lodash/map';
-import noop from 'lodash/noop';
+import { size as lodashSize, map, noop } from 'lodash';
 import type { DocumentProps, PageProps } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 // TODO: check how to remove /esm and use only dist import
@@ -16,21 +14,21 @@ import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import styled from 'styled-components';
 
-import FocusWithin from './FocusWithin';
-import Header, { HeaderAction, HeaderProps } from './Header';
-import { Navigator } from './Navigator';
-import { PageController } from './PageController';
+import FocusWithin from './FocusWithin.js';
+import Header, { HeaderAction, HeaderProps } from './Header.js';
+import { Navigator } from './Navigator.js';
+import { PageController } from './PageController.js';
 import {
 	PreviewCriteriaAlternativeContent,
 	PreviewCriteriaAlternativeContentProps
-} from './PreviewCriteriaAlternativeContent';
-import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents';
-import { usePageScrollController } from './usePageScrollController';
-import { useZoom } from './useZoom';
-import { ZoomController } from './ZoomController';
-import { SCROLL_STEP } from '../constants';
-import { type MakeOptional } from '../types/utils';
-import { print } from '../utils/utils';
+} from './PreviewCriteriaAlternativeContent.js';
+import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents.js';
+import { usePageScrollController } from './usePageScrollController.js';
+import { useZoom } from './useZoom.js';
+import { ZoomController } from './ZoomController.js';
+import { SCROLL_STEP } from '../constants/index.js';
+import { type MakeOptional } from '../types/utils.js';
+import { print } from '../utils/utils.js';
 
 type Page = Parameters<NonNullable<PageProps['onLoadSuccess']>>[0];
 
@@ -212,7 +210,7 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	const previewRef: React.MutableRefObject<HTMLDivElement | null> = useCombinedRefs(ref);
 	const documentLoaded = useRef(useFallback);
 	const pageRefs = useRef<React.RefObject<HTMLElement>[]>([]);
-	const pdfPageProxyListRef = useRef<{ [pageIndex: number]: Page }>({});
+	const pdfPageProxyListRef = useRef<Record<number, Page>>({});
 
 	const [numPages, setNumPages] = useState<number | null>(null);
 	const [currentPage, setCurrentPage] = useState<number>(0);
@@ -512,16 +510,14 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 							closeAction={$closeAction}
 						/>
 						<MiddleContainer orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview && (
-								<AbsoluteLeftIconButton
+							{onPreviousPreview ? <AbsoluteLeftIconButton
 									icon="ArrowBackOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onPreviousPreview}
-								/>
-							)}
+								/> : null}
 							<PreviewContainer ref={previewRef} data-testid="pdf-preview-container">
 								{$customContent ||
 									(src && (
@@ -538,16 +534,14 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 										</Document>
 									))}
 							</PreviewContainer>
-							{onNextPreview && (
-								<AbsoluteRightIconButton
+							{onNextPreview ? <AbsoluteRightIconButton
 									icon="ArrowForwardOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onNextPreview}
-								/>
-							)}
+								/> : null}
 						</MiddleContainer>
 					</ExternalContainer>
 				</FocusWithin>
