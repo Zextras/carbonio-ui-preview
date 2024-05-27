@@ -6,11 +6,6 @@
 module.exports = {
 	extends: ['./node_modules/@zextras/carbonio-ui-configs/rules/eslint.js'],
 	plugins: ['notice'],
-	env: {
-		// node: true,
-		// es2020: true
-		browser: true
-	},
 	overrides: [
 		{
 			files: ['**/tests/*'],
@@ -28,14 +23,6 @@ module.exports = {
 			}
 		],
 		'import/no-unresolved': ['error', { commonjs: true }]
-	},
-	settings: {
-		'import/resolver': {
-			node: {
-				extensions: ['.js']
-			},
-			exports: {}
-		}
 	},
 	ignorePatterns: ['notice.template.ts']
 };

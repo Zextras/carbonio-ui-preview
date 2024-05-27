@@ -2,19 +2,23 @@
 	"name": "@zextras/carbonio-ui-preview",
 	"version": "1.2.3",
 	"description": "Preview ui utility for Zextras Carbonio",
-	"type": "module",
-	"module": "./lib/index.js",
+	"module": "./lib/esm/index.js",
+	"main": "./lib/cjs/index.js",
 	"types": "./lib/index.d.ts",
-	"exports": "./lib/index.js",
+	"exports": {
+		"import": "./lib/esm/index.js",
+		"require": "./lib/cjs/index.js"
+	},
 	"files": [
-		"/lib",
+		"lib",
 		"COPYING",
 		"THIRDPARTIES",
 		"README.md"
 	],
 	"scripts": {
 		"clean": "rm -rf lib",
-		"build": "npm run clean && tsc --project tsconfig.lib.json",
+		"build": "npm run clean && npm run build:types && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+		"build:types": "tsc --project tsconfig.types.json",
 		"prepare": "is-ci || husky",
 		"prepack": "npm run build",
 		"type-check": "tsc --project tsconfig.json",
@@ -36,6 +40,9 @@
 		"@commitlint/cli": "^19.2.2",
 		"@commitlint/config-conventional": "^19.2.2",
 		"@faker-js/faker": "^8.4.1",
+		"@rollup/plugin-commonjs": "^25.0.8",
+		"@rollup/plugin-node-resolve": "^15.2.3",
+		"@rollup/plugin-typescript": "^11.1.6",
 		"@testing-library/dom": "^8.20.1",
 		"@testing-library/jest-dom": "^6.4.2",
 		"@testing-library/react": "^12.1.5",
@@ -45,6 +52,7 @@
 		"@types/node": "^18.19.15",
 		"@types/react": "^17.0.75",
 		"@types/react-dom": "^17.0.25",
+		"@types/rollup-plugin-css-only": "^3.1.3",
 		"@types/styled-components": "^5.1.34",
 		"@zextras/carbonio-ui-configs": "^1.0.0",
 		"babel-plugin-styled-components": "^2.1.4",
@@ -56,6 +64,9 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-fail-on-console": "^3.1.2",
 		"jest-junit": "^16.0.0",
+		"rollup": "^4.18.0",
+		"rollup-plugin-css-only": "^4.5.2",
+		"rollup-plugin-dts": "^6.1.1",
 		"ts-node": "^10.9.2"
 	},
 	"dependencies": {

@@ -556,4 +556,4 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	);
 });
 
-export { PdfPreview, PdfPreviewProps };
+export { PdfPreview, type PdfPreviewProps };

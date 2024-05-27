@@ -222,4 +222,4 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 	);
 });
 
-export { ImagePreview, ImagePreviewProps };
+export { ImagePreview, type ImagePreviewProps };

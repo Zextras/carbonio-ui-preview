@@ -21,4 +21,4 @@ const PreviewWrapper: React.VFC<PreviewWrapperProps> = ({ previewType, ...props 
 		<ImagePreview {...(props as ImagePreviewProps)} />
 	);
 
-export { PreviewWrapper, PreviewWrapperProps };
+export { PreviewWrapper, type PreviewWrapperProps };
