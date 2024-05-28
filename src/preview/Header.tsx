@@ -7,38 +7,7 @@ import React from 'react';
 
 import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
 import map from 'lodash/map.js';
-import styled from 'styled-components';
-
-const HeaderContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
-	padding: 1rem;
-`;
-
-const LeftContainer = styled.div`
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 0.5rem;
-`;
-
-const RightContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 0.5rem;
-`;
-
-const InfoContainer = styled.div`
-	width: fit-content;
-	& div {
-		line-height: 1.5;
-	}
-`;
-
-const UpperCaseText = styled(Text)`
-	text-transform: uppercase;
-`;
+import styles from './Header.css';
 
 export interface HeaderAction {
 	/** id used as key */
@@ -68,8 +37,8 @@ export interface HeaderProps {
 }
 
 const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extension, size }) => (
-	<HeaderContainer>
-		<LeftContainer>
+	<div className={styles.headerContainer}>
+		<div className={styles.leftContainer}>
 			{closeAction ? <Tooltip
 					label={closeAction.tooltipLabel}
 					disabled={!closeAction.tooltipLabel}
@@ -84,18 +53,18 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 						iconColor="gray6"
 					/>
 				</Tooltip> : null}
-			<InfoContainer>
+			<div className={styles.infoContainer}>
 				<Text size="small" color="gray6">
 					{filename}
 				</Text>
-				<UpperCaseText size="small" color="gray6">
+				<Text size="small" color="gray6" className={styles.upperCase}>
 					{extension}
 					{extension && size ? <> &middot; </> : null}
 					{size}
-				</UpperCaseText>
-			</InfoContainer>
-		</LeftContainer>
-		<RightContainer>
+				</Text>
+			</div>
+		</div>
+		<div className={styles.rightContainer}>
 			{map(actions, ({ id, onClick, disabled, icon, tooltipLabel, tooltipPlacement }) => (
 				<Tooltip
 					label={tooltipLabel}
@@ -113,8 +82,8 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 					/>
 				</Tooltip>
 			))}
-		</RightContainer>
-	</HeaderContainer>
+		</div>
+	</div>
 );
 
 export default Header;

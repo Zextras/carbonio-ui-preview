@@ -5,14 +5,15 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Container, Portal, useCombinedRefs, getColor } from '@zextras/carbonio-design-system';
+import {Container, Portal, useCombinedRefs, getColor, useTheme, IconButton} from '@zextras/carbonio-design-system';
 import { size as lodashSize, map, noop } from 'lodash';
 import type { DocumentProps, PageProps } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 // TODO: check how to remove /esm and use only dist import
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import styled from 'styled-components';
+import styles from './PdfPreview.css'
+import commonStyles from './CommonStyles.css'
 
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
@@ -22,7 +23,6 @@ import {
 	PreviewCriteriaAlternativeContent,
 	PreviewCriteriaAlternativeContentProps
 } from './PreviewCriteriaAlternativeContent.js';
-import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents.js';
 import { usePageScrollController } from './usePageScrollController.js';
 import { useZoom } from './useZoom.js';
 import { ZoomController } from './ZoomController.js';
@@ -31,80 +31,6 @@ import { type MakeOptional } from '../types/utils.js';
 import { print } from '../utils/utils.js';
 
 type Page = Parameters<NonNullable<PageProps['onLoadSuccess']>>[0];
-
-const Overlay = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100%;
-	max-width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.8);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1003;
-`;
-
-const MiddleContainer = styled(Container)`
-	flex-grow: 1;
-`;
-
-const ExternalContainer = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100vw;
-	max-width: 100vw;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-`;
-
-const PreviewContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	//  https://bhch.github.io/posts/2021/04/centring-flex-items-and-allowing-overflow-scroll/
-	//justify-content: center;
-	//align-items: center;
-	// justify-content and align-items conflict with overflow management
-	overflow: auto;
-	outline: none;
-
-	&::-webkit-scrollbar {
-		width: 7px;
-		height: 7px;
-	}
-
-	&::-webkit-scrollbar-track {
-		background-color: transparent;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: ${({ theme }): string => theme.palette.gray3.regular};
-		border-radius: 0.25rem;
-	}
-
-	& > .react-pdf__Document {
-		padding-bottom: 1rem;
-		margin: auto;
-		display: flex;
-		gap: 1rem;
-		flex-direction: column;
-	}
-
-	& .react-pdf__message {
-		color: white;
-	}
-`;
-
-const VerticalDivider = styled.div<{ $color: string }>`
-	width: 0.0625rem;
-	height: 1.5rem;
-	background-color: ${({ $color, theme }): string => getColor($color, theme)};
-	flex: 0 0 0.0625rem;
-`;
 
 type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	/** Left Action for the preview */
@@ -471,11 +397,13 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	);
 	const actions = useMemo(() => [printAction, ...actionsProp], [actionsProp, printAction]);
 
+	const theme = useTheme();
+
 	return (
 		<Portal show={show} disablePortal={disablePortal} container={container}>
-			<Overlay onClick={onOverlayClick}>
+			<div onClick={onOverlayClick} className={styles.overlay}>
 				<FocusWithin>
-					<ExternalContainer>
+					<div className={styles.externalContainer}>
 						{!$customContent && (
 							<Navigator>
 								<PageController
@@ -484,7 +412,7 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 									currentPage={currentPage}
 									onPageChange={onPageChange}
 								/>
-								<VerticalDivider $color="gray6" />
+								<div style={{ '--vertical-divider-background-color': getColor("gray6", theme) }} className={styles.verticalDivider} />
 								<ZoomController
 									decrementable={decrementable}
 									zoomOutLabel={zoomOutLabel}
@@ -509,8 +437,9 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 							size={size}
 							closeAction={$closeAction}
 						/>
-						<MiddleContainer orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview ? <AbsoluteLeftIconButton
+						<Container flexGrow={1} orientation="horizontal" crossAlignment="unset" minHeight={0}>
+							{onPreviousPreview ? <IconButton
+									className={commonStyles.absoluteLeftIconButton}
 									icon="ArrowBackOutline"
 									size="medium"
 									backgroundColor="gray0"
@@ -518,7 +447,7 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 									borderRadius="round"
 									onClick={onPreviousPreview}
 								/> : null}
-							<PreviewContainer ref={previewRef} data-testid="pdf-preview-container">
+							<div ref={previewRef} data-testid="pdf-preview-container" className={styles.previewContainer} style={{ "--scrollbar-thumb-color": theme.palette.gray3.regular }}>
 								{$customContent ||
 									(src && (
 										<Document
@@ -533,8 +462,9 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 											{pageElements}
 										</Document>
 									))}
-							</PreviewContainer>
-							{onNextPreview ? <AbsoluteRightIconButton
+							</div>
+							{onNextPreview ? <IconButton
+								className={commonStyles.absoluteRightIconButton}
 									icon="ArrowForwardOutline"
 									size="medium"
 									backgroundColor="gray0"
@@ -542,10 +472,10 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 									borderRadius="round"
 									onClick={onNextPreview}
 								/> : null}
-						</MiddleContainer>
-					</ExternalContainer>
+						</Container>
+					</div>
 				</FocusWithin>
-			</Overlay>
+			</div>
 		</Portal>
 	);
 });

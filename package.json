@@ -18,7 +18,7 @@
 	],
 	"scripts": {
 		"clean": "rm -rf lib",
-		"build": "npm run clean && tsc -p tsconfig.lib.json",
+		"build": "npm run clean && tsc -p tsconfig.lib.json && npm run copy-styles",
 		"build:types": "tsc --project tsconfig.types.json",
 		"prepare": "is-ci || husky",
 		"prepack": "npm run build",
@@ -28,7 +28,8 @@
 		"packTo": "npm pack --pack-destination $PKG_PATH && cd $PKG_PATH && npm i zextras-carbonio-ui-preview-$npm_package_version.tgz",
 		"deploy": "npm pack && rm -rf $PKG_PATH/node_modules/@zextras/carbonio-ui-preview/* && tar -xf zextras-carbonio-ui-preview-$npm_package_version.tgz -C $PKG_PATH/node_modules/@zextras/carbonio-ui-preview/ --strip-components 1",
 		"test": "jest",
-		"postbuild": "is-ci || ./scripts/check-build.sh"
+		"postbuild": "is-ci || ./scripts/check-build.sh",
+		"copy-styles": "cp src/preview/*.css lib/preview/"
 	},
 	"keywords": [],
 	"author": "Zextras SF Team <https://www.zextras.com/carbonio/>",

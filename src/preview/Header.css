@@ -1,0 +1,31 @@
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.leftContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rightContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upperCase {
+    text-transform: uppercase;
+}
+
+.infoContainer {
+    width: fit-content;
+}
+
+.infoContainer div {
+    line-height: 1.5;
+}

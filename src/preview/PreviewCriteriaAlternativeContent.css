@@ -1,0 +1,9 @@
+.fakeModal {
+    border-radius: 1rem;
+    padding: 2rem 4rem 2rem 4rem;
+    margin: auto;
+}
+
+.attachmentLink {
+    text-decoration: none;
+}

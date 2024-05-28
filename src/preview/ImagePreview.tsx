@@ -5,71 +5,13 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Container, Portal, useCombinedRefs } from '@zextras/carbonio-design-system';
-import styled from 'styled-components';
+import {Container, IconButton, Portal, useCombinedRefs} from '@zextras/carbonio-design-system';
 
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
-import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents.js';
 import { type MakeOptional } from '../types/utils.js';
-
-const Overlay = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100%;
-	max-width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.8);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1003;
-`;
-
-const ExternalContainer = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100vw;
-	max-width: 100vw;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-`;
-
-const MiddleContainer = styled(Container)`
-	flex-grow: 1;
-`;
-
-const Image = styled.img`
-	max-height: 100%;
-	max-width: 100%;
-	min-height: 0;
-	min-width: 0;
-	align-self: center;
-	filter: drop-shadow(0px 5px 14px rgba(0, 0, 0, 0.35));
-	border-radius: 0.25rem;
-`;
-
-const PreviewContainer = styled.div.attrs({
-	$paddingVertical: '2rem',
-	$paddingHorizontal: '1rem',
-	$gap: '0.5rem'
-})`
-	display: flex;
-	max-width: 100%;
-	max-height: calc(100vh - ${({ $paddingVertical }): string => $paddingVertical} * 2);
-	flex-direction: column;
-	gap: ${({ $gap }): string => $gap};
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
-	padding: ${({ $paddingVertical, $paddingHorizontal }): string =>
-		`${$paddingVertical} ${$paddingHorizontal}`};
-	outline: none;
-	flex-grow: 1;
-`;
+import styles from './ImagePreview.css'
+import commonStyles from './CommonStyles.css'
 
 type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	/** Left Action for the preview */
@@ -175,9 +117,9 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 
 	return (
 		<Portal show={show} disablePortal={disablePortal} container={container}>
-			<Overlay onClick={onOverlayClick}>
+			<div onClick={onOverlayClick} className={styles.overlay}>
 				<FocusWithin>
-					<ExternalContainer>
+					<div style={styles.externalContainer}>
 						<Header
 							actions={actions}
 							filename={filename}
@@ -185,8 +127,9 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 							size={size}
 							closeAction={$closeAction}
 						/>
-						<MiddleContainer orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview ? <AbsoluteLeftIconButton
+						<Container orientation="horizontal" crossAlignment="unset" minHeight={0} className={styles.middleContainer}>
+							{onPreviousPreview ? <IconButton
+								className={commonStyles.absoluteLeftIconButton}
 									icon="ArrowBackOutline"
 									size="medium"
 									backgroundColor="gray0"
@@ -194,15 +137,17 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									borderRadius="round"
 									onClick={onPreviousPreview}
 								/> : null}
-							<PreviewContainer ref={previewRef}>
-								<Image
+							<div ref={previewRef} style={styles.previewContainer}>
+								<img
 									alt={alt ?? filename}
 									src={computedSrc}
 									onError={(error): void => console.error('TODO handle error', error)}
 									ref={imageRef}
+									style={styles.image}
 								/>
-							</PreviewContainer>
-							{onNextPreview ? <AbsoluteRightIconButton
+							</div>
+							{onNextPreview ? <IconButton
+									className={commonStyles.absoluteRightIconButton}
 									icon="ArrowForwardOutline"
 									size="medium"
 									backgroundColor="gray0"
@@ -210,10 +155,10 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									borderRadius="round"
 									onClick={onNextPreview}
 								/> : null}
-						</MiddleContainer>
-					</ExternalContainer>
+						</Container>
+					</div>
 				</FocusWithin>
-			</Overlay>
+			</div>
 		</Portal>
 	);
 });

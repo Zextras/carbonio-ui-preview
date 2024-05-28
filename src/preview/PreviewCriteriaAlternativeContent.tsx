@@ -6,18 +6,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import { Button, Container, Text } from '@zextras/carbonio-design-system';
-import styled from 'styled-components';
-
-const FakeModalContainer = styled(Container)`
-	border-radius: 1rem;
-	padding: 2rem 4rem 2rem 4rem;
-	margin: auto;
-`;
-
-const AttachmentLink = styled.a`
-	text-decoration: none;
-	//position: relative;
-`;
+import styles from './PreviewCriteriaAlternativeContent.css'
 
 export interface PreviewCriteriaAlternativeContentProps {
 	downloadSrc?: string;
@@ -67,12 +56,13 @@ export const PreviewCriteriaAlternativeContent: React.VFC<
 	);
 
 	return (
-		<FakeModalContainer
+		<Container
 			background="gray0"
 			crossAlignment="center"
 			height="fit"
 			width="fit"
 			gap="1rem"
+			className={styles.fakeModal}
 		>
 			<Text size="large" color="gray6">
 				{titleLabel}
@@ -81,25 +71,19 @@ export const PreviewCriteriaAlternativeContent: React.VFC<
 				{contentLabel}
 			</Text>
 			<Container orientation="horizontal" height="fit" gap="0.5rem">
-				{downloadSrc && (
-					<Button
+				{downloadSrc ? <Button
 						label={downloadLabel}
 						icon="DownloadOutline"
 						width="fill"
 						onClick={downloadClick}
-					/>
-				)}
-				{openSrc && (
-					<Button label={openLabel} icon="DiagonalArrowRightUp" width="fill" onClick={openClick} />
-				)}
+					/> : null}
+				{openSrc ? <Button label={openLabel} icon="DiagonalArrowRightUp" width="fill" onClick={openClick} /> : null}
 			</Container>
 			<Text size="small" color="gray6">
 				{noteLabel}
 			</Text>
-			{downloadSrc && (
-				<AttachmentLink download={filename} rel="noopener" ref={ancRef} href={downloadSrc} />
-			)}
-			{openSrc && <AttachmentLink rel="noopener" ref={ancRef2} href={openSrc} />}
-		</FakeModalContainer>
+			{downloadSrc ? <a download={filename} rel="noopener" ref={ancRef} href={downloadSrc} className={styles.attachmentLink}>Download</a> : null}
+			{openSrc ? <a rel="noopener" ref={ancRef2} href={openSrc} className={styles.attachmentLink}>Open</a> : null}
+		</Container>
 	);
 };
