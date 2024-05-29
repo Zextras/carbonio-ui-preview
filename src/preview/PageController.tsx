@@ -5,8 +5,9 @@
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import {Text, getColor, Container, useTheme} from '@zextras/carbonio-design-system';
-import styles from './PageController.module.css'
+import { Text, getColor, Container, useTheme } from '@zextras/carbonio-design-system';
+
+import styles from './PageController.module.css';
 
 export interface PageControllerProps {
 	pageLabel?: string;
@@ -101,7 +102,7 @@ export const PageController = ({
 			</Text>
 			<input
 				className={styles.styledInput}
-				style={{ color: getColor("gray6", theme), fontSize: theme.sizes.font['small'] }}
+				style={{ color: getColor('gray6', theme), fontSize: theme.sizes.font.small }}
 				onBlur={onBlur}
 				onKeyDown={onKeyDown}
 				onInput={resizeInput}

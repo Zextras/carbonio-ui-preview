@@ -5,20 +5,27 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import {Container, Portal, useCombinedRefs, getColor, useTheme, IconButton} from '@zextras/carbonio-design-system';
+import {
+	Container,
+	Portal,
+	useCombinedRefs,
+	getColor,
+	useTheme,
+	IconButton
+} from '@zextras/carbonio-design-system';
 import { size as lodashSize, map, noop } from 'lodash';
 import type { DocumentProps, PageProps } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
+
 // TODO: check how to remove /esm and use only dist import
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import styles from './PdfPreview.module.css'
-import commonStyles from './CommonStyles.module.css'
-
+import commonStyles from './CommonStyles.module.css';
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
 import { Navigator } from './Navigator.js';
 import { PageController } from './PageController.js';
+import styles from './PdfPreview.module.css';
 import {
 	PreviewCriteriaAlternativeContent,
 	PreviewCriteriaAlternativeContentProps
@@ -412,7 +419,10 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 									currentPage={currentPage}
 									onPageChange={onPageChange}
 								/>
-								<div style={{ '--vertical-divider-background-color': getColor("gray6", theme) }} className={styles.verticalDivider} />
+								<div
+									style={{ '--vertical-divider-background-color': getColor('gray6', theme) }}
+									className={styles.verticalDivider}
+								/>
 								<ZoomController
 									decrementable={decrementable}
 									zoomOutLabel={zoomOutLabel}
@@ -438,7 +448,8 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 							closeAction={$closeAction}
 						/>
 						<Container flexGrow={1} orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview ? <IconButton
+							{onPreviousPreview ? (
+								<IconButton
 									className={commonStyles.absoluteLeftIconButton}
 									icon="ArrowBackOutline"
 									size="medium"
@@ -446,8 +457,14 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onPreviousPreview}
-								/> : null}
-							<div ref={previewRef} data-testid="pdf-preview-container" className={styles.previewContainer} style={{ "--scrollbar-thumb-color": theme.palette.gray3.regular }}>
+								/>
+							) : null}
+							<div
+								ref={previewRef}
+								data-testid="pdf-preview-container"
+								className={styles.previewContainer}
+								style={{ '--scrollbar-thumb-color': theme.palette.gray3.regular }}
+							>
 								{$customContent ||
 									(src && (
 										<Document
@@ -458,21 +475,27 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 											onLoadProgress={onDocumentLoadProgress}
 											error={<p className={styles.message}>{errorLabel}</p>}
 											loading={<p className={styles.message}>{loadingLabel}</p>}
-											noData={<p className={styles.message}>{(fetchFailed && errorLabel) || loadingLabel}</p>}
+											noData={
+												<p className={styles.message}>
+													{(fetchFailed && errorLabel) || loadingLabel}
+												</p>
+											}
 										>
-										{pageElements}
+											{pageElements}
 										</Document>
 									))}
 							</div>
-							{onNextPreview ? <IconButton
-								className={commonStyles.absoluteRightIconButton}
+							{onNextPreview ? (
+								<IconButton
+									className={commonStyles.absoluteRightIconButton}
 									icon="ArrowForwardOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onNextPreview}
-								/> : null}
+								/>
+							) : null}
 						</Container>
 					</div>
 				</FocusWithin>

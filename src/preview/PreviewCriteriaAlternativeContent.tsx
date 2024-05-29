@@ -6,7 +6,8 @@
 import React, { useCallback, useRef } from 'react';
 
 import { Button, Container, Text } from '@zextras/carbonio-design-system';
-import styles from './PreviewCriteriaAlternativeContent.module.css'
+
+import styles from './PreviewCriteriaAlternativeContent.module.css';
 
 export interface PreviewCriteriaAlternativeContentProps {
 	downloadSrc?: string;
@@ -71,19 +72,37 @@ export const PreviewCriteriaAlternativeContent: React.VFC<
 				{contentLabel}
 			</Text>
 			<Container orientation="horizontal" height="fit" gap="0.5rem">
-				{downloadSrc ? <Button
+				{downloadSrc ? (
+					<Button
 						label={downloadLabel}
 						icon="DownloadOutline"
 						width="fill"
 						onClick={downloadClick}
-					/> : null}
-				{openSrc ? <Button label={openLabel} icon="DiagonalArrowRightUp" width="fill" onClick={openClick} /> : null}
+					/>
+				) : null}
+				{openSrc ? (
+					<Button label={openLabel} icon="DiagonalArrowRightUp" width="fill" onClick={openClick} />
+				) : null}
 			</Container>
 			<Text size="small" color="gray6">
 				{noteLabel}
 			</Text>
-			{downloadSrc ? <a download={filename} rel="noopener" ref={ancRef} href={downloadSrc} className={styles.attachmentLink}>Download</a> : null}
-			{openSrc ? <a rel="noopener" ref={ancRef2} href={openSrc} className={styles.attachmentLink}>Open</a> : null}
+			{downloadSrc ? (
+				<a
+					download={filename}
+					rel="noopener"
+					ref={ancRef}
+					href={downloadSrc}
+					className={styles.attachmentLink}
+				>
+					Download
+				</a>
+			) : null}
+			{openSrc ? (
+				<a rel="noopener" ref={ancRef2} href={openSrc} className={styles.attachmentLink}>
+					Open
+				</a>
+			) : null}
 		</Container>
 	);
 };

@@ -7,6 +7,7 @@ import React from 'react';
 
 import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
 import map from 'lodash/map.js';
+
 import styles from './Header.module.css';
 
 export interface HeaderAction {
@@ -39,7 +40,8 @@ export interface HeaderProps {
 const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extension, size }) => (
 	<div className={styles.headerContainer}>
 		<div className={styles.leftContainer}>
-			{closeAction ? <Tooltip
+			{closeAction ? (
+				<Tooltip
 					label={closeAction.tooltipLabel}
 					disabled={!closeAction.tooltipLabel}
 					key={closeAction.id}
@@ -52,7 +54,8 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 						backgroundColor="transparent"
 						iconColor="gray6"
 					/>
-				</Tooltip> : null}
+				</Tooltip>
+			) : null}
 			<div className={styles.infoContainer}>
 				<Text size="small" color="gray6">
 					{filename}

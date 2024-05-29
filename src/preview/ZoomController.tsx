@@ -6,7 +6,8 @@
 import React from 'react';
 
 import { Container, IconButton, Tooltip } from '@zextras/carbonio-design-system';
-import styles from './ZoomController.module.css'
+
+import styles from './ZoomController.module.css';
 
 export interface ZoomControllerProps {
 	decrementable: boolean;
