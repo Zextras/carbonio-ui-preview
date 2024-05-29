@@ -8,15 +8,6 @@ module.exports = {
 	root: true,
 	extends: ['./node_modules/@zextras/carbonio-ui-configs/rules/eslint.js'],
 	plugins: ['notice'],
-	overrides: [
-		{
-			files: ['**/tests/*'],
-			extends: ['plugin:jest-dom/recommended', 'plugin:testing-library/react'],
-			rules: {
-				'import/no-extraneous-dependencies': 'off'
-			}
-		}
-	],
 	rules: {
 		'notice/notice': [
 			'error',
@@ -24,6 +15,8 @@ module.exports = {
 				templateFile: './notice.template.ts'
 			}
 		],
+		'jsx-a11y/click-events-have-key-events': 'warn',
+		'jsx-a11y/no-static-element-interactions': 'warn'
 	},
 	settings: {
 		'import/resolver': {

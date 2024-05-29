@@ -6,7 +6,7 @@
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import last from 'lodash/last.js';
+import { last } from 'lodash';
 
 import styles from './FocusWithin.module.css';
 

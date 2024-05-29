@@ -6,7 +6,6 @@
 import React from 'react';
 
 import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
-import map from 'lodash/map.js';
 
 import styles from './Header.module.css';
 
@@ -68,7 +67,7 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 			</div>
 		</div>
 		<div className={styles.rightContainer}>
-			{map(actions, ({ id, onClick, disabled, icon, tooltipLabel, tooltipPlacement }) => (
+			{actions.map(({ id, onClick, disabled, icon, tooltipLabel, tooltipPlacement }) => (
 				<Tooltip
 					label={tooltipLabel}
 					disabled={!tooltipLabel}
