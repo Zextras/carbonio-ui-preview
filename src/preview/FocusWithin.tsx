@@ -8,7 +8,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 
 import last from 'lodash/last.js';
 
-import styles from './FocusWithin.css';
+import styles from './FocusWithin.module.css';
 
 interface FocusContainerProps {
 	returnFocus?: boolean;

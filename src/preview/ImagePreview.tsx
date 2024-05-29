@@ -10,8 +10,8 @@ import {Container, IconButton, Portal, useCombinedRefs} from '@zextras/carbonio-
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
 import { type MakeOptional } from '../types/utils.js';
-import styles from './ImagePreview.css'
-import commonStyles from './CommonStyles.css'
+import styles from './ImagePreview.module.css'
+import commonStyles from './CommonStyles.module.css'
 
 type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	/** Left Action for the preview */
@@ -119,7 +119,7 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 		<Portal show={show} disablePortal={disablePortal} container={container}>
 			<div onClick={onOverlayClick} className={styles.overlay}>
 				<FocusWithin>
-					<div style={styles.externalContainer}>
+					<div className={styles.externalContainer}>
 						<Header
 							actions={actions}
 							filename={filename}
@@ -127,7 +127,7 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 							size={size}
 							closeAction={$closeAction}
 						/>
-						<Container orientation="horizontal" crossAlignment="unset" minHeight={0} className={styles.middleContainer}>
+						<Container orientation="horizontal" crossAlignment="unset" minHeight={0} flexGrow={1}>
 							{onPreviousPreview ? <IconButton
 								className={commonStyles.absoluteLeftIconButton}
 									icon="ArrowBackOutline"
@@ -137,13 +137,13 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									borderRadius="round"
 									onClick={onPreviousPreview}
 								/> : null}
-							<div ref={previewRef} style={styles.previewContainer}>
+							<div ref={previewRef} className={styles.previewContainer}>
 								<img
 									alt={alt ?? filename}
 									src={computedSrc}
 									onError={(error): void => console.error('TODO handle error', error)}
 									ref={imageRef}
-									style={styles.image}
+									className={styles.image}
 								/>
 							</div>
 							{onNextPreview ? <IconButton

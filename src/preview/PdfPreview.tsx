@@ -12,8 +12,8 @@ import { Document, Page } from 'react-pdf';
 // TODO: check how to remove /esm and use only dist import
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import styles from './PdfPreview.css'
-import commonStyles from './CommonStyles.css'
+import styles from './PdfPreview.module.css'
+import commonStyles from './CommonStyles.module.css'
 
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
@@ -451,15 +451,16 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 								{$customContent ||
 									(src && (
 										<Document
+											className={styles.document}
 											file={documentFile}
 											onLoadSuccess={onDocumentLoadSuccess}
 											onLoadError={onDocumentLoadError}
 											onLoadProgress={onDocumentLoadProgress}
-											error={errorLabel}
-											loading={loadingLabel}
-											noData={(fetchFailed && errorLabel) || loadingLabel}
+											error={<p className={styles.message}>{errorLabel}</p>}
+											loading={<p className={styles.message}>{loadingLabel}</p>}
+											noData={<p className={styles.message}>{(fetchFailed && errorLabel) || loadingLabel}</p>}
 										>
-											{pageElements}
+										{pageElements}
 										</Document>
 									))}
 							</div>

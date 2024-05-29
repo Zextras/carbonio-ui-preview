@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 import React from 'react';
-import styles from './Navigator.css'
+import styles from './Navigator.module.css'
 import {useTheme} from "@zextras/carbonio-design-system";
 
 export interface NavigatorProps {

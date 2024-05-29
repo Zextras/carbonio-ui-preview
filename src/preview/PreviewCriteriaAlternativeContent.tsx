@@ -6,7 +6,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import { Button, Container, Text } from '@zextras/carbonio-design-system';
-import styles from './PreviewCriteriaAlternativeContent.css'
+import styles from './PreviewCriteriaAlternativeContent.module.css'
 
 export interface PreviewCriteriaAlternativeContentProps {
 	downloadSrc?: string;

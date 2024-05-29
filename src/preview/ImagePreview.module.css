@@ -23,10 +23,6 @@
 	position: relative;
 }
 
-.middleContainer {
-	flex-grow: 1;
-}
-
 .image {
 	max-height: 100%;
 	max-width: 100%;

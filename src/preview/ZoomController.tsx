@@ -6,7 +6,7 @@
 import React from 'react';
 
 import { Container, IconButton, Tooltip } from '@zextras/carbonio-design-system';
-import styles from './ZoomController.css'
+import styles from './ZoomController.module.css'
 
 export interface ZoomControllerProps {
 	decrementable: boolean;
@@ -58,6 +58,7 @@ export const ZoomController = ({
 				backgroundColor="gray0"
 				iconColor="gray6"
 				onClick={fitToWidthActive ? resetWidth : fitToWidth}
+				className={styles.zoomIconButton}
 			/>
 		</Tooltip>
 		<Tooltip label={incrementable ? zoomInLabel : upperLimitReachedLabel}>

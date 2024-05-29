@@ -1,12 +1,12 @@
 .absoluteLeftIconButton {
-    position: absolute;
+    position: absolute !important;
     left: 0.5rem;
     top: 50%;
     z-index: 1;
 }
 
 .absoluteRightIconButton {
-    position: absolute;
+    position: absolute !important;
     right: 0.5rem;
     top: 50%;
 }

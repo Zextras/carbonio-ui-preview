@@ -7,7 +7,7 @@ import React from 'react';
 
 import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
 import map from 'lodash/map.js';
-import styles from './Header.css';
+import styles from './Header.module.css';
 
 export interface HeaderAction {
 	/** id used as key */

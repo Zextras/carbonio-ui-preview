@@ -52,7 +52,7 @@
     border-radius: 0.25rem;
 }
 
-.previewContainer > .react-pdf__Document {
+.document {
     padding-bottom: 1rem;
     margin: auto;
     display: flex;
@@ -60,6 +60,6 @@
     flex-direction: column;
 }
 
-.previewContainer .react-pdf__message {
+.message {
     color: white;
 }

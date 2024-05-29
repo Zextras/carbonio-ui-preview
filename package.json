@@ -19,7 +19,6 @@
 	"scripts": {
 		"clean": "rm -rf lib",
 		"build": "npm run clean && tsc -p tsconfig.lib.json && npm run copy-styles",
-		"build:types": "tsc --project tsconfig.types.json",
 		"prepare": "is-ci || husky",
 		"prepack": "npm run build",
 		"type-check": "tsc --project tsconfig.json",
