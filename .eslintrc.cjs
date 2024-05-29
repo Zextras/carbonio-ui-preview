@@ -18,13 +18,6 @@ module.exports = {
 		'jsx-a11y/click-events-have-key-events': 'warn',
 		'jsx-a11y/no-static-element-interactions': 'warn'
 	},
-	settings: {
-		'import/resolver': {
-			node: {
-				extensions: [".js", ".ts", ".ts", ".tsx"],
-			}
-		}
-	},
 	ignorePatterns: ['notice.template.ts'],
 	parserOptions: {
 		 sourceType: "module",
