@@ -11,9 +11,9 @@ import {
 	PreviewManager,
 	PreviewManagerContextType,
 	PreviewsManagerContext
-} from './PreviewManager';
-import { KEYBOARD_KEY, SELECTORS } from '../tests/constants';
-import { setup } from '../tests/utils';
+} from './PreviewManager.js';
+import { KEYBOARD_KEY, SELECTORS } from '../tests/constants.js';
+import { setup } from '../tests/utils.js';
 
 const PreviewManagerTester = (
 	props: Parameters<PreviewManagerContextType['createPreview']>[0]

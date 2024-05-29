@@ -37,8 +37,8 @@ export const Document = ({
 
 	return (
 		<div data-testid={'react-pdf-document'}>
-			{isLoading && <p>{loading}</p>}
-			{!isLoading && !file && <p>{noData}</p>}
+			{isLoading && loading}
+			{!isLoading && !file && noData}
 			{!isLoading && file && children}
 		</div>
 	);

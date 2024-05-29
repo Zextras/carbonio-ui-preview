@@ -2,13 +2,11 @@
 	"name": "@zextras/carbonio-ui-preview",
 	"version": "1.2.3",
 	"description": "Preview ui utility for Zextras Carbonio",
-	"main": "./lib/cjs/index.js",
 	"module": "./lib/index.js",
 	"types": "./lib/index.d.ts",
 	"type": "module",
 	"exports": {
-		"import": "./lib/index.js",
-		"require": "./lib/cjs/index.js"
+		"import": "./lib/index.js"
 	},
 	"files": [
 		"lib",
@@ -21,7 +19,7 @@
 		"build": "npm run clean && tsc -p tsconfig.lib.json && npm run copy-styles",
 		"prepare": "is-ci || husky",
 		"prepack": "npm run build",
-		"type-check": "tsc --project tsconfig.json",
+		"type-check": "tsc",
 		"type-check:watch": "npm run type-check -- --watch",
 		"lint": "eslint --ext .js,.jsx,.ts,.tsx --resolve-plugins-relative-to node_modules/@zextras/carbonio-ui-configs src",
 		"packTo": "npm pack --pack-destination $PKG_PATH && cd $PKG_PATH && npm i zextras-carbonio-ui-preview-$npm_package_version.tgz",
@@ -31,19 +29,17 @@
 		"copy-styles": "cp src/preview/*.css lib/preview/"
 	},
 	"keywords": [],
-	"author": "Zextras SF Team <https://www.zextras.com/carbonio/>",
+	"author": "Zextras DEV Team <https://www.zextras.com/carbonio/>",
 	"license": "AGPL-3.0-only",
 	"devDependencies": {
 		"@babel/core": "^7.23.9",
+		"@babel/plugin-transform-modules-commonjs": "^7.24.6",
 		"@babel/preset-env": "^7.23.9",
 		"@babel/preset-react": "^7.23.3",
 		"@babel/preset-typescript": "^7.23.3",
 		"@commitlint/cli": "^19.2.2",
 		"@commitlint/config-conventional": "^19.2.2",
 		"@faker-js/faker": "^8.4.1",
-		"@rollup/plugin-commonjs": "^25.0.8",
-		"@rollup/plugin-node-resolve": "^15.2.3",
-		"@rollup/plugin-typescript": "^11.1.6",
 		"@testing-library/dom": "^8.20.1",
 		"@testing-library/jest-dom": "^6.4.2",
 		"@testing-library/react": "^12.1.5",
@@ -53,10 +49,8 @@
 		"@types/node": "^18.19.15",
 		"@types/react": "^17.0.75",
 		"@types/react-dom": "^17.0.25",
-		"@types/rollup-plugin-css-only": "^3.1.3",
-		"@types/styled-components": "^5.1.34",
 		"@zextras/carbonio-ui-configs": "^1.0.0",
-		"babel-plugin-styled-components": "^2.1.4",
+		"babel-jest": "^29.7.0",
 		"eslint-config-wojtekmaj": "^1.0.2",
 		"eslint-plugin-notice": "^0.9.10",
 		"husky": "^9.0.11",
@@ -66,9 +60,6 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-fail-on-console": "^3.1.2",
 		"jest-junit": "^16.0.0",
-		"rollup": "^4.18.0",
-		"rollup-plugin-css-only": "^4.5.2",
-		"rollup-plugin-dts": "^6.1.1",
 		"ts-node": "^10.9.2"
 	},
 	"dependencies": {
@@ -79,8 +70,7 @@
 		"@zextras/carbonio-design-system": ">=1.0.0",
 		"lodash": "^4.17.21",
 		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
-		"styled-components": "^5.3.11"
+		"react-dom": "^17.0.2"
 	},
 	"browserslist": [
 		">1%",

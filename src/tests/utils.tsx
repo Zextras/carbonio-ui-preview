@@ -19,7 +19,7 @@ import {
 	within as rtlWithin,
 	screen as rtlScreen
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { ThemeProvider } from '@zextras/carbonio-design-system';
 import * as fs from 'fs';
 

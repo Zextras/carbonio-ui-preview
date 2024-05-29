@@ -8,9 +8,9 @@ import React from 'react';
 import { faker } from '@faker-js/faker';
 import { screen } from '@testing-library/react';
 
-import { ImagePreview, ImagePreviewProps } from './ImagePreview';
-import { KEYBOARD_KEY } from '../tests/constants';
-import { setup } from '../tests/utils';
+import { ImagePreview, ImagePreviewProps } from './ImagePreview.js';
+import { KEYBOARD_KEY } from '../tests/constants.js';
+import { setup } from '../tests/utils.js';
 
 describe('Image Preview', () => {
 	test('Render an image', () => {
