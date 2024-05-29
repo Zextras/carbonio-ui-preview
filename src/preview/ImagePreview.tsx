@@ -5,13 +5,13 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import {Container, IconButton, Portal, useCombinedRefs} from '@zextras/carbonio-design-system';
+import { Container, IconButton, Portal, useCombinedRefs } from '@zextras/carbonio-design-system';
 
+import commonStyles from './CommonStyles.module.css';
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
+import styles from './ImagePreview.module.css';
 import { type MakeOptional } from '../types/utils.js';
-import styles from './ImagePreview.module.css'
-import commonStyles from './CommonStyles.module.css'
 
 type ImagePreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	/** Left Action for the preview */
@@ -128,15 +128,17 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 							closeAction={$closeAction}
 						/>
 						<Container orientation="horizontal" crossAlignment="unset" minHeight={0} flexGrow={1}>
-							{onPreviousPreview ? <IconButton
-								className={commonStyles.absoluteLeftIconButton}
+							{onPreviousPreview ? (
+								<IconButton
+									className={commonStyles.absoluteLeftIconButton}
 									icon="ArrowBackOutline"
 									size="medium"
 									backgroundColor="gray0"
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onPreviousPreview}
-								/> : null}
+								/>
+							) : null}
 							<div ref={previewRef} className={styles.previewContainer}>
 								<img
 									alt={alt ?? filename}
@@ -146,7 +148,8 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									className={styles.image}
 								/>
 							</div>
-							{onNextPreview ? <IconButton
+							{onNextPreview ? (
+								<IconButton
 									className={commonStyles.absoluteRightIconButton}
 									icon="ArrowForwardOutline"
 									size="medium"
@@ -154,7 +157,8 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 									iconColor="gray6"
 									borderRadius="round"
 									onClick={onNextPreview}
-								/> : null}
+								/>
+							) : null}
 						</Container>
 					</div>
 				</FocusWithin>
