@@ -4,7 +4,7 @@
 
 ## ImagePreviewProps.closeAction property
 
-Left Action for the preview
+Left action for the preview
 
 **Signature:**
 

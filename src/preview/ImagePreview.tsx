@@ -72,26 +72,26 @@ const PreviewContainer = styled.div.attrs({
 `;
 
 export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
-	/** Left Action for the preview */
+	/** Left action for the preview */
 	closeAction?: MakeOptional<HeaderAction, 'onClick'>;
 	/**
 	 * HTML node where to insert the Portal's children.
 	 * The default value is 'window.top.document'.
-	 * */
+	 */
 	container?: Element;
 	/** Flag to disable the Portal implementation */
 	disablePortal?: boolean;
 	/** Flag to show or hide Portal's content */
 	show: boolean;
-	/** preview img source */
+	/** Preview img source */
 	src: string | File | Blob;
 	/** Callback to hide the preview */
 	onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Alternative text for image */
+	/** Alternative text for the image */
 	alt?: string;
-	/** Callback  */
+	/** Callback invoked when the next preview is requested */
 	onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Callback  */
+	/** Callback invoked when the previous preview is requested */
 	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 }
 

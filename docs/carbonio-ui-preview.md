@@ -99,10 +99,6 @@ The manager for showing multiple previews. From within it, the PreviewsManagerCo
 
 The context give access to the functions needed to manage multiple previews. It must be used together with the PreviewManager.
 
-```ts
-const previewUtils = useContext(PreviewsManagerContext);
-```
-
 
 </td></tr>
 <tr><td>
@@ -137,6 +133,8 @@ Description
 
 
 </td><td>
+
+Define an item for the preview. It can be of type 'image' or 'pdf'. The id is required to control the opening of the preview after its initialization.
 
 
 </td></tr>

@@ -49,6 +49,7 @@ export interface HeaderAction {
 	icon: string;
 	/** Label to show as tooltip for the action */
 	tooltipLabel?: string;
+	/** Define the placement of the tooltip for the action */
 	tooltipPlacement?: React.ComponentPropsWithRef<typeof Tooltip>['placement'];
 	/** Disabled status for the action */
 	disabled?: boolean;

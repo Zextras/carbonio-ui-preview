@@ -46,7 +46,7 @@ const Component1 = () => {
             // cleanup on component unmount
             emptyPreview();
         }
-    }, [previewItems])
+    }, [previewItems]);
 }
 ```
 

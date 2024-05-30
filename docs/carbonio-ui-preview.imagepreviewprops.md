@@ -49,7 +49,7 @@ string
 
 </td><td>
 
-_(Optional)_ Alternative text for image
+_(Optional)_ Alternative text for the image
 
 
 </td></tr>
@@ -68,7 +68,7 @@ MakeOptional&lt;HeaderAction, 'onClick'&gt;
 
 </td><td>
 
-_(Optional)_ Left Action for the preview
+_(Optional)_ Left action for the preview
 
 
 </td></tr>
@@ -144,7 +144,7 @@ Callback to hide the preview
 
 </td><td>
 
-_(Optional)_ Callback
+_(Optional)_ Callback invoked when the next preview is requested
 
 
 </td></tr>
@@ -163,7 +163,7 @@ _(Optional)_ Callback
 
 </td><td>
 
-_(Optional)_ Callback
+_(Optional)_ Callback invoked when the previous preview is requested
 
 
 </td></tr>
@@ -201,7 +201,7 @@ string \| File \| Blob
 
 </td><td>
 
-preview img source
+Preview img source
 
 
 </td></tr>

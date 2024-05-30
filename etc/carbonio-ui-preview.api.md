@@ -14,7 +14,6 @@ interface HeaderAction {
     id: string;
     onClick: (ev: React_2.MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
     tooltipLabel?: string;
-    // (undocumented)
     tooltipPlacement?: React_2.ComponentPropsWithRef<typeof Tooltip>['placement'];
 }
 
@@ -103,7 +102,7 @@ interface PreviewCriteriaAlternativeContentProps {
     titleLabel?: string;
 }
 
-// @public (undocumented)
+// @public
 export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
     previewType: 'image';
 }) | (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & {

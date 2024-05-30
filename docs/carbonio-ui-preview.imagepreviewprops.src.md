@@ -4,7 +4,7 @@
 
 ## ImagePreviewProps.src property
 
-preview img source
+Preview img source
 
 **Signature:**
 

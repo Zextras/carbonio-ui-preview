@@ -4,7 +4,7 @@
 
 ## ImagePreviewProps.onPreviousPreview property
 
-Callback
+Callback invoked when the previous preview is requested
 
 **Signature:**
 

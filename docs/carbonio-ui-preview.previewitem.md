@@ -4,6 +4,8 @@
 
 ## PreviewItem type
 
+Define an item for the preview. It can be of type 'image' or 'pdf'. The id is required to control the opening of the preview after its initialization.
+
 **Signature:**
 
 ```typescript

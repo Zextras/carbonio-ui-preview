@@ -4,7 +4,7 @@
 
 ## ImagePreviewProps.alt property
 
-Alternative text for image
+Alternative text for the image
 
 **Signature:**
 

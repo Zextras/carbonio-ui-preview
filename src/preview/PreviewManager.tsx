@@ -13,6 +13,10 @@ import { PdfPreviewProps } from './PdfPreview';
 import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper';
 import { type MakeOptional } from '../types/utils';
 
+/**
+ * Define an item for the preview. It can be of type 'image' or 'pdf'.
+ * The id is required to control the opening of the preview after its initialization.
+ */
 export type PreviewItem = (
 	| (MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & { previewType: 'image' })
 	| (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & { previewType: 'pdf' })
@@ -21,9 +25,7 @@ export type PreviewItem = (
 };
 
 export interface PreviewManagerContextType {
-	/**
-	 * Initialize and open the preview for the given item
-	 */
+	/** Initialize and open the preview for the given item */
 	createPreview: (item: MakeOptional<PreviewItem, 'id'>) => void;
 	/**
 	 * Initialize the preview for the given items. This function does not open the preview.
@@ -35,15 +37,16 @@ export interface PreviewManagerContextType {
 	 * before with the initPreview method.
 	 */
 	openPreview: (id: string) => void;
-	/**
-	 * Clear the initialized previews
-	 */
+	/** Clear the initialized previews */
 	emptyPreview: () => void;
 }
 
 /**
  * The context give access to the functions needed to manage multiple previews.
  * It must be used together with the PreviewManager.
+ *
+ * @example
+ *
  * ```ts
  * const previewUtils = useContext(PreviewsManagerContext);
  * ```
@@ -95,7 +98,7 @@ export const PreviewsManagerContext = createContext<PreviewManagerContextType>({
  *             // cleanup on component unmount
  *             emptyPreview();
  *         }
- *     }, [previewItems])
+ *     }, [previewItems]);
  * }
  * ```
  */
