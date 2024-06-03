@@ -138,7 +138,9 @@ describe('Pdf Preview', () => {
 	});
 
 	test('Click on actions calls onClose if event is not stopped by the action itself, instead if is disabled it is not propagated anyway ', async () => {
-		const onClose = jest.fn();
+		const onClose = jest.fn<void, Parameters<PdfPreviewProps['onClose']>>((ev) => {
+			ev.preventDefault();
+		});
 		const actions: PdfPreviewProps['actions'] = [
 			{
 				id: 'action1',
@@ -157,10 +159,7 @@ describe('Pdf Preview', () => {
 
 		const closeAction: PdfPreviewProps['closeAction'] = {
 			id: 'closeAction',
-			icon: 'Close',
-			onClick: jest.fn((ev: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
-				ev.preventDefault();
-			})
+			icon: 'Close'
 		};
 		const { user } = setup(
 			<PdfPreview
@@ -173,13 +172,12 @@ describe('Pdf Preview', () => {
 			/>
 		);
 		await waitForDocumentToLoad();
-		const action1Item = screen.getByTestId('icon: Activity');
-		const action2Item = screen.getByTestId('icon: People');
-		const closeActionItem = screen.getByTestId('icon: Close');
+		const action1Item = screen.getByRoleWithIcon('button', { icon: 'icon: Activity' });
+		const action2Item = screen.getByRoleWithIcon('button', { icon: 'icon: People' });
+		const closeActionItem = screen.getByRoleWithIcon('button', { icon: 'icon: Close' });
 		expect(action1Item).toBeVisible();
 		expect(action2Item).toBeVisible();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(action2Item.parentElement).toHaveAttribute('disabled');
+		expect(action2Item).toBeDisabled();
 		expect(closeActionItem).toBeVisible();
 		// click on action 1 is propagated and calls onClose
 		await user.click(action1Item);
@@ -189,12 +187,12 @@ describe('Pdf Preview', () => {
 		await user.click(action2Item);
 		expect(actions[1].onClick).not.toHaveBeenCalled();
 		expect(onClose).toHaveBeenCalledTimes(1);
-		// click on close action is stopped by the action, event is not propagated and onClose is not called
+		// click on close action is the onClose itself
 		await user.click(closeActionItem);
-		expect(onClose).toHaveBeenCalledTimes(3);
+		expect(onClose).toHaveBeenCalledTimes(2);
 		// click on filename is equivalent to a click on the overlay, so onClose is called
 		await user.click(screen.getByText(/pdf name/i));
-		expect(onClose).toHaveBeenCalledTimes(4);
+		expect(onClose).toHaveBeenCalledTimes(3);
 	});
 
 	test('Zoom starts at lowest step', async () => {

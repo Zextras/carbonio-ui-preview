@@ -5,24 +5,14 @@
  */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import {
-	Container,
-	Portal,
-	useCombinedRefs,
-	getColor,
-	useTheme,
-	IconButton
-} from '@zextras/carbonio-design-system';
+import { useCombinedRefs, getColor, useTheme } from '@zextras/carbonio-design-system';
 import { size as lodashSize, map, noop } from 'lodash';
 import type { DocumentProps, PageProps } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 
-// TODO: check how to remove /esm and use only dist import
-import 'react-pdf/dist/esm/Page/TextLayer.css';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import commonStyles from './CommonStyles.module.css';
-import FocusWithin from './FocusWithin.js';
-import Header, { HeaderAction, HeaderProps } from './Header.js';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import { HeaderAction } from './Header.js';
 import { Navigator } from './Navigator.js';
 import { PageController } from './PageController.js';
 import styles from './PdfPreview.module.css';
@@ -30,33 +20,20 @@ import {
 	PreviewCriteriaAlternativeContent,
 	PreviewCriteriaAlternativeContentProps
 } from './PreviewCriteriaAlternativeContent.js';
+import { PreviewNavigator, PreviewNavigatorProps } from './PreviewNavigator.js';
 import { usePageScrollController } from './usePageScrollController.js';
 import { useZoom } from './useZoom.js';
 import { ZoomController } from './ZoomController.js';
 import { SCROLL_STEP } from '../constants/index.js';
-import { type MakeOptional } from '../types/utils.js';
 import { print } from '../utils/utils.js';
 
 type Page = Parameters<NonNullable<PageProps['onLoadSuccess']>>[0];
 
-type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
-	/** Left Action for the preview */
-	closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-	/**
-	 * HTML node where to insert the Portal's children.
-	 * The default value is 'window.top.document'.
-	 * */
-	container?: Element;
-	/** Flag to disable the Portal implementation */
-	disablePortal?: boolean;
-	/** Flag to show or hide Portal's content */
-	show: boolean;
+type PdfPreviewProps = Omit<PreviewNavigatorProps, 'onOverlayClick'> & {
 	/** preview source */
 	src: string | File | Blob | ArrayBuffer;
 	/** Whether force cache */
 	forceCache?: boolean;
-	/** Callback to hide the preview */
-	onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
 	/** use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent */
 	useFallback?: boolean;
 	/** CustomContent */
@@ -71,10 +48,6 @@ type PdfPreviewProps = Partial<Omit<HeaderProps, 'closeAction'>> & {
 	fitToWidthLabel?: string;
 	zoomInLabel?: string;
 	upperLimitReachedLabel?: string;
-	/** Callback  */
-	onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Callback  */
-	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 	pageLabel?: string;
 	errorLabel?: string;
 	loadingLabel?: string;
@@ -170,16 +143,6 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	}, []);
 
 	const { observePage } = usePageScrollController(previewRef, updatePageOnScroll);
-
-	const $closeAction = useMemo(() => {
-		if (closeAction) {
-			return {
-				...closeAction,
-				onClick: onClose
-			};
-		}
-		return closeAction;
-	}, [closeAction, onClose]);
 
 	const onOverlayClick = useCallback<React.ReactEventHandler>(
 		(event) => {
@@ -407,100 +370,76 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 	const theme = useTheme();
 
 	return (
-		<Portal show={show} disablePortal={disablePortal} container={container}>
-			<div onClick={onOverlayClick} className={styles.overlay}>
-				<FocusWithin>
-					<div className={styles.externalContainer}>
-						{!$customContent && (
-							<Navigator>
-								<PageController
-									pageLabel={pageLabel}
-									pagesNumber={numPages ?? 0}
-									currentPage={currentPage}
-									onPageChange={onPageChange}
-								/>
-								<div
-									style={{ '--vertical-divider-background-color': getColor('gray6', theme) }}
-									className={styles.verticalDivider}
-								/>
-								<ZoomController
-									decrementable={decrementable}
-									zoomOutLabel={zoomOutLabel}
-									lowerLimitReachedLabel={lowerLimitReachedLabel}
-									decreaseByStep={decreaseOfOneStep}
-									fitToWidthActive={fitToWidthActive}
-									resetZoomLabel={resetZoomLabel}
-									fitToWidthLabel={fitToWidthLabel}
-									resetWidth={resetWidth}
-									fitToWidth={fitToWidth}
-									incrementable={incrementable}
-									zoomInLabel={zoomInLabel}
-									upperLimitReachedLabel={upperLimitReachedLabel}
-									increaseByStep={increaseOfOneStep}
-								/>
-							</Navigator>
-						)}
-						<Header
-							actions={actions}
-							filename={filename}
-							extension={extension}
-							size={size}
-							closeAction={$closeAction}
+		<PreviewNavigator
+			onPreviousPreview={onPreviousPreview}
+			onNextPreview={onNextPreview}
+			container={container}
+			disablePortal={disablePortal}
+			extension={extension}
+			show={show}
+			filename={filename}
+			actions={actions}
+			size={size}
+			onOverlayClick={onOverlayClick}
+			closeAction={closeAction}
+			onClose={onClose}
+		>
+			<>
+				{!$customContent && (
+					<Navigator>
+						<PageController
+							pageLabel={pageLabel}
+							pagesNumber={numPages ?? 0}
+							currentPage={currentPage}
+							onPageChange={onPageChange}
 						/>
-						<Container flexGrow={1} orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview ? (
-								<IconButton
-									className={commonStyles.absoluteLeftIconButton}
-									icon="ArrowBackOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onPreviousPreview}
-								/>
-							) : null}
-							<div
-								ref={previewRef}
-								data-testid="pdf-preview-container"
-								className={styles.previewContainer}
-								style={{ '--scrollbar-thumb-color': theme.palette.gray3.regular }}
+						<div
+							style={{ '--vertical-divider-background-color': getColor('gray6', theme) }}
+							className={styles.verticalDivider}
+						/>
+						<ZoomController
+							decrementable={decrementable}
+							zoomOutLabel={zoomOutLabel}
+							lowerLimitReachedLabel={lowerLimitReachedLabel}
+							decreaseByStep={decreaseOfOneStep}
+							fitToWidthActive={fitToWidthActive}
+							resetZoomLabel={resetZoomLabel}
+							fitToWidthLabel={fitToWidthLabel}
+							resetWidth={resetWidth}
+							fitToWidth={fitToWidth}
+							incrementable={incrementable}
+							zoomInLabel={zoomInLabel}
+							upperLimitReachedLabel={upperLimitReachedLabel}
+							increaseByStep={increaseOfOneStep}
+						/>
+					</Navigator>
+				)}
+				<div
+					ref={previewRef}
+					data-testid="pdf-preview-container"
+					className={styles.previewContainer}
+					style={{ '--scrollbar-thumb-color': theme.palette.gray3.regular }}
+				>
+					{$customContent ||
+						(src && (
+							<Document
+								className={styles.document}
+								file={documentFile}
+								onLoadSuccess={onDocumentLoadSuccess}
+								onLoadError={onDocumentLoadError}
+								onLoadProgress={onDocumentLoadProgress}
+								error={<p className={styles.message}>{errorLabel}</p>}
+								loading={<p className={styles.message}>{loadingLabel}</p>}
+								noData={
+									<p className={styles.message}>{(fetchFailed && errorLabel) || loadingLabel}</p>
+								}
 							>
-								{$customContent ||
-									(src && (
-										<Document
-											className={styles.document}
-											file={documentFile}
-											onLoadSuccess={onDocumentLoadSuccess}
-											onLoadError={onDocumentLoadError}
-											onLoadProgress={onDocumentLoadProgress}
-											error={<p className={styles.message}>{errorLabel}</p>}
-											loading={<p className={styles.message}>{loadingLabel}</p>}
-											noData={
-												<p className={styles.message}>
-													{(fetchFailed && errorLabel) || loadingLabel}
-												</p>
-											}
-										>
-											{pageElements}
-										</Document>
-									))}
-							</div>
-							{onNextPreview ? (
-								<IconButton
-									className={commonStyles.absoluteRightIconButton}
-									icon="ArrowForwardOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onNextPreview}
-								/>
-							) : null}
-						</Container>
-					</div>
-				</FocusWithin>
-			</div>
-		</Portal>
+								{pageElements}
+							</Document>
+						))}
+				</div>
+			</>
+		</PreviewNavigator>
 	);
 });
 
