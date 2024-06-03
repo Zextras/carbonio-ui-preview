@@ -5,24 +5,9 @@
  */
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { Text, getColor, Container } from '@zextras/carbonio-design-system';
-import styled from 'styled-components';
+import { Text, getColor, Container, useTheme } from '@zextras/carbonio-design-system';
 
-const StyledInput = styled.input<{ $color: string; $size: string }>`
-	background-color: inherit;
-	border: none;
-	outline: none;
-	min-width: 0.5rem;
-	font-family: inherit;
-	font-size: ${({ theme, $size }): string => theme.sizes.font[$size]};
-	color: ${({ $color, theme }): string => getColor($color, theme)};
-	text-align: center;
-	padding: 0;
-	&:hover,
-	&:focus {
-		text-decoration: underline;
-	}
-`;
+import styles from './PageController.module.css';
 
 export interface PageControllerProps {
 	pageLabel?: string;
@@ -49,6 +34,8 @@ export const PageController = ({
 	onPageChange
 }: PageControllerProps): React.JSX.Element => {
 	const inputRef = useRef<HTMLInputElement>(null);
+
+	const theme = useTheme();
 
 	const setInputValue = useCallback((value: number) => {
 		if (inputRef.current) {
@@ -113,9 +100,9 @@ export const PageController = ({
 			<Text size="small" color="gray6">
 				{pageLabel}
 			</Text>
-			<StyledInput
-				$color="gray6"
-				$size="small"
+			<input
+				className={styles.styledInput}
+				style={{ color: getColor('gray6', theme), fontSize: theme.sizes.font.small }}
 				onBlur={onBlur}
 				onKeyDown={onKeyDown}
 				onInput={resizeInput}

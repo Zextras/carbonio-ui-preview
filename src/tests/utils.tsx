@@ -6,13 +6,82 @@
 
 import React from 'react';
 
-import { render, RenderOptions, RenderResult, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {
+	ByRoleMatcher,
+	ByRoleOptions,
+	GetAllBy,
+	queries,
+	queryHelpers,
+	render,
+	RenderOptions,
+	RenderResult,
+	waitFor,
+	within as rtlWithin,
+	screen as rtlScreen
+} from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { ThemeProvider } from '@zextras/carbonio-design-system';
 import * as fs from 'fs';
 
+type ExtendedQueries = typeof queries & typeof customQueries;
+
+type ByRoleWithIconOptions = ByRoleOptions & {
+	icon: string | RegExp;
+};
+
+/**
+ * Matcher function to search an icon button through the icon data-testid
+ */
+const queryAllByRoleWithIcon: GetAllBy<[ByRoleMatcher, ByRoleWithIconOptions]> = (
+	container,
+	role,
+	{ icon, ...options }
+) =>
+	rtlScreen
+		// eslint-disable-next-line testing-library/prefer-screen-queries
+		.queryAllByRole('button', options)
+		.filter((element) => rtlWithin(element).queryByTestId(icon) !== null);
+const getByRoleWithIconMultipleError = (
+	container: Element | null,
+	role: ByRoleMatcher,
+	options: ByRoleWithIconOptions
+): string => `Found multiple elements with role ${role} and icon ${options.icon}`;
+const getByRoleWithIconMissingError = (
+	container: Element | null,
+	role: ByRoleMatcher,
+	options: ByRoleWithIconOptions
+): string => `Unable to find an element with role ${role} and icon ${options.icon}`;
+
+const [
+	queryByRoleWithIcon,
+	getAllByRoleWithIcon,
+	getByRoleWithIcon,
+	findAllByRoleWithIcon,
+	findByRoleWithIcon
+] = queryHelpers.buildQueries<[ByRoleMatcher, ByRoleWithIconOptions]>(
+	queryAllByRoleWithIcon,
+	getByRoleWithIconMultipleError,
+	getByRoleWithIconMissingError
+);
+
+const customQueries = {
+	// byRoleWithIcon
+	queryByRoleWithIcon,
+	getAllByRoleWithIcon,
+	getByRoleWithIcon,
+	findAllByRoleWithIcon,
+	findByRoleWithIcon
+};
+const extendedQueries: ExtendedQueries = { ...queries, ...customQueries };
+
+export const within = (
+	element: Parameters<typeof rtlWithin<ExtendedQueries>>[0]
+): ReturnType<typeof rtlWithin<ExtendedQueries>> => rtlWithin(element, extendedQueries);
+
+export const screen = within(document.body);
+
 interface ProvidersWrapperProps {
-	children?: React.ReactElement;
+	children?: React.ReactNode;
 }
 
 const ProvidersWrapper = ({ children }: ProvidersWrapperProps): React.JSX.Element => (

@@ -5,8 +5,8 @@
  */
 import React from 'react';
 
-import { ImagePreview, ImagePreviewProps } from './ImagePreview';
-import { PdfPreview, PdfPreviewProps } from './PdfPreview';
+import { ImagePreview, ImagePreviewProps } from './ImagePreview.js';
+import { PdfPreview, PdfPreviewProps } from './PdfPreview.js';
 
 type PreviewsProps = ImagePreviewProps | PdfPreviewProps;
 
@@ -21,4 +21,4 @@ const PreviewWrapper: React.VFC<PreviewWrapperProps> = ({ previewType, ...props 
 		<ImagePreview {...(props as ImagePreviewProps)} />
 	);
 
-export { PreviewWrapper, PreviewWrapperProps };
+export { PreviewWrapper, type PreviewWrapperProps };

@@ -1,0 +1,15 @@
+/*
+ * SPDX-FileCopyrightText: 2024 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.fakeModal {
+    border-radius: 1rem;
+    padding: 2rem 4rem 2rem 4rem;
+    margin: auto;
+}
+
+.attachmentLink {
+    text-decoration: none;
+}
