@@ -8,4 +8,4 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 This app provide a minimal example of use of the carbonio-ui-preview package.
 
-Run `npm run dev` from within this folder to launch the dev environment and see it live.
+From within this folder, install the dependencies `npm install` and run `npm run dev` to start the dev environment and see it live.
