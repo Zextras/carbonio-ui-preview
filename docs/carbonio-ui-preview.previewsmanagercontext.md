@@ -11,11 +11,3 @@ The context give access to the functions needed to manage multiple previews. It 
 ```typescript
 PreviewsManagerContext: React.Context<PreviewManagerContextType>
 ```
-
-## Example
-
-
-```ts
-const previewUtils = useContext(PreviewsManagerContext);
-```
-
