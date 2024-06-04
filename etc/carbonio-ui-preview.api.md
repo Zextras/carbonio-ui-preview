@@ -5,16 +5,17 @@
 ```ts
 
 import { default as React_2 } from 'react';
-import { Tooltip } from '@zextras/carbonio-design-system';
+import { Theme } from '@zextras/carbonio-design-system';
+import { TooltipProps } from '@zextras/carbonio-design-system';
 
 // @public (undocumented)
 interface HeaderAction {
     disabled?: boolean;
-    icon: string;
+    icon: keyof Theme['icons'];
     id: string;
     onClick: (ev: React_2.MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
     tooltipLabel?: string;
-    tooltipPlacement?: React_2.ComponentPropsWithRef<typeof Tooltip>['placement'];
+    tooltipPlacement?: TooltipProps['placement'];
 }
 
 // @public (undocumented)
@@ -27,22 +28,14 @@ interface HeaderProps {
     size: string;
 }
 
-// @public (undocumented)
+// @public
 export const ImagePreview: React_2.ForwardRefExoticComponent<ImagePreviewProps & React_2.RefAttributes<HTMLDivElement>>;
 
-// Warning: (ae-forgotten-export) The symbol "HeaderProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "PreviewNavigatorProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
+export interface ImagePreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
     alt?: string;
-    // Warning: (ae-forgotten-export) The symbol "MakeOptional" needs to be exported by the entry point index.d.ts
-    closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-    container?: Element;
-    disablePortal?: boolean;
-    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    show: boolean;
     src: string | File | Blob;
 }
 
@@ -51,31 +44,24 @@ type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
     [P in keyof T]?: T[P];
 };
 
-// @public (undocumented)
+// @public
 export const PdfPreview: React_2.ForwardRefExoticComponent<PdfPreviewProps & React_2.RefAttributes<HTMLDivElement>>;
 
 // Warning: (ae-forgotten-export) The symbol "PreviewCriteriaAlternativeContentProps" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export interface PdfPreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> {
-    closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-    container?: Element;
+export interface PdfPreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> {
     customContent?: React_2.ReactElement;
-    disablePortal?: boolean;
     errorLabel?: string;
     fitToWidthLabel?: string;
     forceCache?: boolean;
     loadingLabel?: string;
     lowerLimitReachedLabel?: string;
-    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     pageLabel?: string;
     printActionTooltipLabel?: string;
     renderAnnotationLayer?: boolean;
     renderTextLayer?: boolean;
     resetZoomLabel?: string;
-    show: boolean;
     src: string | File | Blob | ArrayBuffer;
     upperLimitReachedLabel?: string;
     useFallback?: boolean;
@@ -85,23 +71,18 @@ export interface PdfPreviewProps extends Partial<Omit<HeaderProps, 'closeAction'
 
 // @public (undocumented)
 interface PreviewCriteriaAlternativeContentProps {
-    // (undocumented)
     contentLabel?: string;
-    // (undocumented)
     downloadLabel?: string;
-    // (undocumented)
     downloadSrc?: string;
-    // (undocumented)
     filename?: string;
-    // (undocumented)
     noteLabel?: string;
-    // (undocumented)
     openLabel?: string;
     openSrc?: string;
-    // (undocumented)
     titleLabel?: string;
 }
 
+// Warning: (ae-forgotten-export) The symbol "MakeOptional" needs to be exported by the entry point index.d.ts
+//
 // @public
 export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
     previewType: 'image';
@@ -120,6 +101,20 @@ export interface PreviewManagerContextType {
     emptyPreview: () => void;
     initPreview: (items: PreviewItem[]) => void;
     openPreview: (id: string) => void;
+}
+
+// Warning: (ae-forgotten-export) The symbol "HeaderProps" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+interface PreviewNavigatorProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
+    closeAction?: Omit<HeaderAction, 'onClick'>;
+    container?: Element;
+    disablePortal?: boolean;
+    onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
+    onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
+    onOverlayClick?: React_2.JSX.IntrinsicElements['div']['onClick'];
+    onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
+    show: boolean;
 }
 
 // @public

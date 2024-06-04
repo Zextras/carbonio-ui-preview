@@ -110,7 +110,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/tsconfig.json"
      */
-    // "tsconfigFilePath": "<projectFolder>/tsconfig.json",
+     "tsconfigFilePath": "<projectFolder>/tsconfig.lib.json",
     /**
      * Provides a compiler configuration that will be used instead of reading the tsconfig.json file from disk.
      * The object must conform to the TypeScript tsconfig schema:
@@ -202,7 +202,7 @@
     /**
      * (REQUIRED) Whether to generate a doc model file.
      */
-    "enabled": true
+    "enabled": true,
 
     /**
      * The output path for the doc model file.  The file extension should be ".api.json".
@@ -222,7 +222,7 @@
      *
      * DEFAULT VALUE: "false"
      */
-    // "includeForgottenExports": false,
+     "includeForgottenExports": true,
 
     /**
      * The base URL where the project's source code can be viewed on a website such as GitHub or
@@ -238,7 +238,7 @@
      * SUPPORTED TOKENS: none
      * DEFAULT VALUE: ""
      */
-    // "projectFolderUrl": "http://github.com/path/to/your/projectFolder"
+     "projectFolderUrl": "https://github.com/zextras/carbonio-ui-preview/blob/release/"
   },
 
   /**

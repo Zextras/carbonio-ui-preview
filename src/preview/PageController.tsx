@@ -10,9 +10,13 @@ import { Text, getColor, Container, useTheme } from '@zextras/carbonio-design-sy
 import styles from './PageController.module.css';
 
 export interface PageControllerProps {
+	/** Label for the page input */
 	pageLabel?: string;
+	/** Current page number */
 	currentPage: number;
+	/** Total number of pages */
 	pagesNumber: number;
+	/** Callback fired to set a new current page */
 	onPageChange: (newPage: number) => void;
 }
 
@@ -27,6 +31,10 @@ function resizeInput(ev: React.KeyboardEvent<HTMLInputElement>): void {
 	inputEl.style.width = `${inputEl.value.length}ch`;
 }
 
+/**
+ * Render a controller for the current page.
+ * It defines a minimum set of boundaries for the validation of the user input.
+ */
 export const PageController = ({
 	pageLabel = 'Page',
 	currentPage,

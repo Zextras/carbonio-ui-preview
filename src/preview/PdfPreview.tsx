@@ -66,6 +66,7 @@ export interface PdfPreviewProps
 	printActionTooltipLabel?: string;
 }
 
+/** Main component for the preview of a pdf */
 export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function PreviewFn(
 	{
 		src,

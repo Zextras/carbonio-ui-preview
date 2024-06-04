@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-/**
- * A library to open previews of images and pdf.
- *
- * @packageDocumentation
- */
-
 import { pdfjs } from 'react-pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -17,10 +11,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 	import.meta.url
 ).toString();
 
-/** Base components */
+/**
+ * A library to open previews of images and pdf.
+ *
+ * @packageDocumentation
+ */
+
 export { type ImagePreviewProps, ImagePreview } from './preview/ImagePreview.js';
 export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview.js';
-/** Utils */
 export {
 	PreviewManager,
 	PreviewsManagerContext,

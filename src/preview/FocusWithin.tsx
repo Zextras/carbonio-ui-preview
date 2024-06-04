@@ -11,10 +11,15 @@ import { last } from 'lodash';
 import styles from './FocusWithin.module.css';
 
 interface FocusContainerProps {
+	/** Whether the focus should return on the element that made the component initially mount */
 	returnFocus?: boolean;
 	children: React.ReactChild | React.ReactChildren;
 }
 
+/**
+ * Utility component which keeps the focus within its content, allowing the user to use the keyboard to
+ * move across interactive elements, without exiting from the content area
+ */
 const FocusWithin = ({ children, returnFocus = true }: FocusContainerProps): React.JSX.Element => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const startSentinelRef = useRef<HTMLDivElement | null>(null);

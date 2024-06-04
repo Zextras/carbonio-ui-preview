@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-export interface PdfPreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> 
+export interface PdfPreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'>, Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> 
 ```
-**Extends:** Partial&lt;Omit&lt;HeaderProps, 'closeAction'&gt;&gt;, Omit&lt;PreviewCriteriaAlternativeContentProps, 'downloadSrc'&gt;
+**Extends:** Omit&lt;[PreviewNavigatorProps](./carbonio-ui-preview.previewnavigatorprops.md)<!-- -->, 'onOverlayClick'&gt;, Omit&lt;[PreviewCriteriaAlternativeContentProps](./carbonio-ui-preview.previewcriteriaalternativecontentprops.md)<!-- -->, 'downloadSrc'&gt;
 
 ## Properties
 
@@ -36,44 +36,6 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
-[closeAction?](./carbonio-ui-preview.pdfpreviewprops.closeaction.md)
-
-
-</td><td>
-
-
-</td><td>
-
-MakeOptional&lt;HeaderAction, 'onClick'&gt;
-
-
-</td><td>
-
-_(Optional)_ Left action for the preview
-
-
-</td></tr>
-<tr><td>
-
-[container?](./carbonio-ui-preview.pdfpreviewprops.container.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Element
-
-
-</td><td>
-
-_(Optional)_ HTML node where to insert the Portal's children. The default value is 'window.top.document'.
-
-
-</td></tr>
-<tr><td>
-
 [customContent?](./carbonio-ui-preview.pdfpreviewprops.customcontent.md)
 
 
@@ -88,25 +50,6 @@ React.ReactElement
 </td><td>
 
 _(Optional)_ Custom component for the fallback
-
-
-</td></tr>
-<tr><td>
-
-[disablePortal?](./carbonio-ui-preview.pdfpreviewprops.disableportal.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-_(Optional)_ Flag to disable the Portal implementation
 
 
 </td></tr>
@@ -207,63 +150,6 @@ _(Optional)_ Label shown when the zoom is at its minimum
 </td></tr>
 <tr><td>
 
-[onClose](./carbonio-ui-preview.pdfpreviewprops.onclose.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-Callback to hide the preview
-
-
-</td></tr>
-<tr><td>
-
-[onNextPreview?](./carbonio-ui-preview.pdfpreviewprops.onnextpreview.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-_(Optional)_ Callback invoked when the next preview is requested
-
-
-</td></tr>
-<tr><td>
-
-[onPreviousPreview?](./carbonio-ui-preview.pdfpreviewprops.onpreviouspreview.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-_(Optional)_ Callback invoked when the previous preview is requested
-
-
-</td></tr>
-<tr><td>
-
 [pageLabel?](./carbonio-ui-preview.pdfpreviewprops.pagelabel.md)
 
 
@@ -354,25 +240,6 @@ string
 </td><td>
 
 _(Optional)_ Label for the reset zoom action
-
-
-</td></tr>
-<tr><td>
-
-[show](./carbonio-ui-preview.pdfpreviewprops.show.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-Flag to show or hide Portal's content
 
 
 </td></tr>

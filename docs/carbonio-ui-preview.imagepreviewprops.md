@@ -7,9 +7,9 @@
 **Signature:**
 
 ```typescript
-export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> 
+export interface ImagePreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> 
 ```
-**Extends:** Partial&lt;Omit&lt;HeaderProps, 'closeAction'&gt;&gt;
+**Extends:** Omit&lt;[PreviewNavigatorProps](./carbonio-ui-preview.previewnavigatorprops.md)<!-- -->, 'onOverlayClick'&gt;
 
 ## Properties
 
@@ -50,139 +50,6 @@ string
 </td><td>
 
 _(Optional)_ Alternative text for the image
-
-
-</td></tr>
-<tr><td>
-
-[closeAction?](./carbonio-ui-preview.imagepreviewprops.closeaction.md)
-
-
-</td><td>
-
-
-</td><td>
-
-MakeOptional&lt;HeaderAction, 'onClick'&gt;
-
-
-</td><td>
-
-_(Optional)_ Left action for the preview
-
-
-</td></tr>
-<tr><td>
-
-[container?](./carbonio-ui-preview.imagepreviewprops.container.md)
-
-
-</td><td>
-
-
-</td><td>
-
-Element
-
-
-</td><td>
-
-_(Optional)_ HTML node where to insert the Portal's children. The default value is 'window.top.document'.
-
-
-</td></tr>
-<tr><td>
-
-[disablePortal?](./carbonio-ui-preview.imagepreviewprops.disableportal.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-_(Optional)_ Flag to disable the Portal implementation
-
-
-</td></tr>
-<tr><td>
-
-[onClose](./carbonio-ui-preview.imagepreviewprops.onclose.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-Callback to hide the preview
-
-
-</td></tr>
-<tr><td>
-
-[onNextPreview?](./carbonio-ui-preview.imagepreviewprops.onnextpreview.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-_(Optional)_ Callback invoked when the next preview is requested
-
-
-</td></tr>
-<tr><td>
-
-[onPreviousPreview?](./carbonio-ui-preview.imagepreviewprops.onpreviouspreview.md)
-
-
-</td><td>
-
-
-</td><td>
-
-(e: React.SyntheticEvent \| KeyboardEvent) =&gt; void
-
-
-</td><td>
-
-_(Optional)_ Callback invoked when the previous preview is requested
-
-
-</td></tr>
-<tr><td>
-
-[show](./carbonio-ui-preview.imagepreviewprops.show.md)
-
-
-</td><td>
-
-
-</td><td>
-
-boolean
-
-
-</td><td>
-
-Flag to show or hide Portal's content
 
 
 </td></tr>

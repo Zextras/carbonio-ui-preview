@@ -17,5 +17,5 @@ export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClo
     id: string;
 };
 ```
-**References:** [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
+**References:** [MakeOptional](./carbonio-ui-preview.makeoptional.md)<!-- -->, [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
 

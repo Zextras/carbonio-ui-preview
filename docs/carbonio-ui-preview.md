@@ -21,6 +21,24 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[HeaderAction](./carbonio-ui-preview.headeraction.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[HeaderProps](./carbonio-ui-preview.headerprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)
 
 
@@ -39,7 +57,25 @@ Description
 </td></tr>
 <tr><td>
 
+[PreviewCriteriaAlternativeContentProps](./carbonio-ui-preview.previewcriteriaalternativecontentprops.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [PreviewManagerContextType](./carbonio-ui-preview.previewmanagercontexttype.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PreviewNavigatorProps](./carbonio-ui-preview.previewnavigatorprops.md)
 
 
 </td><td>
@@ -68,6 +104,8 @@ Description
 
 </td><td>
 
+Main component for rendering the preview of an image
+
 
 </td></tr>
 <tr><td>
@@ -76,6 +114,8 @@ Description
 
 
 </td><td>
+
+Main component for the preview of a pdf
 
 
 </td></tr>
@@ -128,6 +168,15 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[MakeOptional](./carbonio-ui-preview.makeoptional.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
 
 [PreviewItem](./carbonio-ui-preview.previewitem.md)
 

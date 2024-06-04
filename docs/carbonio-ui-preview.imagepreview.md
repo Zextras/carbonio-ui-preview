@@ -4,6 +4,8 @@
 
 ## ImagePreview variable
 
+Main component for rendering the preview of an image
+
 **Signature:**
 
 ```typescript

@@ -43,7 +43,7 @@ Description
 
 </td><td>
 
-(item: MakeOptional&lt;[PreviewItem](./carbonio-ui-preview.previewitem.md)<!-- -->, 'id'&gt;) =&gt; void
+(item: [MakeOptional](./carbonio-ui-preview.makeoptional.md)<!-- -->&lt;[PreviewItem](./carbonio-ui-preview.previewitem.md)<!-- -->, 'id'&gt;) =&gt; void
 
 
 </td><td>

@@ -4,6 +4,8 @@
 
 ## PdfPreview variable
 
+Main component for the preview of a pdf
+
 **Signature:**
 
 ```typescript
