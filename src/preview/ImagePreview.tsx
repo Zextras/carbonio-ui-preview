@@ -3,96 +3,18 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { Container, Portal, useCombinedRefs } from '@zextras/carbonio-design-system';
-import styled from 'styled-components';
+import { useCombinedRefs } from '@zextras/carbonio-design-system';
 
-import FocusWithin from './FocusWithin';
-import Header, { HeaderAction, HeaderProps } from './Header';
-import { AbsoluteLeftIconButton, AbsoluteRightIconButton } from './StyledComponents';
-import { type MakeOptional } from '../types/utils';
+import styles from './ImagePreview.module.css';
+import { PreviewNavigator, PreviewNavigatorProps } from './PreviewNavigator.js';
 
-const Overlay = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100%;
-	max-width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.8);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 1003;
-`;
-
-const ExternalContainer = styled.div`
-	height: 100vh;
-	max-height: 100vh;
-	width: 100vw;
-	max-width: 100vw;
-	display: flex;
-	flex-direction: column;
-	position: relative;
-`;
-
-const MiddleContainer = styled(Container)`
-	flex-grow: 1;
-`;
-
-const Image = styled.img`
-	max-height: 100%;
-	max-width: 100%;
-	min-height: 0;
-	min-width: 0;
-	align-self: center;
-	filter: drop-shadow(0px 5px 14px rgba(0, 0, 0, 0.35));
-	border-radius: 0.25rem;
-`;
-
-const PreviewContainer = styled.div.attrs({
-	$paddingVertical: '2rem',
-	$paddingHorizontal: '1rem',
-	$gap: '0.5rem'
-})`
-	display: flex;
-	max-width: 100%;
-	max-height: calc(100vh - ${({ $paddingVertical }): string => $paddingVertical} * 2);
-	flex-direction: column;
-	gap: ${({ $gap }): string => $gap};
-	justify-content: center;
-	align-items: center;
-	overflow: hidden;
-	padding: ${({ $paddingVertical, $paddingHorizontal }): string =>
-		`${$paddingVertical} ${$paddingHorizontal}`};
-	outline: none;
-	flex-grow: 1;
-`;
-
-export interface ImagePreviewProps extends Partial<Omit<HeaderProps, 'closeAction'>> {
-	/** Left action for the preview */
-	closeAction?: MakeOptional<HeaderAction, 'onClick'>;
-	/**
-	 * HTML node where to insert the Portal's children.
-	 * The default value is 'window.top.document'.
-	 */
-	container?: Element;
-	/** Flag to disable the Portal implementation */
-	disablePortal?: boolean;
-	/** Flag to show or hide Portal's content */
-	show: boolean;
-	/** Preview img source */
+export interface ImagePreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
+	/** preview img source */
 	src: string | File | Blob;
-	/** Callback to hide the preview */
-	onClose: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Alternative text for the image */
+	/** Alternative text for image */
 	alt?: string;
-	/** Callback invoked when the next preview is requested */
-	onNextPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
-	/** Callback invoked when the previous preview is requested */
-	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 }
 
 export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
@@ -126,16 +48,6 @@ export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(
 
 	const previewRef = useCombinedRefs<HTMLDivElement>(ref);
 	const imageRef = useRef<HTMLImageElement>(null);
-
-	const $closeAction = useMemo(() => {
-		if (closeAction) {
-			return {
-				onClick: onClose,
-				...closeAction
-			};
-		}
-		return closeAction;
-	}, [closeAction, onClose]);
 
 	const eventListener = useCallback<(e: KeyboardEvent) => void>(
 		(event) => {
@@ -174,50 +86,29 @@ export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(
 	);
 
 	return (
-		<Portal show={show} disablePortal={disablePortal} container={container}>
-			<Overlay onClick={onOverlayClick}>
-				<FocusWithin>
-					<ExternalContainer>
-						<Header
-							actions={actions}
-							filename={filename}
-							extension={extension}
-							size={size}
-							closeAction={$closeAction}
-						/>
-						<MiddleContainer orientation="horizontal" crossAlignment="unset" minHeight={0}>
-							{onPreviousPreview && (
-								<AbsoluteLeftIconButton
-									icon="ArrowBackOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onPreviousPreview}
-								/>
-							)}
-							<PreviewContainer ref={previewRef}>
-								<Image
-									alt={alt ?? filename}
-									src={computedSrc}
-									onError={(error): void => console.error('TODO handle error', error)}
-									ref={imageRef}
-								/>
-							</PreviewContainer>
-							{onNextPreview && (
-								<AbsoluteRightIconButton
-									icon="ArrowForwardOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onNextPreview}
-								/>
-							)}
-						</MiddleContainer>
-					</ExternalContainer>
-				</FocusWithin>
-			</Overlay>
-		</Portal>
+		<PreviewNavigator
+			onPreviousPreview={onPreviousPreview}
+			onNextPreview={onNextPreview}
+			container={container}
+			disablePortal={disablePortal}
+			extension={extension}
+			show={show}
+			filename={filename}
+			actions={actions}
+			size={size}
+			onOverlayClick={onOverlayClick}
+			closeAction={closeAction}
+			onClose={onClose}
+		>
+			<div ref={previewRef} className={styles.previewContainer}>
+				<img
+					alt={alt ?? filename}
+					src={computedSrc}
+					onError={(error): void => console.error('TODO handle error', error)}
+					ref={imageRef}
+					className={styles.image}
+				/>
+			</div>
+		</PreviewNavigator>
 	);
 });

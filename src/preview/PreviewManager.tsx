@@ -6,12 +6,12 @@
 
 import React, { useCallback, createContext, useReducer, useState, useMemo } from 'react';
 
-import findIndex from 'lodash/findIndex';
+import { findIndex } from 'lodash';
 
-import { ImagePreviewProps } from './ImagePreview';
-import { PdfPreviewProps } from './PdfPreview';
-import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper';
-import { type MakeOptional } from '../types/utils';
+import { ImagePreviewProps } from './ImagePreview.js';
+import { PdfPreviewProps } from './PdfPreview.js';
+import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper.js';
+import { type MakeOptional } from '../types/utils.js';
 
 /**
  * Define an item for the preview. It can be of type 'image' or 'pdf'.
@@ -132,14 +132,14 @@ export const PreviewManager: React.FC = ({ children }) => {
 			const onPreviousPreviewCallback: PreviewWrapperProps['onPreviousPreview'] =
 				openArrayIndex === 0
 					? undefined
-					: (e): void => {
+					: (e: React.SyntheticEvent | KeyboardEvent): void => {
 							e.stopPropagation();
 							setOpenArrayIndex(openArrayIndex - 1);
 						};
 			const onNextPreviewCallback: PreviewWrapperProps['onNextPreview'] =
 				openArrayIndex === previews.length - 1
 					? undefined
-					: (e): void => {
+					: (e: React.SyntheticEvent | KeyboardEvent): void => {
 							e.stopPropagation();
 							setOpenArrayIndex(openArrayIndex + 1);
 						};

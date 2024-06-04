@@ -10,14 +10,21 @@
  * @packageDocumentation
  */
 
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+	'pdfjs-dist/build/pdf.worker.min.js',
+	import.meta.url
+).toString();
+
 /** Base components */
-export { type ImagePreviewProps, ImagePreview } from './preview/ImagePreview';
-export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview';
+export { type ImagePreviewProps, ImagePreview } from './preview/ImagePreview.js';
+export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview.js';
 /** Utils */
 export {
 	PreviewManager,
 	PreviewsManagerContext,
 	type PreviewManagerContextType,
 	type PreviewItem
-} from './preview/PreviewManager';
-export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper';
+} from './preview/PreviewManager.js';
+export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper.js';
