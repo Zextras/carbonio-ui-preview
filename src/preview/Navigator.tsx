@@ -13,6 +13,7 @@ export interface NavigatorProps {
 	children: React.ReactElement | React.ReactElement[];
 }
 
+/** Container for the current preview actions (zoom, page) */
 export const Navigator = ({ children }: NavigatorProps): React.JSX.Element => {
 	const theme = useTheme();
 

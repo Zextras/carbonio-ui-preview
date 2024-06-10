@@ -8,16 +8,17 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useCombinedRefs } from '@zextras/carbonio-design-system';
 
 import styles from './ImagePreview.module.css';
-import { PreviewNavigator, PreviewNavigatorProps } from './PreviewNavigator.js';
+import { PreviewNavigator, type PreviewNavigatorProps } from './PreviewNavigator.js';
 
-type ImagePreviewProps = Omit<PreviewNavigatorProps, 'onOverlayClick'> & {
-	/** preview img source */
+export interface ImagePreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
+	/** Preview img source */
 	src: string | File | Blob;
-	/** Alternative text for image */
+	/** Alternative text for the image */
 	alt?: string;
-};
+}
 
-const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
+/** Main component for rendering the preview of an image */
+export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
 	{
 		src,
 		show,
@@ -112,5 +113,3 @@ const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(functio
 		</PreviewNavigator>
 	);
 });
-
-export { ImagePreview, type ImagePreviewProps };

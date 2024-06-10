@@ -25,6 +25,7 @@ export interface ZoomControllerProps {
 	increaseByStep: (event: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
 }
 
+/** Render a controller for the zoom */
 export const ZoomController = ({
 	decrementable,
 	fitToWidth,

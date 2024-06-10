@@ -7,7 +7,7 @@ module.exports = {
  	env: { "es6": true },
 	root: true,
 	extends: ['./node_modules/@zextras/carbonio-ui-configs/rules/eslint.js'],
-	plugins: ['notice'],
+	plugins: ['eslint-plugin-notice', 'eslint-plugin-tsdoc'],
 	rules: {
 		'notice/notice': [
 			'error',
@@ -16,7 +16,8 @@ module.exports = {
 			}
 		],
 		'jsx-a11y/click-events-have-key-events': 'warn',
-		'jsx-a11y/no-static-element-interactions': 'warn'
+		'jsx-a11y/no-static-element-interactions': 'warn',
+		'tsdoc/syntax': 'warn'
 	},
 	ignorePatterns: ['notice.template.ts'],
 	parserOptions: {

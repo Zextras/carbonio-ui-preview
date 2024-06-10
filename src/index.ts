@@ -11,9 +11,18 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 	import.meta.url
 ).toString();
 
-/** Base components */
-export * from './preview/ImagePreview.js';
-export * from './preview/PdfPreview.js';
-/** Utils */
-export * from './preview/PreviewManager.js';
-export * from './preview/PreviewWrapper.js';
+/**
+ * A library to open previews of images and pdf.
+ *
+ * @packageDocumentation
+ */
+
+export { type ImagePreviewProps, ImagePreview } from './preview/ImagePreview.js';
+export { type PdfPreviewProps, PdfPreview } from './preview/PdfPreview.js';
+export {
+	PreviewManager,
+	PreviewsManagerContext,
+	type PreviewManagerContextType,
+	type PreviewItem
+} from './preview/PreviewManager.js';
+export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper.js';

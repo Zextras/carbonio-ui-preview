@@ -29,32 +29,45 @@ import { print } from '../utils/utils.js';
 
 type Page = Parameters<NonNullable<PageProps['onLoadSuccess']>>[0];
 
-type PdfPreviewProps = Omit<PreviewNavigatorProps, 'onOverlayClick'> & {
-	/** preview source */
+export interface PdfPreviewProps
+	extends Omit<PreviewNavigatorProps, 'onOverlayClick'>,
+		Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'> {
+	/** Preview source */
 	src: string | File | Blob | ArrayBuffer;
 	/** Whether force cache */
 	forceCache?: boolean;
-	/** use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent */
+	/** Use fallback content if you don't want to view the pdf for some reason; content can be customizable with customContent */
 	useFallback?: boolean;
-	/** CustomContent */
+	/** Custom component for the fallback */
 	customContent?: React.ReactElement;
 	/** Whether a text layer should be rendered */
 	renderTextLayer?: boolean;
 	/** Whether the annotation layer should be rendered */
 	renderAnnotationLayer?: boolean;
+	/** Label for the zoom out action */
 	zoomOutLabel?: string;
+	/** Label shown when the zoom is at its minimum */
 	lowerLimitReachedLabel?: string;
+	/** Label for the reset zoom action */
 	resetZoomLabel?: string;
+	/** Label for the fit to width zoom action */
 	fitToWidthLabel?: string;
+	/** Label for the zoom in action */
 	zoomInLabel?: string;
+	/** Label shown when the zoom is at its maximum */
 	upperLimitReachedLabel?: string;
+	/** Label for the page controller */
 	pageLabel?: string;
+	/** Label shown when the preview cannot be shown */
 	errorLabel?: string;
+	/** Label shown while the preview is loading */
 	loadingLabel?: string;
+	/** Label for the print action */
 	printActionTooltipLabel?: string;
-} & Omit<PreviewCriteriaAlternativeContentProps, 'downloadSrc'>;
+}
 
-const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function PreviewFn(
+/** Main component for the preview of a pdf */
+export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function PreviewFn(
 	{
 		src,
 		forceCache = true,
@@ -442,5 +455,3 @@ const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(function Pr
 		</PreviewNavigator>
 	);
 });
-
-export { PdfPreview, type PdfPreviewProps };

@@ -10,17 +10,29 @@ import { Button, Container, Text } from '@zextras/carbonio-design-system';
 import styles from './PreviewCriteriaAlternativeContent.module.css';
 
 export interface PreviewCriteriaAlternativeContentProps {
+	/** Src to download the file */
 	downloadSrc?: string;
-	/** Src that allow open in separate tab */
+	/** Src that allow to open the file in a separate tab */
 	openSrc?: string;
+	/** Title for the preview fallback component */
 	titleLabel?: string;
+	/** Content for the preview fallback component */
 	contentLabel?: string;
+	/** Download action label */
 	downloadLabel?: string;
+	/** Open action label */
 	openLabel?: string;
+	/** Note for the preview fallback component */
 	noteLabel?: string;
+	/** Name of the file */
 	filename?: string;
 }
 
+/**
+ * The default component for the fallback of a pdf preview.
+ * It should be used to let the user download or open the item when
+ * the preview is not shown because of some external rule.
+ */
 export const PreviewCriteriaAlternativeContent: React.VFC<
 	PreviewCriteriaAlternativeContentProps
 > = ({
