@@ -7,9 +7,9 @@ import React from 'react';
 
 import { screen } from '@testing-library/react';
 
-import { PreviewWrapper } from './PreviewWrapper';
-import { SELECTORS } from '../constants/test';
-import { setup } from 'test-utils';
+import { PreviewWrapper } from './PreviewWrapper.js';
+import { SELECTORS } from '../tests/constants.js';
+import { setup } from '../tests/utils.js';
 
 describe('Preview Wrapper', () => {
 	test('Render the pdf preview for type pdf', async () => {

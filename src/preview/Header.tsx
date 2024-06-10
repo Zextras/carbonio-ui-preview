@@ -5,40 +5,9 @@
  */
 import React from 'react';
 
-import { IconButton, Text, Tooltip } from '@zextras/carbonio-design-system';
-import map from 'lodash/map';
-import styled from 'styled-components';
+import { IconButton, Text, Theme, Tooltip, TooltipProps } from '@zextras/carbonio-design-system';
 
-const HeaderContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
-	padding: 1rem;
-`;
-
-const LeftContainer = styled.div`
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	gap: 0.5rem;
-`;
-
-const RightContainer = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 0.5rem;
-`;
-
-const InfoContainer = styled.div`
-	width: fit-content;
-	& div {
-		line-height: 1.5;
-	}
-`;
-
-const UpperCaseText = styled(Text)`
-	text-transform: uppercase;
-`;
+import styles from './Header.module.css';
 
 export interface HeaderAction {
 	/** id used as key */
@@ -46,10 +15,11 @@ export interface HeaderAction {
 	/** Action called on click */
 	onClick: (ev: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
 	/** Icon from the theme */
-	icon: string;
+	icon: keyof Theme['icons'];
 	/** Label to show as tooltip for the action */
 	tooltipLabel?: string;
-	tooltipPlacement?: React.ComponentPropsWithRef<typeof Tooltip>['placement'];
+	/** Define the placement of the tooltip for the action */
+	tooltipPlacement?: TooltipProps['placement'];
 	/** Disabled status for the action */
 	disabled?: boolean;
 }
@@ -57,7 +27,38 @@ export interface HeaderAction {
 export interface HeaderProps {
 	/** Left Action for the preview */
 	closeAction?: HeaderAction;
-	/** Actions for the preview */
+	/**
+	 * Actions for the preview.
+	 *
+	 * Note: by default the actions does not prevent the default behavior nor the propagation of the
+	 * event. This means that a click on an action will cause a click on the preview overlay too, resulting
+	 * in the preview to close.
+	 *
+	 * To prevent the preview to close when an action is clicked, the onClick callback should invoke the
+	 * preventDefault on the event received.
+	 *
+	 * @example
+	 * ```ts
+	 * const actions = [
+	 * 	{
+	 *  	id: 'do-action-and-close-preview',
+	 *   	icon: 'Airplane',
+	 *   	onClick: (e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent): void => {
+	 *   		// do action
+	 *   		// do NOT prevent default
+	 *   	}
+	 * 	},
+	 * 	{
+	 *  	id: 'do-action-and-leave-preview-open',
+	 *    icon: 'Activity',
+	 *    onClick: (e: React.MouseEvent<HTMLButtonElement> | KeyboardEvent): void => {
+	 *      // do action
+	 *      // prevent default to tell the preview to not close
+	 *      e.preventDefault();
+	 * 	}
+	 * ]
+	 * ```
+	 */
 	actions: HeaderAction[];
 	/** Extension of the file, shown as info */
 	extension: string;
@@ -67,10 +68,11 @@ export interface HeaderProps {
 	size: string;
 }
 
+/** Preview header, shows the file information and the actions */
 const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extension, size }) => (
-	<HeaderContainer>
-		<LeftContainer>
-			{closeAction && (
+	<div className={styles.headerContainer}>
+		<div className={styles.leftContainer}>
+			{closeAction ? (
 				<Tooltip
 					label={closeAction.tooltipLabel}
 					disabled={!closeAction.tooltipLabel}
@@ -85,20 +87,20 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 						iconColor="gray6"
 					/>
 				</Tooltip>
-			)}
-			<InfoContainer>
+			) : null}
+			<div className={styles.infoContainer}>
 				<Text size="small" color="gray6">
 					{filename}
 				</Text>
-				<UpperCaseText size="small" color="gray6">
+				<Text size="small" color="gray6" className={styles.upperCase}>
 					{extension}
-					{extension && size && <> &middot; </>}
+					{extension && size ? <> &middot; </> : null}
 					{size}
-				</UpperCaseText>
-			</InfoContainer>
-		</LeftContainer>
-		<RightContainer>
-			{map(actions, ({ id, onClick, disabled, icon, tooltipLabel, tooltipPlacement }) => (
+				</Text>
+			</div>
+		</div>
+		<div className={styles.rightContainer}>
+			{actions.map(({ id, onClick, disabled, icon, tooltipLabel, tooltipPlacement }) => (
 				<Tooltip
 					label={tooltipLabel}
 					disabled={!tooltipLabel}
@@ -115,8 +117,8 @@ const Header: React.VFC<HeaderProps> = ({ closeAction, actions, filename, extens
 					/>
 				</Tooltip>
 			))}
-		</RightContainer>
-	</HeaderContainer>
+		</div>
+	</div>
 );
 
 export default Header;

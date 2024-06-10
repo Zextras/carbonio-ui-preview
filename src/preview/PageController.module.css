@@ -1,0 +1,19 @@
+/*
+ * SPDX-FileCopyrightText: 2024 Zextras <https://www.zextras.com>
+ *
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
+.styledInput {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    min-width: 0.5rem;
+    font-family: inherit;
+    text-align: center;
+    padding: 0;
+}
+
+.styledInput:hover, .styledInput:focus {
+    text-decoration: underline;
+}

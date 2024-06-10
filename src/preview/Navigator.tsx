@@ -5,26 +5,25 @@
  */
 import React from 'react';
 
-import styled from 'styled-components';
+import { useTheme } from '@zextras/carbonio-design-system';
 
-const StyledContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	z-index: 1;
-	bottom: 1rem;
-	background-color: ${({ theme }): string => theme.palette.gray0.regular};
-	align-self: center;
-	border-radius: 0.25rem;
-	gap: 1rem;
-	padding: 0.5rem 1rem;
-`;
+import styles from './Navigator.module.css';
 
 export interface NavigatorProps {
 	children: React.ReactElement | React.ReactElement[];
 }
 
-export const Navigator = ({ children }: NavigatorProps): React.JSX.Element => (
-	<StyledContainer onClick={(ev): void => ev.stopPropagation()}>{children}</StyledContainer>
-);
+/** Container for the current preview actions (zoom, page) */
+export const Navigator = ({ children }: NavigatorProps): React.JSX.Element => {
+	const theme = useTheme();
+
+	return (
+		<div
+			className={styles.styledContainer}
+			style={{ backgroundColor: theme.palette.gray0.regular }}
+			onClick={(ev): void => ev.stopPropagation()}
+		>
+			{children}
+		</div>
+	);
+};

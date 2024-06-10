@@ -6,22 +6,8 @@
 import React from 'react';
 
 import { Container, IconButton, Tooltip } from '@zextras/carbonio-design-system';
-import styled, { css, SimpleInterpolation } from 'styled-components';
 
-const CustomIconButton = styled(IconButton)`
-	${({ disabled }): SimpleInterpolation =>
-		disabled &&
-		css`
-			background: rgba(204, 204, 204, 0.2);
-			& > svg {
-				background: unset;
-			}
-		`};
-	& > svg {
-		width: 1.25rem;
-		height: 1.25rem;
-	}
-`;
+import styles from './ZoomController.module.css';
 
 export interface ZoomControllerProps {
 	decrementable: boolean;
@@ -39,6 +25,7 @@ export interface ZoomControllerProps {
 	increaseByStep: (event: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => void;
 }
 
+/** Render a controller for the zoom */
 export const ZoomController = ({
 	decrementable,
 	fitToWidth,
@@ -56,32 +43,35 @@ export const ZoomController = ({
 }: ZoomControllerProps): React.JSX.Element => (
 	<Container orientation="horizontal" gap="0.5rem" width="fit">
 		<Tooltip label={decrementable ? zoomOutLabel : lowerLimitReachedLabel}>
-			<CustomIconButton
+			<IconButton
 				disabled={!decrementable}
 				icon="Minus"
 				size="small"
 				backgroundColor="gray0"
 				iconColor="gray6"
 				onClick={decreaseByStep}
+				className={styles.zoomIconButton}
 			/>
 		</Tooltip>
 		<Tooltip label={fitToWidthActive ? resetZoomLabel : fitToWidthLabel}>
-			<CustomIconButton
+			<IconButton
 				icon={fitToWidthActive ? 'MinimizeOutline' : 'MaximizeOutline'}
 				size="small"
 				backgroundColor="gray0"
 				iconColor="gray6"
 				onClick={fitToWidthActive ? resetWidth : fitToWidth}
+				className={styles.zoomIconButton}
 			/>
 		</Tooltip>
 		<Tooltip label={incrementable ? zoomInLabel : upperLimitReachedLabel}>
-			<CustomIconButton
+			<IconButton
 				icon="Plus"
 				size="small"
 				backgroundColor="gray0"
 				iconColor="gray6"
 				onClick={increaseByStep}
 				disabled={!incrementable}
+				className={styles.zoomIconButton}
 			/>
 		</Tooltip>
 	</Container>
