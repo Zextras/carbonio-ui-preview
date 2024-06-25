@@ -4,7 +4,11 @@
 
 ```ts
 
-import { default as React_2 } from 'react';
+/// <reference types="react" />
+
+import { ForwardRefExoticComponent } from 'react';
+import * as React_2 from 'react';
+import { RefAttributes } from 'react';
 import { Theme } from '@zextras/carbonio-design-system';
 import { TooltipProps } from '@zextras/carbonio-design-system';
 
@@ -29,7 +33,7 @@ interface HeaderProps {
 }
 
 // @public
-export const ImagePreview: React_2.ForwardRefExoticComponent<ImagePreviewProps & React_2.RefAttributes<HTMLDivElement>>;
+export const ImagePreview: ForwardRefExoticComponent<ImagePreviewProps & RefAttributes<HTMLDivElement>>;
 
 // Warning: (ae-forgotten-export) The symbol "PreviewNavigatorProps" needs to be exported by the entry point index.d.ts
 //
