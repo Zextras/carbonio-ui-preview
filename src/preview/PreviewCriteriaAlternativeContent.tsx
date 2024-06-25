@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
+import * as React from 'react';
 
 import { Button, Container, Text } from '@zextras/carbonio-design-system';
 
