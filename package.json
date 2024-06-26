@@ -53,6 +53,7 @@
 		"@faker-js/faker": "^8.4.1",
 		"@microsoft/api-documenter": "^7.25.3",
 		"@microsoft/api-extractor": "^7.47.0",
+		"@semantic-release/commit-analyzer": "11.0.0",
 		"@testing-library/dom": "^8.20.1",
 		"@testing-library/jest-dom": "^6.4.5",
 		"@testing-library/react": "^12.1.5",
@@ -87,9 +88,6 @@
 		"lodash": "^4.17.21",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2"
-	},
-	"resolutions": {
-		"@semantic-release/commit-analyzer": "11.0.0"
 	},
 	"browserslist": [
 		">1%",
