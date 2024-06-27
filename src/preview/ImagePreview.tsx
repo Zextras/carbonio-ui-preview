@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useCombinedRefs } from '@zextras/carbonio-design-system';
 
@@ -18,7 +18,7 @@ export interface ImagePreviewProps extends Omit<PreviewNavigatorProps, 'onOverla
 }
 
 /** Main component for rendering the preview of an image */
-export const ImagePreview = React.forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
+export const ImagePreview = forwardRef<HTMLDivElement, ImagePreviewProps>(function PreviewFn(
 	{
 		src,
 		show,

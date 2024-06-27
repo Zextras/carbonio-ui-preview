@@ -17,7 +17,9 @@ module.exports = {
 		],
 		'jsx-a11y/click-events-have-key-events': 'warn',
 		'jsx-a11y/no-static-element-interactions': 'warn',
-		'tsdoc/syntax': 'warn'
+		'tsdoc/syntax': 'warn',
+		"react/jsx-uses-react": "off",
+		"react/react-in-jsx-scope": "off"
 	},
 	ignorePatterns: ['notice.template.ts'],
 	parserOptions: {

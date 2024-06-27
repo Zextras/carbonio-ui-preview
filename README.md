@@ -78,7 +78,9 @@ openPreview(id);
 
 See the [example app](examples/app) for a simple working example.
 
-See the [API Documentation](docs/carbonio-ui-preview.md) to see the full list of the props available.
+See the [API Documentation](docs/api/carbonio-ui-preview.md) to see the full list of the props available.
+
+See [Migration](docs/migration.md) for hints about the migration to a major version.
 
 ### How to build
 

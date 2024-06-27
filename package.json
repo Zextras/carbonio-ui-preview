@@ -19,10 +19,8 @@
 	"scripts": {
 		"prebuild:lib": "rm -rf lib",
 		"build:lib": "tsc -p tsconfig.lib.json && npm run copy-styles",
-		"prebuild:docs": "rm -rf docs",
-		"build:docs": "npx api-extractor run --verbose && npx api-documenter generate -i ./temp/ -o ./docs",
-		"prebuild:docs:local": "rm -rf docs",
-		"build:docs:local": "npx api-extractor run --verbose --local && npx api-documenter generate -i ./temp/ -o ./docs",
+		"build:docs": "npx api-extractor run --verbose && npx api-documenter generate -i ./temp/ -o ./docs/api",
+		"build:docs:local": "npx api-extractor run --verbose --local && npx api-documenter generate -i ./temp/ -o ./docs/api",
 		"build:local": "npm run build:lib && npm run build:docs:local",
 		"build": "npm run build:lib && npm run build:docs",
 		"prepare": "is-ci || husky",
@@ -80,7 +78,7 @@
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
-		"react-pdf": "^7.7.3"
+		"react-pdf": "^9.0.0"
 	},
 	"peerDependencies": {
 		"@zextras/carbonio-design-system": ">=1.0.0",

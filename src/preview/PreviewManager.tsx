@@ -4,7 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React, { useCallback, createContext, useReducer, useState, useMemo } from 'react';
+import { useCallback, createContext, useReducer, useState, useMemo } from 'react';
+import * as React from 'react';
 
 import { findIndex } from 'lodash';
 
