@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { ForwardRefExoticComponent } from 'react';
 import * as React_2 from 'react';
 import { RefAttributes } from 'react';

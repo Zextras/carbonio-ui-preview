@@ -402,13 +402,6 @@ pipeline {
                     label "nodejs-agent-v4"
                 }
             }
-            when {
-                beforeAgent(true)
-                allOf {
-                    expression { isReleaseBranch == false }
-                    expression { isMergeCommit == false }
-                }
-            }
             steps {
                 script {
                     unstash(name: '.npmrc')
