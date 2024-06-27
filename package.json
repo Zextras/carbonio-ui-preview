@@ -75,7 +75,8 @@
 		"jest-fail-on-console": "^3.3.0",
 		"jest-junit": "^16.0.0",
 		"semantic-release": "^24.0.0",
-		"ts-node": "^10.9.2"
+		"ts-node": "^10.9.2",
+		"typescript": "^5.5.2"
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
