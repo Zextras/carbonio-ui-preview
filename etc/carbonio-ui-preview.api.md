@@ -95,7 +95,9 @@ export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClo
 };
 
 // @public
-export const PreviewManager: React_2.FC;
+export const PreviewManager: ({ children }: {
+    children: React_2.ReactNode;
+}) => React_2.JSX.Element;
 
 // @public (undocumented)
 export interface PreviewManagerContextType {

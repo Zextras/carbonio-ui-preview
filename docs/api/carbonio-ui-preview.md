@@ -6,6 +6,32 @@
 
 A library to open previews of images and pdf.
 
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[PreviewManager({ children })](./carbonio-ui-preview.previewmanager.md)
+
+
+</td><td>
+
+The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
+
+
+</td></tr>
+</tbody></table>
+
 ## Interfaces
 
 <table><thead><tr><th>
@@ -116,17 +142,6 @@ Main component for rendering the preview of an image
 </td><td>
 
 Main component for the preview of a pdf
-
-
-</td></tr>
-<tr><td>
-
-[PreviewManager](./carbonio-ui-preview.previewmanager.md)
-
-
-</td><td>
-
-The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
 
 
 </td></tr>
