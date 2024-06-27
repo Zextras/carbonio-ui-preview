@@ -7,7 +7,8 @@ export const SELECTORS = {
 	previewContainer: 'pdf-preview-container',
 	pdfPage(pageNum: number): string {
 		return `[data-page-number="${pageNum}"]`;
-	}
+	},
+	pdfPageMock: 'react-pdf-page'
 } as const;
 
 export const KEYBOARD_KEY = {

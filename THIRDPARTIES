@@ -1,40 +1,39 @@
 MIT License (MIT) applies to:
 
 @babel/core, Copyright (c) 2014-present Sebastian McKenzie and other contributors
+@babel/plugin-transform-modules-commonjs, Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @babel/preset-env, Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @babel/preset-react, Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @babel/preset-typescript, Copyright (c) 2014-present Sebastian McKenzie and other contributors
 @commitlint/cli, Copyright (c) 2016 - present Mario Nebl
 @commitlint/config-conventional, Copyright (c) 2016 - present Mario Nebl
-@faker-js/faker, Copyright (c) 2022 - Copyright (c) 2020 Marak Squires
+@faker-js/faker, Faker - Copyright (c) 2022-2024 - Copyright (c) 2020 Marak Squires
+@microsoft/api-documenter, Copyright (c) Microsoft Corporation. All rights reserved.
+@microsoft/api-extractor, Copyright (c) Microsoft Corporation. All rights reserved.
 @testing-library/dom, Copyright (c) 2017 Kent C. Dodds
 @testing-library/jest-dom, Copyright (c) 2017 Kent C. Dodds
 @testing-library/react, Copyright (c) 2017 Kent C. Dodds
 @testing-library/user-event, Copyright (c) 2020 Giorgio Polvara
 @types/jest, Copyright (c) Microsoft Corporation.
 @types/lodash, Copyright (c) Microsoft Corporation.
+@types/node, Copyright (c) Microsoft Corporation.
 @types/react-dom, Copyright (c) Microsoft Corporation.
-@types/react-pdf, Copyright (c) Microsoft Corporation.
 @types/react, Copyright (c) Microsoft Corporation.
-@types/styled-components, Copyright (c) Microsoft Corporation.
-babel-plugin-i18next-extract, Copyright 2019 Gilbert Gilb's <gilbsgilbert@gmail.com>
-babel-plugin-styled-components, Copyright (c) 2016-present Vladimir Danchenkov and Maximilian Stoiber
-core-js, Copyright (c) 2014-2023 Denis Pushkarev
+babel-jest, Copyright (c) Meta Platforms, Inc. and affiliates.
+core-js, Copyright (c) 2014-2024 Denis Pushkarev
 eslint-plugin-notice, Copyright (c) 2017 Nick Deis
+eslint-plugin-tsdoc, Copyright (c) Microsoft Corporation. All rights reserved.
 husky, Copyright (c) 2021 typicode
+identity-obj-proxy, Copyright (c) 2015 Keyan Zhang
 is-ci, Copyright (c) 2016-2021 Thomas Watson Steen
-jest-canvas-mock,
 jest-environment-jsdom, Copyright (c) Meta Platforms, Inc. and affiliates.
 jest-fail-on-console, Copyright (c) 2022 Valentin Hervieu
-jest-fetch-mock, Copyright (c) 2017 Jeff Lau
 jest, Copyright (c) Meta Platforms, Inc. and affiliates.
 lodash, Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
 react-dom, Copyright (c) Facebook, Inc. and its affiliates.
 react-pdf, Copyright (c) 2017–2023 Wojciech Maj
 react, Copyright (c) Facebook, Inc. and its affiliates.
-styled-components, Copyright (c) 2016-present Glen Maddern and Maximilian Stoiber
 ts-node, Copyright (c) 2014 Blake Embrey (hello@blakeembrey.com)
-web-streams-polyfill, Copyright (c) 2020 Mattias Buelens. Copyright (c) 2016 Diwank Singh Tomer
 
 MIT License
 
@@ -290,6 +289,22 @@ Also add information on how to contact you by electronic and paper mail.
 If your software can interact with users remotely through a computer network, you should also make sure that it provides a way for users to get its source.  For example, if your program is a web application, its interface could display a "Source" link that leads users to an archive of the code.  There are many ways you could offer source, and different solutions will be better for different programs; see section 13 for the specific requirements.
 
 You should also get your employer (if you work as a programmer) or school, if any, to sign a "copyright disclaimer" for the program, if necessary. For more information on this, and how to apply and follow the GNU AGPL, see <http://www.gnu.org/licenses/>.
+
+
+
+
+ISC License (ISC) applies to:
+
+eslint-import-resolver-typescript, Copyright 2021 Alex Gorbatchev <alex.gorbatchev@gmail.com>
+
+ISC License:
+
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 

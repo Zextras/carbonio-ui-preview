@@ -4,23 +4,23 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import * as React from 'react';
 
-import last from 'lodash/last';
-import styled from 'styled-components';
+import { last } from 'lodash';
 
-const FocusContainer = styled.span`
-	outline: none;
-	& > * {
-		outline: none;
-	}
-`;
+import styles from './FocusWithin.module.css';
 
 interface FocusContainerProps {
+	/** Whether the focus should return on the element that made the component initially mount */
 	returnFocus?: boolean;
 	children: React.ReactNode;
 }
 
+/**
+ * Utility component which keeps the focus within its content, allowing the user to use the keyboard to
+ * move across interactive elements, without exiting from the content area
+ */
 const FocusWithin = ({ children, returnFocus = true }: FocusContainerProps): React.JSX.Element => {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const startSentinelRef = useRef<HTMLDivElement | null>(null);
@@ -61,13 +61,13 @@ const FocusWithin = ({ children, returnFocus = true }: FocusContainerProps): Rea
 	}, [onStartSentinelFocus, onEndSentinelFocus, returnFocus]);
 
 	return (
-		<FocusContainer>
+		<span className={styles.focusContainer}>
 			<span tabIndex={0} ref={startSentinelRef} />
 			<div tabIndex={-1} ref={contentRef}>
 				{children}
 			</div>
 			<span tabIndex={0} ref={endSentinelRef} />
-		</FocusContainer>
+		</span>
 	);
 };
 

@@ -18,6 +18,70 @@ Preview utility for Zextras Carbonio
 
 </div>
 
+### Usage
+
+Install the package
+```shell
+npm i @zextras/carbonio-ui-preview
+```
+
+Wrap your app with the `PreviewManager` and the `ThemeProvider`
+
+```tsx
+import { ThemeProvider } from "@zextras/carbonio-design-system";
+import { PreviewManager } from "@zextras/carbonio-ui-preview";
+
+// ...
+
+<ThemeProvider>
+  <PreviewManager>
+    <App/>
+  </PreviewManager>
+</ThemeProvider>
+```
+
+Init the preview from within your app
+
+```tsx
+import { PreviewsManagerContext } from "@zextras/carbonio-ui-preview";
+
+// ...
+
+const { initPreview } = useContext(PreviewsManagerContext);
+
+initPreview([
+  {
+    previewType: 'image',
+    id: 'id1',
+    src: '...'
+  },
+  {
+    previewType: 'pdf',
+    id: 'id2',
+    src: '...'
+  },
+  // ...
+]);
+```
+
+And open the preview of an initialized item through its id
+
+```tsx
+import { PreviewsManagerContext } from "@zextras/carbonio-ui-preview";
+
+// ...
+
+const { openPreview } = useContext(PreviewsManagerContext);
+
+openPreview(id);
+```
+
+See the [example app](examples/app) for a simple working example.
+
+See the [API Documentation](docs/api/carbonio-ui-preview.md) to see the full list of the props available.
+
+See [Migration](docs/migration.md) for hints about the migration to a major version.
+
 ### How to build
 
 #### Setup

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react';
+import * as React from 'react';
 
 import {
 	ByRoleMatcher,
@@ -19,7 +19,7 @@ import {
 	within as rtlWithin,
 	screen as rtlScreen
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { ThemeProvider } from '@zextras/carbonio-design-system';
 import * as fs from 'fs';
 

@@ -1,22 +1,21 @@
 {
-	"extends": "@zextras/carbonio-ui-configs/rules/typescript.json",
 	"compilerOptions": {
+		"target": "ES6",
+		"lib": ["dom", "dom.iterable", "ESNext"],
+		"allowJs": true,
 		"skipLibCheck": true,
-		"target": "es5",
-		"lib": ["es2015", "dom"],
-		"outDir": "lib",
-		"sourceMap": true,
-		"jsx": "react",
-		"moduleResolution": "node",
-		"baseUrl": "src",
-		"paths": {
-			"test-utils": ["./utils/test-utils"]
-		},
-		"types": ["@testing-library/jest-dom"],
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"noImplicitAny": false
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["./node_modules/*"],
-	"ts-node": {
-		"transpileOnly": true
-	}
+	"include": ["src"]
 }

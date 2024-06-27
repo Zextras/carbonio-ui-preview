@@ -3,12 +3,12 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
 
-import findIndex from 'lodash/findIndex';
-import findLastIndex from 'lodash/findLastIndex';
+import { findLastIndex } from 'lodash';
 
-import { ZOOM_STEPS } from '../constants';
+import { ZOOM_STEPS } from '../constants/index.js';
 
 type UseZoomReturnType = {
 	currentZoom: number;
@@ -36,7 +36,7 @@ export function useZoom(previewRef: React.RefObject<Element>): UseZoomReturnType
 
 	const increaseOfOneStep = useCallback(() => {
 		if (incrementable) {
-			const targetIndex = findIndex(ZOOM_STEPS, (step) => step > currentZoom);
+			const targetIndex = ZOOM_STEPS.findIndex((step) => step > currentZoom);
 			if (targetIndex >= 0) {
 				setCurrentZoom(ZOOM_STEPS[targetIndex]);
 				if (targetIndex === ZOOM_STEPS.length - 1) {

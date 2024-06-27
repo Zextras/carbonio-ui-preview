@@ -40,3 +40,11 @@ License: AGPL-3.0-only
 Files: .github/*
 Copyright: 2023 Zextras <https://www.zextras.com>
 License: CC0-1.0
+
+Files: docs/*
+Copyright: 2024 Zextras <https://www.zextras.com>
+License: AGPL-3.0-only
+
+Files: etc/*
+Copyright: 2024 Zextras <https://www.zextras.com>
+License: CC0-1.0

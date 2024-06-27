@@ -3,15 +3,14 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React from 'react';
+import * as React from 'react';
 
-import { act, waitForElementToBeRemoved } from '@testing-library/react';
-import fetch from 'jest-fetch-mock';
+import { act, waitFor } from '@testing-library/react';
 
-import { PdfPreview, PdfPreviewProps } from './PdfPreview';
-import { ZOOM_STEPS } from '../constants';
-import { KEYBOARD_KEY, SELECTORS } from '../constants/test';
-import { screen, loadPDF, setup, triggerObserver } from 'test-utils';
+import { PdfPreview, PdfPreviewProps } from './PdfPreview.js';
+import { ZOOM_STEPS } from '../constants/index.js';
+import { KEYBOARD_KEY, SELECTORS } from '../tests/constants.js';
+import { screen, loadPDF, setup, triggerObserver } from '../tests/utils.js';
 
 const pdfFile = loadPDF('./__mocks__/_pdf.pdf');
 
@@ -19,11 +18,13 @@ const zoomInIcon = 'icon: Plus';
 const zoomOutIcon = 'icon: Minus';
 const zoomFitToWidthIcon = 'icon: MaximizeOutline';
 const zoomResetWidthIcon = 'icon: MinimizeOutline';
+const dataPageWidthAttribute = 'data-page-width';
 
 async function waitForDocumentToLoad(): Promise<void> {
 	const loadingElement = await screen.findByText(/Loading document preview…/i);
-	await waitForElementToBeRemoved(loadingElement);
+	await waitFor(() => expect(loadingElement).not.toBeInTheDocument());
 }
+
 describe('Pdf Preview', () => {
 	test.each<keyof typeof pdfFile>(['dataURI', 'file', 'blob'])(
 		'Render a pdf document from %s',
@@ -44,7 +45,7 @@ describe('Pdf Preview', () => {
 	});
 
 	test('If pdf is not valid render an error message', async () => {
-		fetch.mockReject(() => Promise.reject(new Error('API is down')));
+		global.fetch = jest.fn(() => Promise.reject(new Error('API is down')));
 		const onClose = jest.fn();
 		setup(<PdfPreview show src="invalid-pdf.pdf" onClose={onClose} />);
 		expect(await screen.findByText(/Failed to load document preview./i)).toBeVisible();
@@ -137,7 +138,9 @@ describe('Pdf Preview', () => {
 	});
 
 	test('Click on actions calls onClose if event is not stopped by the action itself, instead if is disabled it is not propagated anyway ', async () => {
-		const onClose = jest.fn();
+		const onClose = jest.fn<void, Parameters<PdfPreviewProps['onClose']>>((ev) => {
+			ev.preventDefault();
+		});
 		const actions: PdfPreviewProps['actions'] = [
 			{
 				id: 'action1',
@@ -156,10 +159,7 @@ describe('Pdf Preview', () => {
 
 		const closeAction: PdfPreviewProps['closeAction'] = {
 			id: 'closeAction',
-			icon: 'Close',
-			onClick: jest.fn((ev: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
-				ev.preventDefault();
-			})
+			icon: 'Close'
 		};
 		const { user } = setup(
 			<PdfPreview
@@ -172,13 +172,12 @@ describe('Pdf Preview', () => {
 			/>
 		);
 		await waitForDocumentToLoad();
-		const action1Item = screen.getByTestId('icon: Activity');
-		const action2Item = screen.getByTestId('icon: People');
-		const closeActionItem = screen.getByTestId('icon: Close');
+		const action1Item = screen.getByRoleWithIcon('button', { icon: 'icon: Activity' });
+		const action2Item = screen.getByRoleWithIcon('button', { icon: 'icon: People' });
+		const closeActionItem = screen.getByRoleWithIcon('button', { icon: 'icon: Close' });
 		expect(action1Item).toBeVisible();
 		expect(action2Item).toBeVisible();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(action2Item.parentElement).toHaveAttribute('disabled');
+		expect(action2Item).toBeDisabled();
 		expect(closeActionItem).toBeVisible();
 		// click on action 1 is propagated and calls onClose
 		await user.click(action1Item);
@@ -188,21 +187,22 @@ describe('Pdf Preview', () => {
 		await user.click(action2Item);
 		expect(actions[1].onClick).not.toHaveBeenCalled();
 		expect(onClose).toHaveBeenCalledTimes(1);
-		// click on close action is stopped by the action, event is not propagated and onClose is not called
+		// click on close action is the onClose itself
 		await user.click(closeActionItem);
-		expect(onClose).toHaveBeenCalledTimes(3);
+		expect(onClose).toHaveBeenCalledTimes(2);
 		// click on filename is equivalent to a click on the overlay, so onClose is called
 		await user.click(screen.getByText(/pdf name/i));
-		expect(onClose).toHaveBeenCalledTimes(4);
+		expect(onClose).toHaveBeenCalledTimes(3);
 	});
 
 	test('Zoom starts at lowest step', async () => {
 		const onClose = jest.fn();
 		setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		const canvas = document.querySelector('canvas');
-		expect(canvas).toHaveAttribute('width', `${ZOOM_STEPS[0]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[0]}`
+		);
 	});
 
 	test('Decrease zoom is disabled when zoom is at lowest point', async () => {
@@ -225,19 +225,25 @@ describe('Pdf Preview', () => {
 		await waitForDocumentToLoad();
 		expect(screen.getByTestId(zoomOutIcon)).toBeVisible();
 		expect(screen.getByTestId(zoomInIcon)).toBeVisible();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[0]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[0]}`
+		);
 		for (let step = 0; step < ZOOM_STEPS.length - 1; step += 1) {
 			// eslint-disable-next-line no-await-in-loop
 			await user.click(screen.getByTestId(zoomInIcon));
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[step + 1]}`);
+			expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+				dataPageWidthAttribute,
+				`${ZOOM_STEPS[step + 1]}`
+			);
 		}
 		for (let step = ZOOM_STEPS.length - 1; step > 0; step -= 1) {
 			// eslint-disable-next-line no-await-in-loop
 			await user.click(screen.getByTestId(zoomOutIcon));
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[step - 1]}`);
+			expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+				dataPageWidthAttribute,
+				`${ZOOM_STEPS[step - 1]}`
+			);
 		}
 	});
 
@@ -245,8 +251,6 @@ describe('Pdf Preview', () => {
 		const onClose = jest.fn();
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		const zoomInButton = screen.getByRoleWithIcon('button', { icon: zoomInIcon });
 		expect(zoomInButton).toBeVisible();
 		expect(zoomInButton).toBeEnabled();
@@ -263,15 +267,15 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = 1000;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		expect(screen.queryByTestId(zoomResetWidthIcon)).not.toBeInTheDocument();
 		expect(ref.current).not.toBeNull();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${mockPdfWidth}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${mockPdfWidth}`
+		);
 		expect(screen.getByTestId(zoomResetWidthIcon)).toBeVisible();
 		expect(screen.queryByTestId(zoomFitToWidthIcon)).not.toBeInTheDocument();
 	});
@@ -282,20 +286,22 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = 1000;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		expect(screen.queryByTestId(zoomResetWidthIcon)).not.toBeInTheDocument();
 		expect(ref.current).not.toBeNull();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${mockPdfWidth}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${mockPdfWidth}`
+		);
 		expect(screen.getByTestId(zoomResetWidthIcon)).toBeVisible();
 		expect(screen.queryByTestId(zoomFitToWidthIcon)).not.toBeInTheDocument();
 		await user.click(screen.getByTestId(zoomResetWidthIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[0]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[0]}`
+		);
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		expect(screen.queryByTestId(zoomResetWidthIcon)).not.toBeInTheDocument();
 	});
@@ -306,8 +312,6 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = ZOOM_STEPS[0] - 1;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
@@ -323,8 +327,6 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = ZOOM_STEPS[ZOOM_STEPS.length - 1] + 1;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
@@ -342,16 +344,16 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = ZOOM_STEPS[stepToReach + 1] - 1;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
 		const zoomOutButton = screen.getByRoleWithIcon('button', { icon: zoomOutIcon });
 		expect(zoomOutButton).toBeEnabled();
 		await user.click(screen.getByTestId(zoomOutIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[stepToReach]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[stepToReach]}`
+		);
 	});
 
 	test('After fit to width, increase zoom set zoom to nearest greater zoom step', async () => {
@@ -362,16 +364,16 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = ZOOM_STEPS[stepToReach - 1] + 1;
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		jest.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get').mockReturnValue(mockPdfWidth);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
 		const zoomInButton = screen.getByRoleWithIcon('button', { icon: zoomInIcon });
 		expect(zoomInButton).toBeEnabled();
 		await user.click(screen.getByTestId(zoomInIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[stepToReach]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[stepToReach]}`
+		);
 	});
 
 	test('When fit to width is active, resize of the window update width of the pdf', async () => {
@@ -380,8 +382,6 @@ describe('Pdf Preview', () => {
 		const mockPdfWidth = [1001, 1501, 2001];
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		expect(screen.getByTestId(zoomFitToWidthIcon)).toBeVisible();
 		const getPreviewClientWidthMock = jest.spyOn(
 			ref.current as HTMLDivElement,
@@ -391,16 +391,20 @@ describe('Pdf Preview', () => {
 		getPreviewClientWidthMock.mockReturnValueOnce(mockPdfWidth[0]);
 
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${mockPdfWidth[0]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${mockPdfWidth[0]}`
+		);
 
 		getPreviewClientWidthMock.mockReturnValueOnce(mockPdfWidth[1]);
 		// resize window to trigger listener
 		act(() => {
 			window.resizeTo(mockPdfWidth[1], mockPdfWidth[1]);
 		});
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${mockPdfWidth[1]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${mockPdfWidth[1]}`
+		);
 	});
 
 	test('Click on disabled decrease/increase zoom actions does not change step and does not close preview', async () => {
@@ -408,29 +412,27 @@ describe('Pdf Preview', () => {
 		const ref = React.createRef<HTMLDivElement>();
 		const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} ref={ref} />);
 		await waitForDocumentToLoad();
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toBeVisible();
 		const zoomOutButton = screen.getByRoleWithIcon('button', { icon: zoomOutIcon });
 		expect(zoomOutButton).toBeDisabled();
 		await user.click(zoomOutButton);
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute('width', `${ZOOM_STEPS[0]}`);
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
+			`${ZOOM_STEPS[0]}`
+		);
 		expect(onClose).not.toHaveBeenCalled();
 		jest
 			.spyOn(ref.current as HTMLDivElement, 'clientWidth', 'get')
 			.mockReturnValue(ZOOM_STEPS[ZOOM_STEPS.length - 1]);
 		await user.click(screen.getByTestId(zoomFitToWidthIcon));
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute(
-			'width',
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
 			`${ZOOM_STEPS[ZOOM_STEPS.length - 1]}`
 		);
 		const zoomInButton = screen.getByRoleWithIcon('button', { icon: zoomInIcon });
 		expect(zoomInButton).toBeDisabled();
 		await user.click(zoomInButton);
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(document.querySelector('canvas')).toHaveAttribute(
-			'width',
+		expect(screen.getAllByTestId(SELECTORS.pdfPageMock)[0]).toHaveAttribute(
+			dataPageWidthAttribute,
 			`${ZOOM_STEPS[ZOOM_STEPS.length - 1]}`
 		);
 		expect(onClose).not.toHaveBeenCalled();
@@ -441,8 +443,6 @@ describe('Pdf Preview', () => {
 			const onClose = jest.fn();
 			setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
 			expect(screen.getByText(/page/i)).toBeVisible();
 			expect(screen.getByRole('textbox', { name: /current page/i })).toBeVisible();
 			// mock pdf has 4 pages
@@ -453,9 +453,6 @@ describe('Pdf Preview', () => {
 			const onClose = jest.fn();
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.clear(pageInput);
@@ -469,9 +466,6 @@ describe('Pdf Preview', () => {
 			const onClose = jest.fn();
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.clear(pageInput);
@@ -487,9 +481,6 @@ describe('Pdf Preview', () => {
 			window.HTMLElement.prototype.scrollIntoView = scrollIntoViewFn;
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.clear(pageInput);
@@ -507,9 +498,6 @@ describe('Pdf Preview', () => {
 			window.HTMLElement.prototype.scrollIntoView = scrollIntoViewFn;
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.clear(pageInput);
@@ -524,9 +512,6 @@ describe('Pdf Preview', () => {
 			const onClose = jest.fn();
 			setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			// eslint-disable-next-line testing-library/no-node-access
@@ -539,11 +524,7 @@ describe('Pdf Preview', () => {
 		test('on scroll, if focus is on input, value is updated with current page', async () => {
 			const onClose = jest.fn();
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
-			await screen.findByText(/Loading document preview…/i);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.clear(pageInput);
@@ -561,13 +542,8 @@ describe('Pdf Preview', () => {
 			const onClose = jest.fn();
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
-			expect(pageInput).toHaveDisplayValue('1');
-			await user.clear(pageInput);
-			await user.type(pageInput, '4');
+			await user.click(pageInput);
 			expect(pageInput).toHaveFocus();
 			await user.keyboard(KEYBOARD_KEY.ESC);
 			expect(onClose).not.toHaveBeenCalled();
@@ -582,9 +558,6 @@ describe('Pdf Preview', () => {
 				const onClose = jest.fn();
 				const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 				await waitForDocumentToLoad();
-				// eslint-disable-next-line testing-library/no-node-access
-				expect(document.querySelector('canvas')).toBeVisible();
-				expect(screen.getByText(/page/i)).toBeVisible();
 				const pageInput = screen.getByRole('textbox', { name: /current page/i });
 				expect(pageInput).toHaveDisplayValue('1');
 				await user.keyboard(KEYBOARD_KEY.END);
@@ -596,9 +569,6 @@ describe('Pdf Preview', () => {
 				const onClose = jest.fn();
 				const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 				await waitForDocumentToLoad();
-				// eslint-disable-next-line testing-library/no-node-access
-				expect(document.querySelector('canvas')).toBeVisible();
-				expect(screen.getByText(/page/i)).toBeVisible();
 				const pageInput = screen.getByRole('textbox', { name: /current page/i });
 				expect(pageInput).toHaveDisplayValue('1');
 				await user.click(pageInput);
@@ -630,9 +600,6 @@ describe('Pdf Preview', () => {
 				const onClose = jest.fn();
 				const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 				await waitForDocumentToLoad();
-				// eslint-disable-next-line testing-library/no-node-access
-				expect(document.querySelector('canvas')).toBeVisible();
-				expect(screen.getByText(/page/i)).toBeVisible();
 				const pageInput = screen.getByRole('textbox', { name: /current page/i });
 				expect(pageInput).toHaveDisplayValue('1');
 				await user.keyboard(KEYBOARD_KEY.PAGE_DOWN);
@@ -656,9 +623,6 @@ describe('Pdf Preview', () => {
 				const onClose = jest.fn();
 				const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 				await waitForDocumentToLoad();
-				// eslint-disable-next-line testing-library/no-node-access
-				expect(document.querySelector('canvas')).toBeVisible();
-				expect(screen.getByText(/page/i)).toBeVisible();
 				const pageInput = screen.getByRole('textbox', { name: /current page/i });
 				expect(pageInput).toHaveDisplayValue('1');
 				await user.click(pageInput);
@@ -691,9 +655,6 @@ describe('Pdf Preview', () => {
 			window.HTMLElement.prototype.scrollBy = scrollByFn;
 			const { user } = setup(<PdfPreview show src={pdfFile.dataURI} onClose={onClose} />);
 			await waitForDocumentToLoad();
-			// eslint-disable-next-line testing-library/no-node-access
-			expect(document.querySelector('canvas')).toBeVisible();
-			expect(screen.getByText(/page/i)).toBeVisible();
 			const pageInput = screen.getByRole('textbox', { name: /current page/i });
 			expect(pageInput).toHaveDisplayValue('1');
 			await user.click(pageInput);

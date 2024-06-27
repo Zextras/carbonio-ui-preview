@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/zextras/carbonio-ui-preview/compare/v1.2.4...v1.2.5) (2024-06-10)
+
+### [1.2.4](https://github.com/zextras/carbonio-ui-preview/compare/v1.2.3...v1.2.4) (2024-06-10)
+
+
+### Bug Fixes
+
+* update react-pdf to v7 to fix vulnerability ([22ad4e0](https://github.com/zextras/carbonio-ui-preview/commit/22ad4e05079284f4e46a25052aa4dd0d8921e017)), closes [wojtekmaj/react-pdf#1786](https://github.com/wojtekmaj/react-pdf/issues/1786) [#65](https://github.com/zextras/carbonio-ui-preview/issues/65)
+
 ### [1.2.3](https://github.com/zextras/carbonio-ui-preview/compare/v1.2.2...v1.2.3) (2024-02-27)
 
 ### [1.2.2](https://github.com/zextras/carbonio-ui-preview/compare/v1.2.1...v1.2.2) (2023-09-28)
