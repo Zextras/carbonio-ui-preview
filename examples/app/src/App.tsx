@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import {PreviewManagerContextType, PreviewsManagerContext} from "@zextras/carbonio-ui-preview";
-import {useContext, useEffect} from "react";
+import {PreviewManagerContextType, usePreview} from "@zextras/carbonio-ui-preview";
+import {useEffect} from "react";
 
 type PreviewItem = Parameters<PreviewManagerContextType['initPreview']>[0][number]
 
@@ -34,7 +34,7 @@ const items = [
 ] satisfies PreviewItem[];
 
 function Item({ id, filename}: Readonly<{ id: string; filename: string}>) {
-  const { openPreview } = useContext(PreviewsManagerContext);
+  const { openPreview } = usePreview();
   const clickHandler = () => {
     openPreview(id);
   }
@@ -48,7 +48,7 @@ function Item({ id, filename}: Readonly<{ id: string; filename: string}>) {
 }
 
 function App() {
-  const {initPreview} = useContext(PreviewsManagerContext);
+  const {initPreview} = usePreview();
 
   useEffect(() => {
     initPreview(items);
