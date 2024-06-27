@@ -12,6 +12,10 @@ export default {
         {
             name: 'devel',
             prerelease: true
+        },
+        {
+            name: 'test',
+            prerelease: true
         }
     ],
     plugins: [
