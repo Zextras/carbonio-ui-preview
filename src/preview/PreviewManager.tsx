@@ -61,7 +61,7 @@ export const usePreview = (): PreviewManagerContextType => useContext(PreviewsMa
  * From within it, the PreviewsManagerContext give access to the functions to initialize and open
  * the previews of different items.
  */
-export const PreviewManager: React.FC = ({ children }) => {
+export const PreviewManager = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
 	const [previews, dispatchPreviews] = useReducer(
 		(state: PreviewItem[], action: { type: 'empty' } | { type: 'init'; value: PreviewItem[] }) => {
 			switch (action.type) {

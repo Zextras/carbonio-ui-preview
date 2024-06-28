@@ -21,6 +21,17 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[PreviewManager({ children })](./carbonio-ui-preview.previewmanager.md)
+
+
+</td><td>
+
+The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
+
+
+</td></tr>
+<tr><td>
+
 [usePreview()](./carbonio-ui-preview.usepreview.md)
 
 
@@ -142,17 +153,6 @@ Main component for rendering the preview of an image
 </td><td>
 
 Main component for the preview of a pdf
-
-
-</td></tr>
-<tr><td>
-
-[PreviewManager](./carbonio-ui-preview.previewmanager.md)
-
-
-</td><td>
-
-The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
 
 
 </td></tr>

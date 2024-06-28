@@ -14,7 +14,7 @@ import styles from './FocusWithin.module.css';
 interface FocusContainerProps {
 	/** Whether the focus should return on the element that made the component initially mount */
 	returnFocus?: boolean;
-	children: React.ReactChild | React.ReactChildren;
+	children: React.ReactNode;
 }
 
 /**
