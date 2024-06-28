@@ -9,5 +9,5 @@ Main component for rendering the preview of an image
 **Signature:**
 
 ```typescript
-ImagePreview: React.ForwardRefExoticComponent<ImagePreviewProps & React.RefAttributes<HTMLDivElement>>
+ImagePreview: import("react").ForwardRefExoticComponent<ImagePreviewProps & import("react").RefAttributes<HTMLDivElement>>
 ```

@@ -402,13 +402,6 @@ pipeline {
                     label "nodejs-agent-v4"
                 }
             }
-            when {
-                beforeAgent(true)
-                allOf {
-                    expression { isReleaseBranch == false }
-                    expression { isMergeCommit == false }
-                }
-            }
             steps {
                 script {
                     unstash(name: '.npmrc')
@@ -423,89 +416,22 @@ pipeline {
         }
 
         // ============================================ Release Automation ==============================================
-        stage("Bump Version") {
-            agent {
-                node {
-                    label "nodejs-agent-v4"
-                }
-            }
+        stage('Release') {
             when {
-                beforeAgent(true)
-                expression { isBumpBuild == true }
-            }
-            steps {
-                gitSetup()
-                script {
-                    def commitVersion = getCommitVersion();
-                    if (commitVersion) {
-                        echo "Force bump to version ${commitVersion}"
-                        npxCmd(
-                            script: "standard-version --no-verify --release-as ${commitVersion}"
-                        )
-                    } else {
-                        npxCmd(
-                            script: "standard-version --no-verify"
-                        )
-                    }
-                    pkgVersionFull = getPackageVersion()
-                    echo("Package version: ${pkgVersionFull}")
-                    gitPush(
-                        branch: "${BRANCH_NAME}",
-                        followTags: true
-                    )
-                    def versionBumperBranch = "version-bumper/v${pkgVersionFull}"
-                    gitPush(
-                        branch: "refs/heads/${versionBumperBranch}"
-                    )
-
-                    stash(
-                        includes: 'CHANGELOG.md',
-                        name: 'release_updated_files_changelogmd'
-                    )
-                    stash(
-                        includes: 'package.json',
-                        name: 'release_updated_files_packagejson'
-                    )
-                    stash(
-                        includes: 'package-lock.json',
-                        name: 'release_updated_files_packagelockjson'
-                    )
-                }
-            }
-        }
-
-        stage("Release in NPM") {
-            agent {
-                node {
-                    label "nodejs-agent-v4"
-                }
-            }
-            when {
-                beforeAgent(true)
+                beforeAgent true
                 allOf {
-                    expression { isReleaseBranch == true }
-                    expression { isBumpBuild == false }
+                    expression { isPullRequest == false }
                 }
             }
             steps {
                 script {
-                    def commitId = getCommitId()
-                    checkout(scm: [
-                        $class: "GitSCM",
-                        branches: [[
-                            name: commitId
-                        ]],
-                        userRemoteConfigs: scm.userRemoteConfigs
-                    ])
-                    unstash(name: ".npmrc")
-                    catchError(buildResult: "UNSTABLE", stageResult: "FAILURE") {
-                        nodeCmd(
-                            install: true,
-                            script: "npm publish",
-                            varEnv: [
-                                NODE_ENV: 'production'
-                            ]
-                        )
+                    withCredentials([usernamePassword(credentialsId: 'npm-zextras-bot-auth-token', usernameVariable: 'AUTH_USERNAME', passwordVariable: 'NPM_TOKEN')]) {
+                        withCredentials([usernamePassword(credentialsId: 'tarsier-bot-pr-token-github', usernameVariable: 'GH_USERNAME', passwordVariable: 'GH_TOKEN')]) {
+                            npxCmd(
+                                script: "semantic-release",
+                                install: true
+                            )
+                        }
                     }
                 }
             }

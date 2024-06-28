@@ -1,6 +1,6 @@
 {
 	"name": "@zextras/carbonio-ui-preview",
-	"version": "1.2.5",
+	"version": "0.0.0-semantically-released",
 	"description": "Preview ui utility for Zextras Carbonio",
 	"main": "./lib/index.js",
 	"module": "./lib/index.js",
@@ -19,10 +19,8 @@
 	"scripts": {
 		"prebuild:lib": "rm -rf lib",
 		"build:lib": "tsc -p tsconfig.lib.json && npm run copy-styles",
-		"prebuild:docs": "rm -rf docs",
-		"build:docs": "npx api-extractor run --verbose && npx api-documenter generate -i ./temp/ -o ./docs",
-		"prebuild:docs:local": "rm -rf docs",
-		"build:docs:local": "npx api-extractor run --verbose --local && npx api-documenter generate -i ./temp/ -o ./docs",
+		"build:docs": "npx api-extractor run --verbose && npx api-documenter generate -i ./temp/ -o ./docs/api",
+		"build:docs:local": "npx api-extractor run --verbose --local && npx api-documenter generate -i ./temp/ -o ./docs/api",
 		"build:local": "npm run build:lib && npm run build:docs:local",
 		"build": "npm run build:lib && npm run build:docs",
 		"prepare": "is-ci || husky",
@@ -35,6 +33,10 @@
 		"test": "jest",
 		"postbuild": "is-ci || ./scripts/check-build.sh",
 		"copy-styles": "cp src/preview/*.css lib/preview/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/zextras/carbonio-ui-preview.git"
 	},
 	"keywords": [],
 	"author": "Zextras DEV Team <https://www.zextras.com/carbonio/>",
@@ -60,6 +62,7 @@
 		"@types/react-dom": "^17.0.25",
 		"@zextras/carbonio-ui-configs": "^1.0.1",
 		"babel-jest": "^29.7.0",
+		"conventional-changelog-conventionalcommits": "^8.0.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
 		"eslint-plugin-notice": "^0.9.10",
 		"eslint-plugin-tsdoc": "^0.3.0",
@@ -70,11 +73,12 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jest-fail-on-console": "^3.3.0",
 		"jest-junit": "^16.0.0",
+		"semantic-release": "^24.0.0",
 		"ts-node": "^10.9.2"
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
-		"react-pdf": "^7.7.3"
+		"react-pdf": "^9.0.0"
 	},
 	"peerDependencies": {
 		"@zextras/carbonio-design-system": ">=1.0.0",

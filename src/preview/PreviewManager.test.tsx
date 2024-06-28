@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import * as React from 'react';
 
 import { screen } from '@testing-library/react';
 

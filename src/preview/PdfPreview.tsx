@@ -3,7 +3,8 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 
 import { useCombinedRefs, getColor, useTheme } from '@zextras/carbonio-design-system';
 import { size as lodashSize, map, noop } from 'lodash';

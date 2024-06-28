@@ -6,6 +6,32 @@
 
 A library to open previews of images and pdf.
 
+## Functions
+
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[usePreview()](./carbonio-ui-preview.usepreview.md)
+
+
+</td><td>
+
+Util hook to quick access to the preview functions
+
+
+</td></tr>
+</tbody></table>
+
 ## Interfaces
 
 <table><thead><tr><th>
