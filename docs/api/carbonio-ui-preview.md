@@ -30,6 +30,17 @@ The manager for showing multiple previews. From within it, the PreviewsManagerCo
 
 
 </td></tr>
+<tr><td>
+
+[usePreview()](./carbonio-ui-preview.usepreview.md)
+
+
+</td><td>
+
+Util hook to quick access to the preview functions
+
+
+</td></tr>
 </tbody></table>
 
 ## Interfaces

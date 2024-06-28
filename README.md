@@ -43,11 +43,11 @@ import { PreviewManager } from "@zextras/carbonio-ui-preview";
 Init the preview from within your app
 
 ```tsx
-import { PreviewsManagerContext } from "@zextras/carbonio-ui-preview";
+import { usePreview } from "@zextras/carbonio-ui-preview";
 
 // ...
 
-const { initPreview } = useContext(PreviewsManagerContext);
+const { initPreview } = usePreview();
 
 initPreview([
   {
@@ -67,11 +67,11 @@ initPreview([
 And open the preview of an initialized item through its id
 
 ```tsx
-import { PreviewsManagerContext } from "@zextras/carbonio-ui-preview";
+import { usePreview } from "@zextras/carbonio-ui-preview";
 
 // ...
 
-const { openPreview } = useContext(PreviewsManagerContext);
+const { openPreview } = usePreview();
 
 openPreview(id);
 ```

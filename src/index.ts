@@ -23,6 +23,7 @@ export {
 	PreviewManager,
 	PreviewsManagerContext,
 	type PreviewManagerContextType,
-	type PreviewItem
+	type PreviewItem,
+	usePreview
 } from './preview/PreviewManager.js';
 export { PreviewWrapper, type PreviewWrapperProps } from './preview/PreviewWrapper.js';

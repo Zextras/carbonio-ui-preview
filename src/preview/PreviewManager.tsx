@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import { useCallback, createContext, useReducer, useState, useMemo } from 'react';
+import { useCallback, createContext, useReducer, useState, useMemo, useContext } from 'react';
 import * as React from 'react';
 
 import { findIndex } from 'lodash';
@@ -52,6 +52,9 @@ export const PreviewsManagerContext = createContext<PreviewManagerContextType>({
 	openPreview: () => undefined,
 	emptyPreview: () => undefined
 });
+
+/** Util hook to quick access to the preview functions */
+export const usePreview = (): PreviewManagerContextType => useContext(PreviewsManagerContext);
 
 /**
  * The manager for showing multiple previews.
