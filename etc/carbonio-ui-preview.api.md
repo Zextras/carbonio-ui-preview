@@ -132,4 +132,7 @@ export type PreviewWrapperProps = (ImagePreviewProps & {
     previewType: 'pdf';
 });
 
+// @public
+export const usePreview: () => PreviewManagerContextType;
+
 ```
