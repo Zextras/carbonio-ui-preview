@@ -5,115 +5,27 @@
  */
 
 // git utils
-int getCommitParentsCount() {
-    return Integer.parseInt(
-        sh(
-            script: """#!/usr/bin/env bash
-                git cat-file -p HEAD | grep -w "parent" | wc -l
-            """,
-            returnStdout: true
-        ).trim()
-    )
+String getRepositoryName() {
+    return sh(script: '''#!/bin/bash
+        git remote -v | head -n1 | cut -d$'\t' -f2 | cut -d' ' -f1 | sed -e 's!https://github.com/!!g' -e 's!git@github.com:!!g' -e 's!.git!!g'
+    ''', returnStdout: true).trim()
 }
 
-boolean gitIsMergeCommit() {
-    return 2 <= getCommitParentsCount()
+String getLastTag() {
+    return sh(script: '''#!/bin/bash
+        git describe --tags --abbrev=0
+    ''', returnStdout: true).trim()
 }
 
-void gitFixConfigAndRemote() {
-    sh(
-        script: """#!/usr/bin/env bash
-            git config user.email "bot@zextras.com"
-            git config user.name "Tarsier Bot"
-        """
-    )
-    String repoOriginUrl = sh(
-        script: """#!/usr/bin/env bash
-            git remote -v | head -n1 | cut -d\$'\t' -f2 | cut -d\" \" -f1
-        """,
-        returnStdout: true
-    ).trim()
-    String newOriginUrl = repoOriginUrl.replaceFirst("https://github.com/Zextras", "git@github.com:Zextras")
-    sh(
-        script: """#!/usr/bin/env bash
-            git remote set-url origin ${newOriginUrl}
-        """
-    )
-}
-
-void gitUnshallow() {
-    sh(
-      script: """#!/usr/bin/env bash
-        git fetch --unshallow
-      """
-    )
-}
-
-void gitSetup() {
-    gitFixConfigAndRemote()
-    gitUnshallow()
-}
-
-String getCommitVersion() {
-    return sh(
-        script: """#!/usr/bin/env bash
-            git log -1 | grep \'version:\' | sed -n \'s/.*version:\\s*//p\'
-        """,
-        returnStdout: true
-    ).trim()
-}
-
-String getCommitId() {
-    return sh(
-        script: """#!/usr/bin/env bash
-            git rev-parse HEAD
-        """,
-        returnStdout: true
-    ).trim()
-}
-
-void gitPush(Map opts = [:]) {
-    def gitOptions = [' ']
-    if (opts.followTags == true) {
-        gitOptions << '--follow-tags'
+Boolean tagExistsAtHead() {
+    try {
+        sh(script: '''#!/bin/bash
+            git describe --tags --exact-match
+        ''', returnStdout: true)
+        return true
+    } catch (err) {
+        return false
     }
-    if (gitOptions.size() > 1) {
-        gitOptions << ' '
-    }
-
-    sh(
-        script: """#!/usr/bin/env bash
-            git push${gitOptions.join(' ')}origin HEAD:${opts.branch}
-        """
-    )
-}
-
-String getOriginUrl() {
-    return sh(
-      script: """#!/usr/bin/env bash
-        git remote -v | head -n1 | cut -d\$'\t' -f2 | cut -d\" \" -f1
-      """,
-      returnStdout: true
-    ).trim()
-}
-
-void openGithubPr(Map args = [:]) {
-    def ownerAndRepo = getOriginUrl().replaceAll("git@github.com:", "").replaceAll(".git", "")
-    echo "Opening PR with https://api.github.com/repos/${ownerAndRepo}/pulls"
-    sh(
-        script: """#!/usr/bin/env bash
-            curl --location https://api.github.com/repos/${ownerAndRepo}/pulls \
-            -X POST \
-            -H 'Accept: application/vnd.github+json' \
-            -H 'Authorization: Bearer ${args.TOKEN}' \
-            -d '{
-                \"title\": \"${args.title}\",
-                \"head\": \"${args.head}\",
-                \"base\": \"${args.base}\",
-                \"maintainer_can_modify\": true
-            }'
-        """
-    )
 }
 
 // Package utils
@@ -122,26 +34,6 @@ String getPackageName() {
         script: """#!/usr/bin/env bash
             cat package.json \
             | jq --raw-output '.name'
-            """,
-        returnStdout: true
-    ).trim()
-}
-
-String getPackageDescription() {
-    return sh(
-        script: """#!/usr/bin/env bash
-            cat package.json \
-            | jq --raw-output '.description'
-            """,
-        returnStdout: true
-    ).trim()
-}
-
-String getPackageVersion() {
-    return sh(
-        script: """#!/usr/bin/env bash
-            cat package.json \
-            | jq --raw-output '.version'
             """,
         returnStdout: true
     ).trim()
@@ -195,14 +87,9 @@ void npmLogin(String npmAuthToken) {
 Boolean isReleaseBranch
 Boolean isDevelBranch
 Boolean isPullRequest
-Boolean isMergeCommit
-Boolean isBumpBuild
 Boolean lcovIsPresent
 // PROJECT DETAILS
 String pkgName
-String pkgVersion
-String pkgVersionFull
-String[] pkgVersionParts
 
 pipeline {
     agent {
@@ -245,18 +132,8 @@ pipeline {
                     echo "isDevelBranch: ${isDevelBranch}"
                     isPullRequest = "${BRANCH_NAME}" ==~ /PR-\d+/
                     echo "isPullRequest: ${isPullRequest}"
-                    isMergeCommit = gitIsMergeCommit()
-                    echo "isMergeCommit: ${isMergeCommit}"
-                    isBumpBuild = isReleaseBranch && isMergeCommit
-                    echo "isBumpBuild: ${isBumpBuild}"
-                    isDevBuild = !isReleaseBranch
-                    echo "isDevBuild: ${isDevBuild}"
                     pkgName = getPackageName()
                     echo "pkgName: ${pkgName}"
-                    pkgDescription = getPackageDescription()
-                    echo "pkgDescription: ${pkgDescription}"
-                    pkgFullVersion = getPackageVersion()
-                    echo "pkgFullVersion: ${pkgFullVersion}"
                     isSonarQubeEnabled = params.RUN_SONARQUBE == true && (isPullRequest || isDevelBranch || isReleaseBranch)
                     echo "isSonarQubeEnabled: ${isSonarQubeEnabled}"
                 }
@@ -441,6 +318,7 @@ pipeline {
                 beforeAgent true
                 allOf {
                     expression { isReleaseBranch == true }
+                    expression { tagExistsAtHead() == true }
                 }
             }
             steps {
