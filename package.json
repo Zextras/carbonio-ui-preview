@@ -64,7 +64,7 @@
 		"babel-jest": "^29.7.0",
 		"conventional-changelog-conventionalcommits": "^8.0.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
-		"eslint-plugin-notice": "^0.9.10",
+		"eslint-plugin-notice": "^1.0.0",
 		"eslint-plugin-tsdoc": "^0.3.0",
 		"husky": "^9.0.11",
 		"identity-obj-proxy": "^3.0.0",
@@ -78,7 +78,7 @@
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
-		"react-pdf": "^9.0.0"
+		"react-pdf": "^9.1.0"
 	},
 	"peerDependencies": {
 		"@zextras/carbonio-design-system": ">=1.0.0",
