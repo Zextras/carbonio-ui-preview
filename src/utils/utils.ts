@@ -17,3 +17,8 @@ export function print(documentFile: ArrayBuffer | Blob): void {
 		};
 	}
 }
+
+const videoElement = document.createElement('video');
+export function videoCanPlayType(mimeType: string): CanPlayTypeResult {
+	return videoElement.canPlayType(mimeType);
+}
