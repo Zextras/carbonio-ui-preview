@@ -68,7 +68,7 @@ string
 
 </td><td>
 
-_(Optional)_ file mime type
+_(Optional)_ File mime type
 
 
 </td></tr>

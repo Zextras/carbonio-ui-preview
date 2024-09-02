@@ -4,7 +4,7 @@
 
 ## VideoPreviewProps.mimeType property
 
-file mime type
+File mime type
 
 **Signature:**
 
