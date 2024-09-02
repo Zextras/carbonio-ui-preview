@@ -109,7 +109,7 @@ describe('Video Preview', () => {
 	});
 
 	it('should not render the video when canPlayType return empty string on mime type (mime type not supported)', () => {
-		jest.spyOn(utils, 'videoCanPlayType').mockReturnValue('');
+		jest.spyOn(HTMLVideoElement.prototype, 'canPlayType').mockReturnValue('');
 
 		setup(
 			<VideoPreview
