@@ -21,7 +21,7 @@ describe('Video Preview', () => {
 		expect(screen.getByTestId('video')).toBeVisible();
 	});
 
-	test('If show is false does not render an image', () => {
+	test('If show is false does not render the video', () => {
 		const onClose = jest.fn();
 		setup(<VideoPreview show={false} src={''} onClose={onClose} />);
 		expect(screen.queryByTestId('video')).not.toBeInTheDocument();
@@ -108,7 +108,7 @@ describe('Video Preview', () => {
 		expect(onClose).toHaveBeenCalledTimes(3);
 	});
 
-	it('should not render the video when canPlayType return empty string on mime type(mime type not supported)', () => {
+	it('should not render the video when canPlayType return empty string on mime type (mime type not supported)', () => {
 		jest.spyOn(utils, 'videoCanPlayType').mockReturnValue('');
 
 		setup(
@@ -133,7 +133,7 @@ describe('Video Preview', () => {
 	});
 
 	it('should render the video when canPlayType return maybe string on mime type', () => {
-		jest.spyOn(utils, 'videoCanPlayType').mockReturnValue('maybe');
+		jest.spyOn(HTMLVideoElement.prototype, 'canPlayType').mockReturnValue('maybe');
 		const mimeType = 'video/mp4';
 		setup(<VideoPreview onClose={jest.fn()} show src={''} mimeType={mimeType} />);
 		expect(screen.getByTestId('video')).toBeVisible();
@@ -141,7 +141,7 @@ describe('Video Preview', () => {
 	});
 
 	it('should render the video when canPlayType return probably string on mime type', () => {
-		jest.spyOn(utils, 'videoCanPlayType').mockReturnValue('probably');
+		jest.spyOn(HTMLVideoElement.prototype, 'canPlayType').mockReturnValue('probably');
 		const mimeType = 'video/mp4';
 		setup(<VideoPreview onClose={jest.fn()} show src={''} mimeType={mimeType} />);
 		expect(screen.getByTestId('video')).toBeVisible();
@@ -158,11 +158,11 @@ describe('Video Preview', () => {
 		jest.spyOn(HTMLMediaElement.prototype, 'paused', 'get').mockReturnValue(true);
 		const playStub = jest
 			.spyOn(window.HTMLVideoElement.prototype, 'play')
-			.mockImplementation(() => Promise.resolve());
+			.mockImplementation();
 
 		const pauseStub = jest
 			.spyOn(window.HTMLVideoElement.prototype, 'pause')
-			.mockImplementation(() => undefined);
+			.mockImplementation();
 
 		const { user } = setup(<VideoPreview onClose={jest.fn()} show src={''} />);
 		await user.keyboard(' ');
@@ -175,11 +175,11 @@ describe('Video Preview', () => {
 		jest.spyOn(HTMLMediaElement.prototype, 'paused', 'get').mockReturnValue(false);
 		const pauseStub = jest
 			.spyOn(window.HTMLVideoElement.prototype, 'pause')
-			.mockImplementation(() => undefined);
+			.mockImplementation();
 
 		const playStub = jest
 			.spyOn(window.HTMLVideoElement.prototype, 'play')
-			.mockImplementation(() => Promise.resolve());
+			.mockImplementation();
 
 		const { user } = setup(<VideoPreview onClose={jest.fn()} show src={''} />);
 		await user.keyboard(' ');

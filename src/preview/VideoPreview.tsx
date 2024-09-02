@@ -14,7 +14,7 @@ import { videoCanPlayType } from '../utils/utils.js';
 export interface VideoPreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
 	/** Preview video source */
 	src: string;
-	/** file mime type */
+	/** File mime type */
 	mimeType?: string;
 	/** Label shown when the preview cannot be shown */
 	errorLabel?: string;
