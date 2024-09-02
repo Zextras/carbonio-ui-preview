@@ -9,7 +9,8 @@ import { Text, useCombinedRefs } from '@zextras/carbonio-design-system';
 
 import { PreviewNavigator, type PreviewNavigatorProps } from './PreviewNavigator.js';
 import styles from './VideoPreview.module.css';
-import { videoCanPlayType } from '../utils/utils.js';
+
+const videoElement = document.createElement('video');
 
 export interface VideoPreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
 	/** Preview video source */
@@ -42,7 +43,7 @@ export const VideoPreview = forwardRef<HTMLDivElement, VideoPreviewProps>(functi
 ) {
 	const canPlayType = useMemo(() => {
 		if (mimeType) {
-			return videoCanPlayType(mimeType) !== '';
+			return videoElement.canPlayType(mimeType) !== '';
 		}
 		return true;
 	}, [mimeType]);

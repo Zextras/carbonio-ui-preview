@@ -10,7 +10,6 @@ import { fireEvent } from '@testing-library/react';
 import { VideoPreview, VideoPreviewProps } from './VideoPreview.js';
 import { KEYBOARD_KEY } from '../tests/constants.js';
 import { screen, setup } from '../tests/utils.js';
-import * as utils from '../utils/utils.js';
 
 describe('Video Preview', () => {
 	const cannotBePlayedMessage = 'This video cannot be played.';
@@ -156,35 +155,25 @@ describe('Video Preview', () => {
 
 	it('should call video play when keyboard space is clicked', async () => {
 		jest.spyOn(HTMLMediaElement.prototype, 'paused', 'get').mockReturnValue(true);
-		const playStub = jest
-			.spyOn(window.HTMLVideoElement.prototype, 'play')
-			.mockImplementation();
+		const playStub = jest.spyOn(window.HTMLVideoElement.prototype, 'play').mockImplementation();
 
-		const pauseStub = jest
-			.spyOn(window.HTMLVideoElement.prototype, 'pause')
-			.mockImplementation();
+		const pauseStub = jest.spyOn(window.HTMLVideoElement.prototype, 'pause').mockImplementation();
 
 		const { user } = setup(<VideoPreview onClose={jest.fn()} show src={''} />);
 		await user.keyboard(' ');
 		expect(playStub).toHaveBeenCalled();
 		expect(pauseStub).not.toHaveBeenCalled();
-		jest.restoreAllMocks();
 	});
 
 	it('should call video pause when video is not paused and keyboard space is clicked', async () => {
 		jest.spyOn(HTMLMediaElement.prototype, 'paused', 'get').mockReturnValue(false);
-		const pauseStub = jest
-			.spyOn(window.HTMLVideoElement.prototype, 'pause')
-			.mockImplementation();
+		const pauseStub = jest.spyOn(window.HTMLVideoElement.prototype, 'pause').mockImplementation();
 
-		const playStub = jest
-			.spyOn(window.HTMLVideoElement.prototype, 'play')
-			.mockImplementation();
+		const playStub = jest.spyOn(window.HTMLVideoElement.prototype, 'play').mockImplementation();
 
 		const { user } = setup(<VideoPreview onClose={jest.fn()} show src={''} />);
 		await user.keyboard(' ');
 		expect(pauseStub).toHaveBeenCalled();
 		expect(playStub).not.toHaveBeenCalled();
-		jest.restoreAllMocks();
 	});
 });
