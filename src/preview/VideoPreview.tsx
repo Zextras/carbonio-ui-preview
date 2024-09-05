@@ -89,6 +89,16 @@ export const VideoPreview = forwardRef<HTMLDivElement, VideoPreviewProps>(functi
 		};
 	}, [eventListener, show]);
 
+	useEffect(() => {
+		const instance = videoRef.current;
+		return (): void => {
+			if (instance) {
+				instance.pause();
+				instance.src = '';
+			}
+		};
+	}, []);
+
 	return (
 		<PreviewNavigator
 			onPreviousPreview={onPreviousPreview}
