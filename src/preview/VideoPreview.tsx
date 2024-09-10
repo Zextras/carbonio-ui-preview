@@ -124,7 +124,7 @@ export const VideoPreview = forwardRef<HTMLDivElement, VideoPreviewProps>(functi
 						ref={videoRef}
 						src={src}
 						onError={onVideoError}
-						className={styles.image}
+						className={styles.video}
 						controls
 					/>
 				)}
