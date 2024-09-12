@@ -14,7 +14,7 @@ import { screen, setup } from '../tests/utils.js';
 describe('Video Preview', () => {
 	const cannotBePlayedMessage = 'This video cannot be played.';
 
-	test('Render an video', () => {
+	test('Render a video', () => {
 		const onClose = jest.fn();
 		setup(<VideoPreview show src={'video'} onClose={onClose} />);
 		expect(screen.getByTestId('video')).toBeVisible();
