@@ -6,9 +6,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import * as React from 'react';
 
-import { findLastIndex } from 'lodash';
-
-import { ZOOM_STEPS } from '../constants/index.js';
+import { ZOOM_STEPS } from '../../constants/index.js';
 
 type UseZoomReturnType = {
 	currentZoom: number;
@@ -52,7 +50,7 @@ export function useZoom(previewRef: React.RefObject<Element>): UseZoomReturnType
 
 	const decreaseOfOneStep = useCallback(() => {
 		if (decrementable) {
-			const targetIndex = findLastIndex(ZOOM_STEPS, (step) => step < currentZoom);
+			const targetIndex = ZOOM_STEPS.findLastIndex((step) => step < currentZoom);
 			if (targetIndex >= 0) {
 				setCurrentZoom(ZOOM_STEPS[targetIndex]);
 				if (targetIndex === 0) {

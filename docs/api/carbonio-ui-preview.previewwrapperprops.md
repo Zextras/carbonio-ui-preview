@@ -11,7 +11,9 @@ export type PreviewWrapperProps = (ImagePreviewProps & {
     previewType: 'image';
 }) | (PdfPreviewProps & {
     previewType: 'pdf';
+}) | (VideoPreviewProps & {
+    previewType: 'video';
 });
 ```
-**References:** [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
+**References:** [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)<!-- -->, [VideoPreviewProps](./carbonio-ui-preview.videopreviewprops.md)
 

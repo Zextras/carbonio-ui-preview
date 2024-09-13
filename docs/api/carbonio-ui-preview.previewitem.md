@@ -11,11 +11,13 @@ Define an item for the preview. It can be of type 'image' or 'pdf'. The id is re
 ```typescript
 export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
     previewType: 'image';
+}) | (MakeOptional<Omit<VideoPreviewProps, 'show'>, 'onClose'> & {
+    previewType: 'video';
 }) | (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & {
     previewType: 'pdf';
 })) & {
     id: string;
 };
 ```
-**References:** [MakeOptional](./carbonio-ui-preview.makeoptional.md)<!-- -->, [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
+**References:** [MakeOptional](./carbonio-ui-preview.makeoptional.md)<!-- -->, [ImagePreviewProps](./carbonio-ui-preview.imagepreviewprops.md)<!-- -->, [VideoPreviewProps](./carbonio-ui-preview.videopreviewprops.md)<!-- -->, [PdfPreviewProps](./carbonio-ui-preview.pdfpreviewprops.md)
 
