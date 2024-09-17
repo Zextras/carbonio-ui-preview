@@ -7,11 +7,10 @@
 import { useCallback, createContext, useReducer, useState, useMemo, useContext } from 'react';
 import * as React from 'react';
 
-import { findIndex } from 'lodash';
-
 import { ImagePreviewProps } from './ImagePreview.js';
 import { PdfPreviewProps } from './PdfPreview.js';
 import { PreviewWrapper, PreviewWrapperProps } from './PreviewWrapper.js';
+import { VideoPreviewProps } from './VideoPreview.js';
 import { type MakeOptional } from '../types/utils.js';
 
 /**
@@ -20,6 +19,7 @@ import { type MakeOptional } from '../types/utils.js';
  */
 export type PreviewItem = (
 	| (MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & { previewType: 'image' })
+	| (MakeOptional<Omit<VideoPreviewProps, 'show'>, 'onClose'> & { previewType: 'video' })
 	| (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & { previewType: 'pdf' })
 ) & {
 	id: string;
@@ -105,6 +105,7 @@ export const PreviewManager = ({ children }: { children: React.ReactNode }): Rea
 			return (
 				<PreviewWrapper
 					{...props}
+					key={props.id}
 					show
 					onClose={closePreview}
 					onPreviousPreview={onPreviousPreviewCallback}
@@ -145,7 +146,7 @@ export const PreviewManager = ({ children }: { children: React.ReactNode }): Rea
 
 	const openPreview = useCallback<(id: string) => void>(
 		(id) => {
-			const index = findIndex(previews, (preview: PreviewItem) => preview.id === id);
+			const index = previews.findIndex((preview) => preview.id === id);
 			if (index >= 0) {
 				setOpenArrayIndex(index);
 			}

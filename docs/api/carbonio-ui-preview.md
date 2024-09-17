@@ -119,6 +119,15 @@ Description
 
 
 </td></tr>
+<tr><td>
+
+[VideoPreviewProps](./carbonio-ui-preview.videopreviewprops.md)
+
+
+</td><td>
+
+
+</td></tr>
 </tbody></table>
 
 ## Variables
@@ -174,7 +183,7 @@ The context give access to the functions needed to manage multiple previews. It 
 
 </td><td>
 
-Show the preview for either an image or a pdf. This component is just a wrapper on the two specific preview components.
+Show the preview for a video, an image or a pdf. This component is just a wrapper on the two specific preview components.
 
 
 </td></tr>

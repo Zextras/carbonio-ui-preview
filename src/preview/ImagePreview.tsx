@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 
 import { useCombinedRefs } from '@zextras/carbonio-design-system';
 
@@ -48,30 +48,6 @@ export const ImagePreview = forwardRef<HTMLDivElement, ImagePreviewProps>(functi
 	}, [src, setComputedSrc]);
 
 	const previewRef = useCombinedRefs<HTMLDivElement>(ref);
-	const imageRef = useRef<HTMLImageElement>(null);
-
-	const eventListener = useCallback<(e: KeyboardEvent) => void>(
-		(event) => {
-			if (event.key === 'Escape') {
-				onClose(event);
-			} else if (event.key === 'ArrowRight' && onNextPreview) {
-				onNextPreview(event);
-			} else if (event.key === 'ArrowLeft' && onPreviousPreview) {
-				onPreviousPreview(event);
-			}
-		},
-		[onClose, onNextPreview, onPreviousPreview]
-	);
-
-	useEffect(() => {
-		if (show) {
-			document.addEventListener('keydown', eventListener);
-		}
-
-		return (): void => {
-			document.removeEventListener('keydown', eventListener);
-		};
-	}, [eventListener, show]);
 
 	const onOverlayClick = useCallback<React.ReactEventHandler>(
 		(event) => {
@@ -106,7 +82,6 @@ export const ImagePreview = forwardRef<HTMLDivElement, ImagePreviewProps>(functi
 					alt={alt ?? filename}
 					src={computedSrc}
 					onError={(error): void => console.error('TODO handle error', error)}
-					ref={imageRef}
 					className={styles.image}
 				/>
 			</div>

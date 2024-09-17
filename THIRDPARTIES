@@ -15,7 +15,6 @@ MIT License (MIT) applies to:
 @testing-library/react, Copyright (c) 2017 Kent C. Dodds
 @testing-library/user-event, Copyright (c) 2020 Giorgio Polvara
 @types/jest, Copyright (c) Microsoft Corporation.
-@types/lodash, Copyright (c) Microsoft Corporation.
 @types/node, Copyright (c) Microsoft Corporation.
 @types/react-dom, Copyright (c) Microsoft Corporation.
 @types/react, Copyright (c) Microsoft Corporation.
@@ -29,7 +28,6 @@ is-ci, Copyright (c) 2016-2021 Thomas Watson Steen
 jest-environment-jsdom, Copyright (c) Meta Platforms, Inc. and affiliates.
 jest-fail-on-console, Copyright (c) 2022 Valentin Hervieu
 jest, Copyright (c) Meta Platforms, Inc. and affiliates.
-lodash, Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
 react-dom, Copyright (c) Facebook, Inc. and its affiliates.
 react-pdf, Copyright (c) 2017–2023 Wojciech Maj
 react, Copyright (c) Facebook, Inc. and its affiliates.

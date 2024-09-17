@@ -30,6 +30,13 @@ const items = [
     src: 'https://pdfobject.com/pdf/sample.pdf',
     filename: 'A sample PDF file',
     extension: 'pdf'
+  },
+  {
+    previewType: 'video',
+    id: 'video-file',
+    src: 'https://github.com/webrtc/samples/raw/gh-pages/src/video/chrome.mp4',
+    filename: 'A sample video',
+    extension: 'mp4'
   }
 ] satisfies PreviewItem[];
 
