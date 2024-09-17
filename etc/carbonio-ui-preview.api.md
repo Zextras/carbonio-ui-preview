@@ -4,9 +4,8 @@
 
 ```ts
 
-import { ForwardRefExoticComponent } from 'react';
 import * as React_2 from 'react';
-import { RefAttributes } from 'react';
+import { default as React_3 } from 'react';
 import { Theme } from '@zextras/carbonio-design-system';
 import { TooltipProps } from '@zextras/carbonio-design-system';
 
@@ -31,7 +30,7 @@ interface HeaderProps {
 }
 
 // @public
-export const ImagePreview: ForwardRefExoticComponent<ImagePreviewProps & RefAttributes<HTMLDivElement>>;
+export const ImagePreview: React_3.ForwardRefExoticComponent<ImagePreviewProps & React_3.RefAttributes<HTMLDivElement>>;
 
 // Warning: (ae-forgotten-export) The symbol "PreviewNavigatorProps" needs to be exported by the entry point index.d.ts
 //
@@ -84,10 +83,13 @@ interface PreviewCriteriaAlternativeContentProps {
 }
 
 // Warning: (ae-forgotten-export) The symbol "MakeOptional" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "VideoPreviewProps" needs to be exported by the entry point index.d.ts
 //
 // @public
 export type PreviewItem = ((MakeOptional<Omit<ImagePreviewProps, 'show'>, 'onClose'> & {
     previewType: 'image';
+}) | (MakeOptional<Omit<VideoPreviewProps, 'show'>, 'onClose'> & {
+    previewType: 'video';
 }) | (MakeOptional<Omit<PdfPreviewProps, 'show'>, 'onClose'> & {
     previewType: 'pdf';
 })) & {
@@ -130,9 +132,18 @@ export type PreviewWrapperProps = (ImagePreviewProps & {
     previewType: 'image';
 }) | (PdfPreviewProps & {
     previewType: 'pdf';
+}) | (VideoPreviewProps & {
+    previewType: 'video';
 });
 
 // @public
 export const usePreview: () => PreviewManagerContextType;
+
+// @public (undocumented)
+interface VideoPreviewProps extends Omit<PreviewNavigatorProps, 'onOverlayClick'> {
+    errorLabel?: string;
+    mimeType?: string;
+    src: string;
+}
 
 ```

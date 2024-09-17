@@ -4,7 +4,7 @@
 
 ## PreviewWrapper variable
 
-Show the preview for either an image or a pdf. This component is just a wrapper on the two specific preview components.
+Show the preview for a video, an image or a pdf. This component is just a wrapper on the two specific preview components.
 
 **Signature:**
 

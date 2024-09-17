@@ -25,4 +25,12 @@ describe('Preview Wrapper', () => {
 		expect(screen.getByRole('img')).toBeVisible();
 		expect(screen.queryByTestId(SELECTORS.previewContainer)).not.toBeInTheDocument();
 	});
+
+	test('Render the video previewer for type video', async () => {
+		const onClose = jest.fn();
+		setup(<PreviewWrapper show src="" onClose={onClose} previewType="video" />);
+		const video = await screen.findByTestId('video');
+		expect(video).toBeVisible();
+		expect(screen.queryByTestId(SELECTORS.previewContainer)).not.toBeInTheDocument();
+	});
 });

@@ -7,13 +7,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
 
 import { useCombinedRefs, getColor, useTheme } from '@zextras/carbonio-design-system';
-import { size as lodashSize, map, noop } from 'lodash';
 import type { DocumentProps, PageProps } from 'react-pdf';
 import { Document, Page } from 'react-pdf';
 
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { HeaderAction } from './Header.js';
+import { usePageScrollController } from './hooks/usePageScrollController.js';
+import { useZoom } from './hooks/useZoom.js';
 import { Navigator } from './Navigator.js';
 import { PageController } from './PageController.js';
 import styles from './PdfPreview.module.css';
@@ -22,8 +23,6 @@ import {
 	PreviewCriteriaAlternativeContentProps
 } from './PreviewCriteriaAlternativeContent.js';
 import { PreviewNavigator, PreviewNavigatorProps } from './PreviewNavigator.js';
-import { usePageScrollController } from './usePageScrollController.js';
-import { useZoom } from './useZoom.js';
 import { ZoomController } from './ZoomController.js';
 import { SCROLL_STEP } from '../constants/index.js';
 import { print } from '../utils/utils.js';
@@ -124,7 +123,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 		}
 		// ArrayBuffer - File - Blob - data URI string
 		setDocumentFile(src);
-		return noop;
+		return (): void => undefined;
 	}, [src, setDocumentFile, forceCache]);
 
 	const previewRef: React.MutableRefObject<HTMLDivElement | null> = useCombinedRefs(ref);
@@ -201,7 +200,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 	const pageOnRenderSuccess = useCallback<NonNullable<PageProps['onRenderSuccess']>>(
 		(page): void => {
 			registerPageObserver(page);
-			setPrintReady(lodashSize(pdfPageProxyListRef.current) === numPages);
+			setPrintReady(Object.values(pdfPageProxyListRef.current).length === numPages);
 		},
 		[numPages, registerPageObserver]
 	);
@@ -213,7 +212,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 	const pageElements = useMemo(() => {
 		if (numPages) {
 			pageRefs.current = [];
-			return map(new Array(numPages), (el, index) => {
+			return [...Array(numPages)].map((el, index) => {
 				const pageRef = React.createRef<HTMLDivElement>();
 				pageRefs.current.push(pageRef);
 				return (
@@ -301,15 +300,6 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 	const eventListener = useCallback<(e: KeyboardEvent) => void>(
 		(event) => {
 			switch (event.key) {
-				case 'Escape':
-					onClose(event);
-					break;
-				case 'ArrowRight':
-					onNextPreview?.(event);
-					break;
-				case 'ArrowLeft':
-					onPreviousPreview?.(event);
-					break;
 				case 'Home':
 					if (currentPage > 1) {
 						onPageChange(1);
@@ -340,7 +330,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 					break;
 			}
 		},
-		[currentPage, numPages, onClose, onNextPreview, onPageChange, onPreviousPreview, previewRef]
+		[currentPage, numPages, onPageChange, previewRef]
 	);
 
 	useEffect(() => {

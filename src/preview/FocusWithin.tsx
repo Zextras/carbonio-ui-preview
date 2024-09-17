@@ -7,8 +7,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import * as React from 'react';
 
-import { last } from 'lodash';
-
 import styles from './FocusWithin.module.css';
 
 interface FocusContainerProps {
@@ -28,7 +26,8 @@ const FocusWithin = ({ children, returnFocus = true }: FocusContainerProps): Rea
 
 	const onStartSentinelFocus = useCallback(() => {
 		if (contentRef.current) {
-			const node = last(contentRef.current.querySelectorAll<HTMLElement>('[tabindex]'));
+			const nodeListOf = contentRef.current.querySelectorAll<HTMLElement>('[tabindex]');
+			const node = nodeListOf[nodeListOf.length - 1];
 			node?.focus();
 		}
 	}, []);

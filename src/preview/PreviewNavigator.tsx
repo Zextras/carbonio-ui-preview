@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-only
  */
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import * as React from 'react';
 
 import { IconButton, Portal, Container } from '@zextras/carbonio-design-system';
@@ -67,6 +67,29 @@ export const PreviewNavigator = ({
 	closeAction,
 	onClose
 }: React.PropsWithChildren<PreviewNavigatorProps>): React.JSX.Element => {
+	const eventListener = useCallback<(e: KeyboardEvent) => void>(
+		(event) => {
+			if (event.key === 'Escape') {
+				onClose(event);
+			} else if (event.key === 'ArrowRight' && onNextPreview) {
+				onNextPreview(event);
+			} else if (event.key === 'ArrowLeft' && onPreviousPreview) {
+				onPreviousPreview(event);
+			}
+		},
+		[onClose, onNextPreview, onPreviousPreview]
+	);
+
+	useEffect(() => {
+		if (show) {
+			document.addEventListener('keydown', eventListener);
+		}
+
+		return (): void => {
+			document.removeEventListener('keydown', eventListener);
+		};
+	}, [eventListener, show]);
+
 	const $closeAction = useMemo<HeaderAction | undefined>(() => {
 		if (closeAction) {
 			return {
