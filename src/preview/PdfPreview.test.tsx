@@ -10,7 +10,7 @@ import { act, waitFor } from '@testing-library/react';
 import { PdfPreview, PdfPreviewProps } from './PdfPreview.js';
 import { ZOOM_STEPS } from '../constants/index.js';
 import { KEYBOARD_KEY, SELECTORS } from '../tests/constants.js';
-import { loadPDF, screen, setup, triggerObserver } from '../tests/utils.js';
+import { screen, loadPDF, setup, triggerObserver } from '../tests/utils.js';
 
 const pdfFile = loadPDF('./__mocks__/_pdf.pdf');
 
