@@ -51,14 +51,14 @@
 		"@faker-js/faker": "^8.4.1",
 		"@microsoft/api-documenter": "^7.25.3",
 		"@microsoft/api-extractor": "^7.47.0",
-		"@testing-library/dom": "^8.20.1",
+		"@testing-library/dom": "^9.3.4",
 		"@testing-library/jest-dom": "^6.4.5",
-		"@testing-library/react": "^12.1.5",
+		"@testing-library/react": "^14.2.1",
 		"@testing-library/user-event": "^14.5.2",
 		"@types/jest": "^29.5.12",
 		"@types/node": "^18.19.34",
-		"@types/react": "^17.0.80",
-		"@types/react-dom": "^17.0.25",
+		"@types/react": "^18.2.77",
+		"@types/react-dom": "^18.2.25",
 		"@zextras/carbonio-ui-configs": "^1.0.1",
 		"babel-jest": "^29.7.0",
 		"conventional-changelog-conventionalcommits": "^8.0.0",
@@ -73,16 +73,17 @@
 		"jest-fail-on-console": "^3.3.0",
 		"jest-junit": "^16.0.0",
 		"semantic-release": "^24.0.0",
-		"ts-node": "^10.9.2"
+		"ts-node": "^10.9.2",
+		"typescript": "^5.3.3"
 	},
 	"dependencies": {
 		"core-js": "^3.37.1",
 		"react-pdf": "^9.1.0"
 	},
 	"peerDependencies": {
-		"@zextras/carbonio-design-system": ">=1.0.0",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2"
+		"@zextras/carbonio-design-system": "^8.0.0",
+		"react": "^18.0.0",
+		"react-dom": "^18.0.0"
 	},
 	"browserslist": [
 		">1%",

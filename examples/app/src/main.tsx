@@ -4,21 +4,22 @@
  * SPDX-License-Identifier: AGPL-3.0-only
  */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App.tsx'
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
 import {PreviewManager} from "@zextras/carbonio-ui-preview";
 import {ThemeProvider} from "@zextras/carbonio-design-system";
+import App from './App.tsx'
 
 const container = document.getElementById('root');
-ReactDOM.render(
+const root = createRoot(container!);
+root.render(
   <React.StrictMode>
     <ThemeProvider>
       <PreviewManager>
         <App />
       </PreviewManager>
     </ThemeProvider>
-  </React.StrictMode>,
-  container
+  </React.StrictMode>
 );
+
 

@@ -2,12 +2,52 @@
 
 [Home](./index.md) &gt; [@zextras/carbonio-ui-preview](./carbonio-ui-preview.md) &gt; [PreviewManager](./carbonio-ui-preview.previewmanager.md)
 
-## PreviewManager variable
+## PreviewManager() function
 
 The manager for showing multiple previews. From within it, the PreviewsManagerContext give access to the functions to initialize and open the previews of different items.
 
 **Signature:**
 
 ```typescript
-PreviewManager: React.FC
+PreviewManager: ({ children }: {
+    children: React.ReactNode;
+}) => React.JSX.Element
 ```
+
+## Parameters
+
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+{ children }
+
+
+</td><td>
+
+{ children: React.ReactNode; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
+**Returns:**
+
+React.JSX.Element
+

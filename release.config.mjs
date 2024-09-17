@@ -12,6 +12,10 @@ export default {
         {
             name: 'devel',
             prerelease: true
+        },
+        {
+            name: 'next/+([0-9]).+([0-9]).+([0-9])',
+            prerelease: '${name.replace(/[\\/\\.]/g, "-")}'
         }
     ],
     plugins: [
