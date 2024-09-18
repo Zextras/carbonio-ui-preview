@@ -58,6 +58,11 @@ beforeAll(() => {
 		writable: true,
 		value: jest.fn()
 	});
+
+	Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
+		writable: true,
+		value: () => undefined
+	});
 });
 
 beforeEach(() => {
