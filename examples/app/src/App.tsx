@@ -32,6 +32,14 @@ const items = [
     extension: 'pdf'
   },
   {
+    previewType: 'pdf',
+    id: 'pdf-file-fallback',
+    src: 'https://pdfobject.com/pdf/sample.pdf',
+    filename: 'Fallback for pdf file',
+    extension: 'pdf',
+    useFallback: true
+  },
+  {
     previewType: 'video',
     id: 'video-file',
     src: 'https://github.com/webrtc/samples/raw/gh-pages/src/video/chrome.mp4',
