@@ -109,6 +109,9 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 	const [fetchFailed, setFetchFailed] = useState(false);
 
 	useEffect(() => {
+		if (useFallback) {
+			return (): void => undefined;
+		}
 		// Check whether is a string but not a data URI.
 		if (typeof src === 'string' && !src.startsWith('data:') && src.trim().length > 0) {
 			const controller = new AbortController();
@@ -124,7 +127,7 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 		// ArrayBuffer - File - Blob - data URI string
 		setDocumentFile(src);
 		return (): void => undefined;
-	}, [src, setDocumentFile, forceCache]);
+	}, [src, setDocumentFile, forceCache, useFallback]);
 
 	const previewRef: React.MutableRefObject<HTMLDivElement | null> = useCombinedRefs(ref);
 	const documentLoaded = useRef(useFallback);
