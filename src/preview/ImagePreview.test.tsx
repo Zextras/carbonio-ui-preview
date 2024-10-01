@@ -16,14 +16,14 @@ describe('Image Preview', () => {
 		const img = faker.image.url();
 		const onClose = jest.fn();
 		setup(<ImagePreview show src={img} onClose={onClose} />);
-		expect(screen.getByRole('img')).toBeVisible();
+		expect(screen.getByRole('presentation')).toBeVisible();
 	});
 
 	test('If show is false does not render an image', () => {
 		const img = faker.image.url();
 		const onClose = jest.fn();
 		setup(<ImagePreview show={false} src={img} onClose={onClose} />);
-		expect(screen.queryByRole('img')).not.toBeInTheDocument();
+		expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
 	});
 
 	test('Additional data are visible', () => {
