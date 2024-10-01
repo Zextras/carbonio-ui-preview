@@ -15,14 +15,13 @@ describe('Preview Wrapper', () => {
 		setup(<PreviewWrapper show src="" onClose={onClose} previewType="pdf" />);
 		await screen.findByTestId(SELECTORS.previewContainer);
 		expect(screen.getByTestId(SELECTORS.previewContainer)).toBeVisible();
-		expect(screen.queryByRole('img')).not.toBeInTheDocument();
+		expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
 	});
 
 	test('Render the image previewer for type image', async () => {
 		const onClose = jest.fn();
 		setup(<PreviewWrapper show src="" onClose={onClose} previewType="image" />);
-		await screen.findByRole('img');
-		expect(screen.getByRole('img')).toBeVisible();
+		expect(await screen.findByRole('presentation')).toBeVisible();
 		expect(screen.queryByTestId(SELECTORS.previewContainer)).not.toBeInTheDocument();
 	});
 
