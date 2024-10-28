@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import * as React from 'react';
 
-import { IconButton, Portal, Container } from '@zextras/carbonio-design-system';
+import { IconButton, Portal, Container, Tooltip } from '@zextras/carbonio-design-system';
 
 import FocusWithin from './FocusWithin.js';
 import Header, { HeaderAction, HeaderProps } from './Header.js';
@@ -49,6 +49,8 @@ export interface PreviewNavigatorProps extends Partial<Omit<HeaderProps, 'closeA
 	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 	/** Callback invoked when the preview overlay is clicked */
 	onOverlayClick?: React.JSX.IntrinsicElements['div']['onClick'];
+	previousTooltip?: string;
+	nextTooltip?: string;
 }
 
 /** Define the preview main layout, allowing the navigation between multiple previews. */
@@ -65,7 +67,9 @@ export const PreviewNavigator = ({
 	size = '',
 	onOverlayClick,
 	closeAction,
-	onClose
+	onClose,
+	previousTooltip = 'Previous',
+	nextTooltip = 'Next'
 }: React.PropsWithChildren<PreviewNavigatorProps>): React.JSX.Element => {
 	const eventListener = useCallback<(e: KeyboardEvent) => void>(
 		(event) => {
@@ -114,27 +118,33 @@ export const PreviewNavigator = ({
 						/>
 						<Container orientation="horizontal" crossAlignment="unset" minHeight={0} flexGrow={1}>
 							{onPreviousPreview ? (
-								<IconButton
-									className={styles.absoluteLeftIconButton}
-									icon="ArrowBackOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onPreviousPreview}
-								/>
+								<div className={styles.absoluteLeftIconButton}>
+									<Tooltip label={previousTooltip}>
+										<IconButton
+											icon="ArrowBackOutline"
+											size="medium"
+											backgroundColor="gray0"
+											iconColor="gray6"
+											borderRadius="round"
+											onClick={onPreviousPreview}
+										/>
+									</Tooltip>
+								</div>
 							) : null}
 							{children}
 							{onNextPreview ? (
-								<IconButton
-									className={styles.absoluteRightIconButton}
-									icon="ArrowForwardOutline"
-									size="medium"
-									backgroundColor="gray0"
-									iconColor="gray6"
-									borderRadius="round"
-									onClick={onNextPreview}
-								/>
+								<div className={styles.absoluteRightIconButton}>
+									<Tooltip label={nextTooltip}>
+										<IconButton
+											icon="ArrowForwardOutline"
+											size="medium"
+											backgroundColor="gray0"
+											iconColor="gray6"
+											borderRadius="round"
+											onClick={onNextPreview}
+										/>
+									</Tooltip>
+								</div>
 							) : null}
 						</Container>
 					</div>

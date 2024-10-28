@@ -93,6 +93,25 @@ _(Optional)_ Flag to disable the Portal implementation
 </td></tr>
 <tr><td>
 
+[nextTooltip?](./carbonio-ui-preview.previewnavigatorprops.nexttooltip.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
 [onClose](./carbonio-ui-preview.previewnavigatorprops.onclose.md)
 
 
@@ -164,6 +183,25 @@ _(Optional)_ Callback invoked when the preview overlay is clicked
 </td><td>
 
 _(Optional)_ Callback invoked when the previous preview is requested
+
+
+</td></tr>
+<tr><td>
+
+[previousTooltip?](./carbonio-ui-preview.previewnavigatorprops.previoustooltip.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
 
 
 </td></tr>
