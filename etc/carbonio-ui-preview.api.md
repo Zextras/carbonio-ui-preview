@@ -116,13 +116,11 @@ interface PreviewNavigatorProps extends Partial<Omit<HeaderProps, 'closeAction'>
     closeAction?: Omit<HeaderAction, 'onClick'>;
     container?: Element;
     disablePortal?: boolean;
-    // (undocumented)
     nextTooltip?: string;
     onClose: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     onNextPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
     onOverlayClick?: React_2.JSX.IntrinsicElements['div']['onClick'];
     onPreviousPreview?: (e: React_2.SyntheticEvent | KeyboardEvent) => void;
-    // (undocumented)
     previousTooltip?: string;
     show: boolean;
 }

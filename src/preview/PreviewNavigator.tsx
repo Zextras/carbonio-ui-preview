@@ -49,7 +49,9 @@ export interface PreviewNavigatorProps extends Partial<Omit<HeaderProps, 'closeA
 	onPreviousPreview?: (e: React.SyntheticEvent | KeyboardEvent) => void;
 	/** Callback invoked when the preview overlay is clicked */
 	onOverlayClick?: React.JSX.IntrinsicElements['div']['onClick'];
+	/** Tooltip for the previous icon button */
 	previousTooltip?: string;
+	/** Tooltip for the next icon button */
 	nextTooltip?: string;
 }
 

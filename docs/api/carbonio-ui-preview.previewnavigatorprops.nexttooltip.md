@@ -4,6 +4,8 @@
 
 ## PreviewNavigatorProps.nextTooltip property
 
+Tooltip for the next icon button
+
 **Signature:**
 
 ```typescript

@@ -4,6 +4,8 @@
 
 ## PreviewNavigatorProps.previousTooltip property
 
+Tooltip for the previous icon button
+
 **Signature:**
 
 ```typescript

@@ -106,7 +106,7 @@ string
 
 </td><td>
 
-_(Optional)_
+_(Optional)_ Tooltip for the next icon button
 
 
 </td></tr>
@@ -201,7 +201,7 @@ string
 
 </td><td>
 
-_(Optional)_
+_(Optional)_ Tooltip for the previous icon button
 
 
 </td></tr>
