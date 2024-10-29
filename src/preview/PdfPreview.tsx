@@ -101,7 +101,9 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 		pageLabel,
 		errorLabel = 'Failed to load document preview.',
 		loadingLabel = 'Loading document preview…',
-		printActionTooltipLabel = 'Print'
+		printActionTooltipLabel = 'Print',
+		previousTooltip,
+		nextTooltip
 	},
 	ref
 ) {
@@ -390,6 +392,8 @@ export const PdfPreview = React.forwardRef<HTMLDivElement, PdfPreviewProps>(func
 			onOverlayClick={onOverlayClick}
 			closeAction={closeAction}
 			onClose={onClose}
+			previousTooltip={previousTooltip}
+			nextTooltip={nextTooltip}
 		>
 			<>
 				{!$customContent && (

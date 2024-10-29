@@ -37,7 +37,9 @@ export const VideoPreview = forwardRef<HTMLDivElement, VideoPreviewProps>(functi
 		closeAction,
 		onClose,
 		onNextPreview,
-		onPreviousPreview
+		onPreviousPreview,
+		previousTooltip,
+		nextTooltip
 	},
 	ref
 ) {
@@ -113,6 +115,8 @@ export const VideoPreview = forwardRef<HTMLDivElement, VideoPreviewProps>(functi
 			onOverlayClick={onOverlayClick}
 			closeAction={closeAction}
 			onClose={onClose}
+			previousTooltip={previousTooltip}
+			nextTooltip={nextTooltip}
 		>
 			<div ref={previewRef} className={styles.previewContainer}>
 				{!canPlayType || videoFailed ? (
