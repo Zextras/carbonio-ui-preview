@@ -32,7 +32,9 @@ export const ImagePreview = forwardRef<HTMLDivElement, ImagePreviewProps>(functi
 		onClose,
 		alt,
 		onNextPreview,
-		onPreviousPreview
+		onPreviousPreview,
+		previousTooltip,
+		nextTooltip
 	},
 	ref
 ) {
@@ -76,6 +78,8 @@ export const ImagePreview = forwardRef<HTMLDivElement, ImagePreviewProps>(functi
 			onOverlayClick={onOverlayClick}
 			closeAction={closeAction}
 			onClose={onClose}
+			previousTooltip={previousTooltip}
+			nextTooltip={nextTooltip}
 		>
 			<div ref={previewRef} className={styles.previewContainer}>
 				<img

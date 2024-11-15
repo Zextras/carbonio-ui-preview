@@ -34,9 +34,7 @@ export interface PreviewCriteriaAlternativeContentProps {
  * It should be used to let the user download or open the item when
  * the preview is not shown because of some external rule.
  */
-export const PreviewCriteriaAlternativeContent: React.VFC<
-	PreviewCriteriaAlternativeContentProps
-> = ({
+export const PreviewCriteriaAlternativeContent = ({
 	downloadSrc,
 	openSrc,
 	titleLabel = 'This item cannot be displayed',
@@ -45,33 +43,29 @@ export const PreviewCriteriaAlternativeContent: React.VFC<
 	openLabel = 'OPEN IN A SEPARATE TAB',
 	noteLabel = 'Please, download it or open it in a separate tab',
 	filename = ''
-}) => {
-	const ancRef = useRef<HTMLAnchorElement>(null);
-	const ancRef2 = useRef<HTMLAnchorElement>(null);
+}: PreviewCriteriaAlternativeContentProps): React.JSX.Element => {
+	const downloadAnchorRef = useRef<HTMLAnchorElement>(null);
+	const openOnTabAnchorRef = useRef<HTMLAnchorElement>(null);
 
 	const downloadClick = useCallback(
 		(ev: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
 			ev.preventDefault();
-			if (ancRef.current) {
-				ancRef.current.click();
-			}
+			downloadAnchorRef.current?.click();
 		},
-		[ancRef]
+		[downloadAnchorRef]
 	);
 
 	const openClick = useCallback(
 		(ev: React.MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
 			ev.preventDefault();
-			if (ancRef2.current) {
-				ancRef2.current.click();
-			}
+			openOnTabAnchorRef.current?.click();
 		},
-		[ancRef2]
+		[openOnTabAnchorRef]
 	);
 
 	return (
 		<Container
-			background="gray0"
+			background={'gray0'}
 			crossAlignment="center"
 			height="fit"
 			width="fit"
@@ -104,15 +98,22 @@ export const PreviewCriteriaAlternativeContent: React.VFC<
 				<a
 					download={filename}
 					rel="noopener"
-					ref={ancRef}
+					ref={downloadAnchorRef}
 					href={downloadSrc}
 					className={styles.attachmentLink}
+					hidden
 				>
 					Download
 				</a>
 			) : null}
 			{openSrc ? (
-				<a rel="noopener" ref={ancRef2} href={openSrc} className={styles.attachmentLink}>
+				<a
+					rel="noopener"
+					ref={openOnTabAnchorRef}
+					href={openSrc}
+					className={styles.attachmentLink}
+					hidden
+				>
 					Open
 				</a>
 			) : null}

@@ -44,7 +44,6 @@ const PreviewManagerInitTester = (props: {
 
 describe('Preview Manager', () => {
 	test('Show the preview of a pdf by calling createPreview and hide it with close action', async () => {
-		// global.fetch = jest.fn(() => Promise.reject());
 		const onClose = jest.fn();
 		const { user } = setup(
 			<PreviewManager>
@@ -71,13 +70,12 @@ describe('Preview Manager', () => {
 		);
 
 		expect(screen.getByRole('button', { name: /create preview/i })).toBeVisible();
-		expect(screen.queryByRole('img')).not.toBeInTheDocument();
+		expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
 		await user.click(screen.getByRole('button', { name: /create preview/i }));
-		await screen.findByRole('img');
-		expect(screen.getByRole('img')).toBeVisible();
+		expect(await screen.findByRole('presentation')).toBeVisible();
 		await user.keyboard(KEYBOARD_KEY.ESC);
 		expect(onClose).toHaveBeenCalled();
-		expect(screen.queryByRole('img')).not.toBeInTheDocument();
+		expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
 	});
 
 	test('Multiple calls to createPreview replace the previewer', async () => {
@@ -88,13 +86,11 @@ describe('Preview Manager', () => {
 			</PreviewManager>
 		);
 		expect(screen.getByRole('button', { name: /create preview/i })).toBeVisible();
-		expect(screen.queryByRole('img')).not.toBeInTheDocument();
+		expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
 		await user.click(screen.getByRole('button', { name: /create preview/i }));
-		await screen.findByRole('img');
-		expect(screen.getByRole('img')).toBeVisible();
+		expect(await screen.findByRole('presentation')).toBeVisible();
 		await user.click(screen.getByRole('button', { name: /create preview/i }));
-		await screen.findByRole('img');
-		expect(screen.getByRole('img')).toBeVisible();
+		expect(await screen.findByRole('presentation')).toBeVisible();
 	});
 
 	describe('keyboard shortcuts', () => {

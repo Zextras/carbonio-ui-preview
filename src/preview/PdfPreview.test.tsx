@@ -37,6 +37,17 @@ describe('Pdf Preview', () => {
 		}
 	);
 
+	it('should retrieve the pdf from a uri', async () => {
+		const fetchFn = jest
+			.spyOn(global, 'fetch')
+			.mockImplementation(() => Promise.resolve(new Response(pdfFile.blob)));
+		setup(<PdfPreview show src={'/test/url'} onClose={jest.fn()} />);
+		await waitForDocumentToLoad();
+		expect(fetchFn).toHaveBeenCalled();
+		// eslint-disable-next-line testing-library/no-node-access
+		expect(document.querySelector(SELECTORS.pdfPage(1))).toBeInTheDocument();
+	});
+
 	test('If show is false does not render the pdf', async () => {
 		const onClose = jest.fn();
 		setup(<PdfPreview show={false} src={pdfFile.dataURI} onClose={onClose} />);
@@ -45,7 +56,7 @@ describe('Pdf Preview', () => {
 	});
 
 	test('If pdf is not valid render an error message', async () => {
-		global.fetch = jest.fn(() => Promise.reject(new Error('API is down')));
+		jest.spyOn(global, 'fetch').mockReturnValue(Promise.reject(new Error('API is down')));
 		const onClose = jest.fn();
 		setup(<PdfPreview show src="invalid-pdf.pdf" onClose={onClose} />);
 		expect(await screen.findByText(/Failed to load document preview./i)).toBeVisible();
@@ -436,6 +447,22 @@ describe('Pdf Preview', () => {
 			`${ZOOM_STEPS[ZOOM_STEPS.length - 1]}`
 		);
 		expect(onClose).not.toHaveBeenCalled();
+	});
+
+	it('should not download the pdf if the fallback is shown', async () => {
+		const fetchFn = jest.spyOn(global, 'fetch');
+		setup(
+			<PdfPreview
+				show
+				src={'/test/url'}
+				onClose={jest.fn()}
+				useFallback
+				contentLabel={'show fallback'}
+			/>
+		);
+		expect(screen.getByText('show fallback')).toBeVisible();
+		await jest.advanceTimersToNextTimerAsync();
+		expect(fetchFn).not.toHaveBeenCalled();
 	});
 
 	describe('Page selector', () => {
